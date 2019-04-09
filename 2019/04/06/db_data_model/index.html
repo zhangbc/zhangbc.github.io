@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="../../../../lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="../../../../lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="../../../../lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据库理论,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。  一，数据描述 数据的三种范畴  1）现实世界（客观世界）：现实世界所反映的客观存在的事物及其相互之间的联系，指数处理对象最原始的表现形式。  2）信息世界（观念世界）：是现实世界在人们头脑中的反映，经过一定的选择，命名和分类而形成的。以下为相关概念：   实体（Entity）：客观存在的事物在人们头脑中的反映，或说，客观存在并可相互区">
+<meta name="keywords" content="数据库理论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【数据库理论】数据模型">
+<meta property="og:url" content="http://yoursite.com/2019/04/06/db_data_model/index.html">
+<meta property="og:site_name" content="天堂的鸽子">
+<meta property="og:description" content="本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。  一，数据描述 数据的三种范畴  1）现实世界（客观世界）：现实世界所反映的客观存在的事物及其相互之间的联系，指数处理对象最原始的表现形式。  2）信息世界（观念世界）：是现实世界在人们头脑中的反映，经过一定的选择，命名和分类而形成的。以下为相关概念：   实体（Entity）：客观存在的事物在人们头脑中的反映，或说，客观存在并可相互区">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-09T13:11:32.520Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【数据库理论】数据模型">
+<meta name="twitter:description" content="本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。  一，数据描述 数据的三种范畴  1）现实世界（客观世界）：现实世界所反映的客观存在的事物及其相互之间的联系，指数处理对象最原始的表现形式。  2）信息世界（观念世界）：是现实世界在人们头脑中的反映，经过一定的选择，命名和分类而形成的。以下为相关概念：   实体（Entity）：客观存在的事物在人们头脑中的反映，或说，客观存在并可相互区">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/06/db_data_model/">
+
+
+
+
+
+  <title>【数据库理论】数据模型 | 天堂的鸽子</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天堂的鸽子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">天道酬勤</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bocheng Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="../../../../uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天堂的鸽子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">【数据库理论】数据模型</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-06T12:48:52+08:00">
+                2019-04-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/数据库技术/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span id="busuanzi_value_page_pv"></span>次阅读
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数&#58;</span>
+                
+                <span title="字数">
+                  2.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。</p>
+</blockquote>
+<h2 id="一，数据描述"><a href="#一，数据描述" class="headerlink" title="一，数据描述"></a>一，数据描述</h2><ol>
+<li><p><strong>数据的三种范畴</strong><br>  1）<code>现实世界</code>（<code>客观世界</code>）：<code>现实世界</code>所反映的客观存在的事物及其相互之间的联系，指数处理对象最原始的表现形式。<br>  2）<code>信息世界</code>（<code>观念世界</code>）：是<code>现实世界</code>在人们头脑中的反映，经过一定的选择，命名和分类而形成的。以下为相关概念：</p>
+<blockquote>
+<ul>
+<li><code>实体（Entity）</code>：客观存在的事物在人们头脑中的反映，或说，客观存在并可相互区别的客观事物或抽象事件。</li>
+<li><code>属性（Attribute）</code>：实体所具有的某一方面的特性。</li>
+<li><code>域（Domain）</code>：一个属性可能取的所有属性值的范围称为该属性的域。</li>
+<li><code>码（Key）</code>：唯一标识实体的属性集。</li>
+<li><code>实体型（Entity Type）</code>：用实体名及其属性名集合来抽象和刻画同类实体，称为实体型。</li>
+<li><code>实体集（Entity Set）</code>：同一类型实体的集合。</li>
+</ul>
+</blockquote>
+<p>3）<code>机器世界</code>（<code>数据世界</code>或<code>存储世界</code>）<br>数据化后的信息称为<code>数据</code>，所以说<code>数据</code>是信息的符号表示。以下为相关概念：</p>
+<blockquote>
+<ul>
+<li><code>数据项（字段，Field）</code>：对应于信息世界中的属性。</li>
+<li><code>记录（Record）</code>：对应于每个实体所对应的数据。</li>
+<li><code>记录型（Record Type）</code>：对应于信息世界中的实体型。</li>
+<li><code>文件（File）</code>：对应于信息世界中的实体集。</li>
+<li><code>关键字（Key）</code>：对应于能够唯一标识一个记录的字段集。</li>
+</ul>
+</blockquote>
+</li>
+<li><p><strong>实体间的联系</strong></p>
+<blockquote>
+<ul>
+<li><code>一对一联系</code>：如果实体集<code>A</code>中每个实体，实体集<code>B</code>中至多有一个实体与之联系，反之亦然，则称实体集A与实体集B具有<code>一对一联系</code>，记作<code>1:1</code>；</li>
+<li><code>一对多联系</code>：如果实体集<code>A</code>中每个实体，实体集<code>B</code>中有n（n&gt;=0）个实体与之联系，反之，实体集<code>B</code>中每个实体，实体集<code>A</code>中至多有一个实体与之联系，则称实体集A与实体集B具有<code>一对多联系</code>，记作<code>1:n</code>；</li>
+<li><code>多对多联系</code>：如果实体集<code>A</code>中每个实体，实体集<code>B</code>中有n（n&gt;=0）个实体与之联系，反之，实体集<code>B</code>中每个实体，实体集<code>A</code>中有m（m&gt;=0）个实体与之联系，则称实体集A与实体集B具有<code>多对多联系</code>，记作<code>n:m</code>。</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h2 id="二，概念模型与E-R方法"><a href="#二，概念模型与E-R方法" class="headerlink" title="二，概念模型与E-R方法"></a>二，概念模型与E-R方法</h2><ol>
+<li><p><strong>数据模型</strong><br>  1）数据模型应满足以下要求：</p>
+<blockquote>
+<p>i）能够比较真实地模拟现实世界；<br>ii）容易为人所理解；<br>iii）便于在计算机上实现。</p>
+</blockquote>
+<p>  2）数据模型分类：</p>
+<blockquote>
+<p>i）<code>概念模型</code>：即<code>信息模型</code>，是按用户的观点来对数据和信息建模的，主要用于数据设计；<br>ii）<code>基本数据模型</code>：主要包括<code>网状模型</code>，<code>层次模型</code>，<code>关系模型</code>等，是按计算机系统的观点对数据建模的，主要用于DBMS的实现。</p>
+</blockquote>
+</li>
+<li><p><strong>数据模型的三要素</strong><br>  1）<code>数据结构</code>：用于描述系统的静态特性。<code>数据结构</code>是所有研究对象类型的集合，这些对象是数据库的组成部分，分为两大类：</p>
+<blockquote>
+<ul>
+<li>与数据类型，内容，性质有关的对象；</li>
+<li>与数据之间联系有关的对象。</li>
+</ul>
+</blockquote>
+<p>  2）<code>数据操作</code>：用于描述系统的动态特征。<code>数据操作</code>是指对数据库中各种对象（型）的实例（值）允许执行的操作的集合，包括操作及有关的操作规则。数据库主要有<strong>检索</strong>和<strong>修改</strong>（插入，删除，更新）两大数据操作。<br>  3）<code>数据完整性约束</code>：是一组完整性规则的集合。<code>完整性规则</code>是给定的数据模型中的数据及其联系所具有的制约和存储规则，用于限制符合数据模型的数据库状态及状态的变化，用于确保数据的<code>正确</code>、<code>有效</code>和<code>相容</code>。</p>
+</li>
+<li><p><strong>概念数据模型</strong><br>  1）<code>概念模型</code>的定义：按用户的观点对现实世界进行数据建模而形成的，是一种独立于计算机系统的模型，完全不涉及信息在计算机系统中的表示，也不依赖于具体的数据库管理系统，用于描述某个特定组织所关心的信息结构。<br>  2）<code>概念模型</code>的相关基本概念：<code>实体</code>、<code>属性</code>、<code>域</code>、<code>码</code>、<code>实体型</code>和<code>实体集</code>。<br>  3）<code>概念模型</code>的基本关系：在<code>概念模型</code>中主要解决问题是实体间的联系。</p>
+</li>
+<li><p><strong>E-R图表示法</strong><br>  1）<code>实体型</code>：用<code>矩形</code>表示，矩形框内写明实体名；<br>  2）<code>属性</code>：用<code>椭圆</code>表示，椭圆内写明属性名；<br>  3）<code>联系</code>：用<code>菱形</code>表示，菱形框内写明联系名，并用无向边分别与有关实体连接起来，同时在无向边旁标注联系的类型（<code>1:1</code>，<code>1:n</code>，<code>n:m</code>）。<br>  <code>E-R模型</code>优点：</p>
+<blockquote>
+<p>i）接近人的思想，容易理解；<br>ii）与计算机无关，用户容易接受。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="三，传统的三大数据模型"><a href="#三，传统的三大数据模型" class="headerlink" title="三，传统的三大数据模型"></a>三，传统的三大数据模型</h2><ol>
+<li><p><strong>层次模型</strong><br>  1）<code>层次模型</code>定义：用<code>树形结构</code>表示实体之间的联系的模型称为<code>层次模型</code>。<br>  2）建立数据的<code>层次模型</code>需要满足以下条件：</p>
+<blockquote>
+<p>i）有且仅有一个结点没有父结点，这个结点即为树根结点；<br>ii）其他数据记录有且仅有一个父结点。</p>
+</blockquote>
+<p>  3）<code>层次模型</code>的<strong>基本特点</strong>：任何一个给定的记录值只有按其路径查看，才能体现它的全部含义，没有一个子记录值能够脱离父记录值而独立存在的。<br>  4）<code>层次模型</code>的<strong>最明显特点</strong>：层次清晰，构造简单，易于实现，可以很方便地表示一对一和一对多这两种实体之间的联系。<br>  5）<code>层次模型</code>的主要优点：</p>
+<blockquote>
+<p>i）<code>层次模型</code>本身比较简单；<br>ii）实体间联系是固定的，且预先定义好的应用系统采用<code>层次模型</code>来实现，其性能优于<code>关系模型</code>的性能，不低于<code>网状模型</code>的性能；<br>iii）<code>层次模型</code>提供了良好的完整性支持。</p>
+</blockquote>
+<p> 6）<code>层次模型</code>的主要缺点：</p>
+<blockquote>
+<p>i）现实世界中很多联系是非层次性的，层次模型表示这类联系的方法很笨拙，只能通过引入冗余数据或创建非自然组织（引入虚结点）来解决；<br>ii）对插入和删除操作的限制比较多；<br>iii）查询子结点必须通过父结点；<br>iv）由于结构严谨，层次命令趋于程序化。</p>
+</blockquote>
+</li>
+<li><p><strong>网状模型</strong><br>  1）<code>网状模型</code>的定义： 网状模型是一种有向图，在数据库中，把满足以下两个条件的基本层次联系集合称为网状模型：</p>
+<blockquote>
+<p>i）允许一个以上的结点无父结点；<br>ii）一个结点可以有多于一个的父结点。</p>
+</blockquote>
+<p>  2）为了描述网状模型的记录之间的联系，引进了<code>系（Set）</code>的概念，所谓<code>系</code>可以理解为命名了的<code>联系</code>，它由一个父记录型和一个或多个子记录型构成。<br>  3）<code>网状数据库</code>的定义：用网状模型设计出来的数据库称为<code>网状数据库</code>。<br>  4）<code>网状模型</code>的主要优点：</p>
+<blockquote>
+<p>i）能够更为直接地描述现实世界，如一个结点可以有多个父结点；<br>ii）具有良好的性能，存取效率较高。</p>
+</blockquote>
+<p>  5）<code>网状模型</code>的主要缺点：</p>
+<blockquote>
+<p>i）结构比较复杂，而且随着应用环境的扩大，数据库的结构就变得越来越复杂，不利于用户最终掌握；<br>ii）其DDL，DML语言复杂，用户不易使用。</p>
+</blockquote>
+</li>
+<li><p><strong>关系模型</strong><br>  1）<code>关系模型</code>的主要优点：</p>
+<blockquote>
+<p>i）数据结构比较简单；<br>ii）具有很高的数据独立性；<br>iii）可以直接处理多对多联系；<br>iv）坚实的理论基础。</p>
+</blockquote>
+<p>  2）<code>值域</code>的定义：在关系模型中，一个n元关系有n个属性，属性的取值范围称为值域。<br>  3）<code>关系模型</code>主要缺点：存取路径对用户透明，查询效率往往不如非关系数据模型。</p>
+</li>
+</ol>
+<h2 id="四，数据独立与三层结构"><a href="#四，数据独立与三层结构" class="headerlink" title="四，数据独立与三层结构"></a>四，数据独立与三层结构</h2><ol>
+<li><p><strong>三级模式结构</strong></p>
+<blockquote>
+<ul>
+<li><code>外模式</code>：又称为<code>用户模式</code>，是数据库用户和数据库系统的接口，是数据库用户的数据视图，是数据库用户可以看得见和使用的局部数据的逻辑结构和特征描述，是与某一个应用有关的数据的逻辑表示。</li>
+<li><code>模式</code>：可分为<code>概念模式</code>和<code>逻辑模式</code>，是所有数据库用户的公共数据视图，是数据库中全部数据的逻辑结构和特征的描述。<blockquote>
+<p>一个数据库只有一个<code>模式</code>，其中<code>概念模式</code>可以用<code>实体-联系模型</code>模型来描述，<code>逻辑模式</code>以某种数据模型为基础，综合考虑所有用户的需求，并将其形成全局逻辑结构。</p>
+</blockquote>
+</li>
+<li><code>内模式</code>：又称为<code>存储模式</code>，是数据库物理结构和存储方式的描述，是数据在数据库内部的表示方式。</li>
+</ul>
+</blockquote>
+</li>
+<li><p><strong>数据的独立性</strong></p>
+<blockquote>
+<ul>
+<li><code>逻辑数据独立性</code>：当<code>模式</code>改变时，只要对<code>外模式/模式映像</code>做相应的改变，就可以使<code>外模式</code>保持不变，以<code>外模式</code>为依据编写的应用程序就不受影响，从而应用程序不必修改，保证了数据与程序之间的<code>逻辑独立性</code>。</li>
+<li><code>存储数据独立性</code>：当<code>内模式</code>改变时，只要对<code>模式/内模式映像</code>做相应的改变，使<code>模式</code>保持不变，应用程序就不受影响，从而保证了数据与程序之间的<code>物理独立性</code>，称为<code>存储数据独立性</code>。</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h2 id="五，数据库管理系统"><a href="#五，数据库管理系统" class="headerlink" title="五，数据库管理系统"></a>五，数据库管理系统</h2><ol>
+<li><p><strong><code>DBMS</code>的主要功能</strong><br>  数据库的<code>主要职责</code>就是有效地实现数据库三级模式之间的转换，即把用户或应用程序对数据库的一次访问，从用户级带到概念级，再导向物理级，转换为对存储数据的操作。</p>
+<blockquote>
+<p>1）数据库定义<br>2）数据库操作及查询优化<br>3）数据库控制运行管理<br>4）数据组织，存储和管理<br>5）数据库的恢复和维护<br>6）数据库的多种接口<br>7）其他功能</p>
+</blockquote>
+</li>
+<li><p><strong><code>DBMS</code>的组成</strong><br>  1）<code>DBMS</code>由<code>查询处理器</code>和<code>存储管理器</code>两大部分组成。其中：</p>
+<blockquote>
+<p>(1) <code>查询处理器</code>主要有<code>DDL</code>编译器，<code>DML</code>编译器，<code>嵌入式DML</code>的预编译器及查询运行核心程序；<br>(2) <code>存储管理器</code>有授权和完整性管理器，事务管理器，文件管理器及缓冲区管理器。</p>
+</blockquote>
+<p>  2）<code>查询处理程序</code>：把用较高级的语言所表示的数据库操作（查询、更新等）转换成一系列对数据库的请求。<br>  3）<code>存储管理程序</code>：包括<code>文件管理程序</code>和<code>缓冲区管理程序</code>。<br>  4）<code>事务管理程序</code>：保证数据库中所有事务全部都能正确执行。</p>
+</li>
+<li><p><strong>用户访问数据库的过程</strong>（略）</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechatpay.jpeg" alt="Bocheng Zhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Bocheng Zhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2019/04/06/db_data_model/" title="【数据库理论】数据模型">http://yoursite.com/2019/04/06/db_data_model/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/数据库理论/" rel="tag"> <i class="fa fa-tag"> 数据库理论</i></a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../db_introduction/" rel="prev" title="【数据库理论】绪论">
+                【数据库理论】绪论 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+  <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="../../../../uploads/avatar.png" alt="Bocheng Zhang">
+            
+              <p class="site-author-name" itemprop="name">Bocheng Zhang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhangbc" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhangbocheng189@126.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://theme-next.iissnan.com/theme-settings.html" title="NexT文档" target="_blank">NexT文档</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一，数据描述"><span class="nav-text">一，数据描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二，概念模型与E-R方法"><span class="nav-text">二，概念模型与E-R方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三，传统的三大数据模型"><span class="nav-text">三，传统的三大数据模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四，数据独立与三层结构"><span class="nav-text">四，数据独立与三层结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五，数据库管理系统"><span class="nav-text">五，数据库管理系统</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bocheng Zhang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">8.1k</span>
+  
+</div>
+
+
+  <div class="powered-by">版权归 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 所有</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style="display:none">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style="display:none">
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客啦
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script scr="/js/scr/md5.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'c3e9e61886d65422eafe',
+          clientSecret: '5e136f2fd1ac0f977bbb2853e5f5798ef45e05d4',
+          repo: 'zhangbc.github.io',
+          owner: 'zhangbc',
+          admin: ['zhangbc'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+  <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
+
+</body>
+</html>
