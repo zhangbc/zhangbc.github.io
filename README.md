@@ -45,6 +45,10 @@ hexo --config custom.yml # 自定义配置文件路径，替代_config.yml
 hexo --draft # 显示草稿
 ```
 
+#### TODO 
+- 阅读次数统计
+- pv统计
+- markdown优化
 
 #### 参考文献
 > - [Hexo NexT主题中集成gitalk评论系统](https://asdfv1929.github.io/2018/01/20/gitalk/)
