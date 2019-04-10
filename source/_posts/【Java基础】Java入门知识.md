@@ -170,4 +170,4 @@ title_en: java_introductory_knowledge
 > - 其他运算符（instanceof，自增，自减，条件运算符）
 
 17）**Java 源程序与编译型运行区别**
-![Java 源程序与编译型运行区别](/images/java_code_difference.png)
+![Java 源程序与编译型运行区别](/images/java_intrductory_knowledge_20190408.png)

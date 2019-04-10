@@ -46,11 +46,13 @@ hexo --draft # 显示草稿
 ```
 
 #### TODO 
-- 阅读次数统计
-- pv统计
-- markdown优化
+- [ ] 阅读次数统计
+- [ ] pv统计
+- [ ] 代码复制
+- [x] markdown优化支持LaTex
 
 #### 参考文献
 > - [Hexo NexT主题中集成gitalk评论系统](https://asdfv1929.github.io/2018/01/20/gitalk/)
 > - [Hexo+Next个人博客主题优化](https://www.jianshu.com/p/efbeddc5eb19)
 > - [Next官方文档](http://theme-next.iissnan.com/)
+> - [hexo下LaTeX无法显示的解决方案](https://www.jianshu.com/p/d95a4795f3a8)
