@@ -13,7 +13,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://zhangbc.github.io
 root: /
 permalink: :year/:month/:day/:title_en/
 permalink_defaults:
@@ -26,7 +26,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render: REAEME.md
+skip_render: REAEDME.md
 
 # Writing
 new_post_name: :title.md # File name of new posts

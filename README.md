@@ -20,6 +20,7 @@ hexo new "title"
 # 发布部署，生成静态网页，开始部署
 hexo g  # or generate
 hexo g --watch # 监视文件变动
+gulp    # 压缩静态资源
 hexo d  # or deploy
 
 # 启动服务预览，监视文件变动并自发更新，无须重启
@@ -46,9 +47,9 @@ hexo --draft # 显示草稿
 ```
 
 #### TODO 
-- [ ] 阅读次数统计
+- [x] 阅读次数统计
 - [ ] pv统计
-- [ ] 代码复制
+- [x] 代码复制
 - [x] markdown优化支持LaTex
 
 #### 参考文献
@@ -56,3 +57,5 @@ hexo --draft # 显示草稿
 > - [Hexo+Next个人博客主题优化](https://www.jianshu.com/p/efbeddc5eb19)
 > - [Next官方文档](http://theme-next.iissnan.com/)
 > - [hexo下LaTeX无法显示的解决方案](https://www.jianshu.com/p/d95a4795f3a8)
+> - [Font Awesome](http://fontawesome.dashgame.com/)
+> - [Hexo的Next主题详细配置](https://www.jianshu.com/p/3a05351a37dc)
