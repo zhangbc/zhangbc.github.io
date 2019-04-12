@@ -24,13 +24,13 @@ gulp.task('minify-html', function() {
 });
 // 压缩js文件
 gulp.task('minify-js', function() {
-    return gulp.src(['./public/**/.js','!./public/js/**/*min.js'])
+    return gulp.src(['./public/**/**/.js','!./public/js/**/**/*min.js'])
         .pipe(uglify())
         .pipe(gulp.dest('./public'));
 });
 // 压缩 public/demo 目录内图片
 gulp.task('minify-images', function() {
-    gulp.src('./public/demo/**/*.*')
+    gulp.src('./public/2019/**/*.*')
         .pipe(imagemin({
            optimizationLevel: 5, //类型：Number  默认：3  取值范围：0-7（优化等级）
            progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片

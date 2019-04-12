@@ -48,9 +48,11 @@ hexo --draft # 显示草稿
 
 #### TODO 
 - [x] 阅读次数统计
-- [ ] pv统计
+- [x] pv统计
 - [x] 代码复制
 - [x] markdown优化支持LaTex
+- [x] 博客分享（百度不支持*https*）
+- [ ] 公众号
 
 #### 参考文献
 > - [Hexo NexT主题中集成gitalk评论系统](https://asdfv1929.github.io/2018/01/20/gitalk/)
@@ -59,3 +61,4 @@ hexo --draft # 显示草稿
 > - [hexo下LaTeX无法显示的解决方案](https://www.jianshu.com/p/d95a4795f3a8)
 > - [Font Awesome](http://fontawesome.dashgame.com/)
 > - [Hexo的Next主题详细配置](https://www.jianshu.com/p/3a05351a37dc)
+> - [百度分享不支持Https的解决方案](https://github.com/hrwhisper/baiduShare.git)
