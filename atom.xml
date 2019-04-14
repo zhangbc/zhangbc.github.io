@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangbc.github.io/"/>
-  <updated>2019-04-14T06:10:16.477Z</updated>
+  <updated>2019-04-14T10:46:42.548Z</updated>
   <id>https://zhangbc.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【数据库理论】数据库的设计与实施</title>
+    <link href="https://zhangbc.github.io/2019/04/14/db_design/"/>
+    <id>https://zhangbc.github.io/2019/04/14/db_design/</id>
+    <published>2019-04-14T10:44:12.000Z</published>
+    <updated>2019-04-14T10:46:42.548Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。</p></blockquote><h2 id="一，数据库设计概述"><a href="#一，数据库设计概述" class="headerlink" title="一，数据库设计概述"></a>一，数据库设计概述</h2><p><code>数据库技术</code>是信息资源开发，管理和服务的最有效手段，从小型 单项事务处理系统到大型的信息系统都利用了数据库技术来保证系统数据的整体性，完整性和共享性。</p><p>1，<strong>数据库设计的内容与特点</strong></p><p>1）<strong>数据库设计</strong>包括<code>结构特性设计</code>与<code>行为特性设计</code>。</p><blockquote><ul><li><code>结构特性设计</code>即数据库框架和数据库结构设计，其结果是得到一个合理的数据模型，以反映真实的事务间的联系，目的是汇总各用户的视图，尽量减少冗余，实现数据共享。结构特性是<code>静态的</code>。</li><li><code>行为特性设计</code>是指应用程序设计，如查询，报表处理等，结构特性必须适应行为特性。</li></ul></blockquote><p>2，<strong>数据库设计方法</strong></p><p>1）<code>新奥尔良方法</code>：将数据库设计分为需求分析，概念设计，逻辑设计，物理设计。</p><p>2）从本质上，规范设计法的<strong>基本思想</strong>是“<code>反复探寻，逐步求精</code>”。</p><p>3，<strong>数据库设计的步骤</strong></p><p>1）<strong>数据库设计的过程</strong>：<code>三大阶段六步骤</code>，即：数据库规范设计，需求分析，概念结构设计，逻辑结构设计，物理结构设计，数据库实施与维护（总体规划阶段，系统开发设计阶段，系统运行与维护阶段）。</p><p>2）<strong>六个步骤</strong>：</p><blockquote><p>（1）<code>数据规划设计</code>：明确数据库建设的总体目标和技术路线，得出数据库设计项目的可行性分析报告，对数据库设计的进度和人员分工做出安排。<br>（2）<code>需求分析</code>：准确弄清用户要求是数据库设计的基础。<br>（3）<code>概念结构设计</code>：数据库逻辑结构依赖于具体的<code>DBMS</code>。概念结构是各用户关心的系统信息结构，是对现实世界的第一层抽象。<br>（4）<code>逻辑结构设计</code>：使概念结构转换为某个<code>DBMS</code>所支持的数据模型，并进行优化。<br>（5）<code>物理结构设计</code>：设计目标是从一个满足用户要求的已确定的逻辑模型出发，设计一个在限定的软件，硬件条件和应用环境下可实现的，运行效率高的数据库结构。<br>（6）<code>数据库实施与维护</code></p></blockquote><h2 id="二，数据库规划"><a href="#二，数据库规划" class="headerlink" title="二，数据库规划"></a>二，数据库规划</h2><p>1，<strong>系统调查</strong>：搞清楚企业的组织层次，得到企业的组织结构图。</p><p>2，<strong>可行性分析</strong>：分析数据库建设是否具有可行性，即从经济，法律，技术等多方面进行可行性论证分析，在此基础上得到可行性报告。</p><p>3，<strong>数据库建设的总体目标和数据库建设的实施总安排</strong></p><h2 id="三，需求分析"><a href="#三，需求分析" class="headerlink" title="三，需求分析"></a>三，需求分析</h2><p>1，<strong>需求分析的任务</strong></p><p>1）<code>需求分析</code>的<strong>任务</strong>：通过详细调查现实世界要处理的对象，充分了解原系统工作概况，明确各用户需求，在此基础上确定新的功能。</p><p>2）<code>需求分析</code>的<strong>重点</strong>：调查，搜集用户在数据管理中的信息要求，处理要求，安全性与完整性要求。</p><blockquote><ul><li><code>信息要求</code>是指用户需要从数据库中获取信息的内容和性质，由用户的信息要求可以导出数据要求，即在数据库中需要存储哪些数据。</li><li><code>处理要求</code>是指用户要求完成什么样的处理功能，对处理的响应时间有什么要求，处理方式是批处理还是联机处理。</li><li><code>安全性要求</code>是指保护数据不被未授权的用户破坏。</li><li><code>完整性要求</code>是指保护数据不被授权的用户破坏。</li></ul></blockquote><p>2，<strong>需求分析的方法</strong></p><p>1）常用的调查方法</p><blockquote><p>（1）跟班作业<br>（2）开调查会<br>（3）查阅档案资料<br>（4）询问<br>（5）设计调查用表并请用户填写</p></blockquote><p>3，<strong>需求分析的步骤</strong></p><p>1）<strong>分析用户的活动</strong></p><p>2）<strong>确定系统的边界</strong></p><p>3）<strong>分析用户活动所设计的数据</strong><br><code>数据流图（DFD）</code>是描述各处理活动之间数据流动的有力工具，是一种从数据流的角度描述一个组织业务活动的图示。</p><p>4）<strong>分析系统数据</strong></p><p><code>数据字典（DD）</code>是描述每个数据流，每个文件，每个加工的集合，是对数据流图中出现的所有数据元素给出逻辑定义和描述。</p><p><code>数据字典</code>包括<code>数据项</code>，<code>数据文件</code>，<code>数据流</code>，<code>数据加工处理</code>。</p><blockquote><ul><li><code>数据项描述</code>={数据项名，别名，数据项含义，数据类型，字节长度，取值范围，取值含义，与其他数据项的逻辑关系}</li><li><code>数据文件描述</code>={数据文件名，所有数据项名，数据存取频度，存取方式}</li><li><code>数据流描述</code>={数据流名称，所有数据项名，数据流来源，数据流去向，平均流量，峰值流量}</li><li><code>数据加工处理描述</code>={加工处理名，说明，输入的数据流名，输出的数据流名，处理要求}</li></ul></blockquote><h2 id="四，概念结构设计"><a href="#四，概念结构设计" class="headerlink" title="四，概念结构设计"></a>四，概念结构设计</h2><p><code>概念结构设计阶段</code>是将用户需求抽象为信息结构（概念模型）的过程。</p><p>1，<strong>局部E-R图的设计</strong></p><p>2，<strong>全局E-R图的设计</strong></p><h2 id="五，逻辑结构设计"><a href="#五，逻辑结构设计" class="headerlink" title="五，逻辑结构设计"></a>五，逻辑结构设计</h2><p>逻辑模式设计的<strong>主要目标</strong>是产生一个具体<code>DBMS</code>可处理的数据模型和数据库模式，即把概念设计阶段的全局<code>E-R</code>图转换成<code>DBMS</code>支持的数据模型。一般步骤： </p><blockquote><p>（1）将概念结构转换为一般的关系模型，网状模型或层次模型。<br>（2）将转换来的关系模型，网状模型，层次模型向<code>DBMS</code>支持的数据模型转换，变成合适的数据库模式。<br>（3）对模式进行挑战和优化。</p></blockquote><h2 id="六，物理结构设计"><a href="#六，物理结构设计" class="headerlink" title="六，物理结构设计"></a>六，物理结构设计</h2><p>1）在进行数据库的物理结构设计时，首先确定数据库的物理结构，然后是对所设计的物理结构设计进行评价。<br>2）物理结构设计的重要目标是满足主要应用的性能要求。<br>3）就<code>RDBMS</code>而言，物理结构设计主要内容有：为关系模式选取存取方法，设计关系，索引等数据库文件的物理存储结构。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;一，数据库设计概述&quot;&gt;&lt;a href=&quot;#一，数据库设计概述&quot; class=&quot;headerlink&quot; title=&quot;一，数据库设计概述&quot;
+      
+    
+    </summary>
+    
+      <category term="数据库技术" scheme="https://zhangbc.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="数据库理论" scheme="https://zhangbc.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%90%86%E8%AE%BA/"/>
+    
+  </entry>
   
   <entry>
     <title>【数据库理论】关系模式的规范化与查询优化</title>
