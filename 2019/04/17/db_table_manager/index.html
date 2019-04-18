@@ -79,7 +79,7 @@
 
 
 
-  <meta name="keywords" content="数据库实战,">
+  <meta name="keywords" content="数据库实践,">
 
 
 
@@ -90,18 +90,20 @@
 
 
 
-<meta name="description" content="1，创建链接远程服务器及其删除12345exec sp_addlinkedserver  &apos;web&apos;,&apos;&apos;,&apos;SQLOLEDB&apos;,&apos;192.168.10.106&apos;exec sp_addlinkedsrvlogin &apos;web&apos;,&apos;false&apos;,null,&apos;sa&apos;,&apos;123&apos;--删除链接服务器exec sp_dropserver &apos;web&apos;,&apos;droplogins&apos; 2，重置SQLSERVER表的自增">
-<meta name="keywords" content="数据库实战">
+<meta name="description" content="本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。  课本第07～08章主要知识点   一，SQL Server 2005概述1，SQL Server 2005 新特性 SQL Server 是一个全面的，集成的数据库解决方案，为企业中的用户提供了用于企业数据管理和商业智能的一个安全，可靠和高效的平台。 1）Service Broker   提供了一个功能强大的，异步编程的新模型。数据库">
+<meta name="keywords" content="数据库实践">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【数据库实战】SQL Server数据库常用脚本">
-<meta property="og:url" content="https://zhangbc.github.io/2019/04/07/sql_used_script/index.html">
+<meta property="og:title" content="【数据库实践】 数据库及其管理">
+<meta property="og:url" content="https://zhangbc.github.io/2019/04/17/db_table_manager/index.html">
 <meta property="og:site_name" content="天堂的鸽子">
-<meta property="og:description" content="1，创建链接远程服务器及其删除12345exec sp_addlinkedserver  &apos;web&apos;,&apos;&apos;,&apos;SQLOLEDB&apos;,&apos;192.168.10.106&apos;exec sp_addlinkedsrvlogin &apos;web&apos;,&apos;false&apos;,null,&apos;sa&apos;,&apos;123&apos;--删除链接服务器exec sp_dropserver &apos;web&apos;,&apos;droplogins&apos; 2，重置SQLSERVER表的自增">
+<meta property="og:description" content="本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。  课本第07～08章主要知识点   一，SQL Server 2005概述1，SQL Server 2005 新特性 SQL Server 是一个全面的，集成的数据库解决方案，为企业中的用户提供了用于企业数据管理和商业智能的一个安全，可靠和高效的平台。 1）Service Broker   提供了一个功能强大的，异步编程的新模型。数据库">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-09T13:11:32.517Z">
+<meta property="og:image" content="https://zhangbc.github.io/images/db_table_manager_architecture_20190417.png">
+<meta property="og:updated_time" content="2019-04-17T17:57:39.094Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【数据库实战】SQL Server数据库常用脚本">
-<meta name="twitter:description" content="1，创建链接远程服务器及其删除12345exec sp_addlinkedserver  &apos;web&apos;,&apos;&apos;,&apos;SQLOLEDB&apos;,&apos;192.168.10.106&apos;exec sp_addlinkedsrvlogin &apos;web&apos;,&apos;false&apos;,null,&apos;sa&apos;,&apos;123&apos;--删除链接服务器exec sp_dropserver &apos;web&apos;,&apos;droplogins&apos; 2，重置SQLSERVER表的自增">
+<meta name="twitter:title" content="【数据库实践】 数据库及其管理">
+<meta name="twitter:description" content="本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。  课本第07～08章主要知识点   一，SQL Server 2005概述1，SQL Server 2005 新特性 SQL Server 是一个全面的，集成的数据库解决方案，为企业中的用户提供了用于企业数据管理和商业智能的一个安全，可靠和高效的平台。 1）Service Broker   提供了一个功能强大的，异步编程的新模型。数据库">
+<meta name="twitter:image" content="https://zhangbc.github.io/images/db_table_manager_architecture_20190417.png">
 
 
 
@@ -135,7 +137,7 @@
 
 
 
-  <title>【数据库实战】SQL Server数据库常用脚本 | 天堂的鸽子</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>【数据库实践】 数据库及其管理 | 天堂的鸽子</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -302,12 +304,12 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangbc.github.io/2019/04/07/sql_used_script/">
+    <link itemprop="mainEntityOfPage" href="https://zhangbc.github.io/2019/04/17/db_table_manager/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Bocheng Zhang">
@@ -324,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">【数据库实战】SQL Server数据库常用脚本</h1>
+          <h1 class="post-title" itemprop="name headline">【数据库实践】 数据库及其管理</h1>
         
 
         <div class="post-meta">
@@ -336,8 +338,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-07T16:40:27+08:00">
-                2019-04-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-17T23:32:38+08:00">
+                2019-04-17
               </time>
             
 
@@ -359,8 +361,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/database/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库技术</span>
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
                   </a>
                 </span>
 
@@ -399,7 +401,7 @@
                   <span class="post-meta-item-text">字数&#58;</span>
                 
                 <span title="字数">
-                  576
+                  2.3k
                 </span>
               
 
@@ -415,7 +417,7 @@
                   <span class="post-meta-item-text">时长 &asymp;</span>
                 
                 <span title="时长">
-                  2
+                  8
                 </span>
               
             </div>
@@ -436,31 +438,154 @@
       
 
       
-        <h4 id="1，创建链接远程服务器及其删除"><a href="#1，创建链接远程服务器及其删除" class="headerlink" title="1，创建链接远程服务器及其删除"></a>1，创建链接远程服务器及其删除</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">exec sp_addlinkedserver  'web','','SQLOLEDB','192.168.10.106'</span><br><span class="line">exec sp_addlinkedsrvlogin 'web','false',null,'sa','123'</span><br><span class="line"></span><br><span class="line"><span class="comment">--删除链接服务器</span></span><br><span class="line">exec sp_dropserver 'web','droplogins'</span><br></pre></td></tr></table></figure>
-<h4 id="2，重置SQLSERVER表的自增列，让自增列重新计数"><a href="#2，重置SQLSERVER表的自增列，让自增列重新计数" class="headerlink" title="2，重置SQLSERVER表的自增列，让自增列重新计数"></a>2，重置SQLSERVER表的自增列，让自增列重新计数</h4><p>语法：<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DBCC CHECKIDENT</span><br><span class="line">(</span><br><span class="line">  table_name</span><br><span class="line">  <span class="comment">[, &#123; NORESEED | &#123; RESEED <span class="comment">[,new_reseed_value ]</span> &#125; &#125; ]</span></span><br><span class="line"> )</span><br><span class="line"> <span class="comment">[ WITH NO_INFOMSGS ]</span></span><br></pre></td></tr></table></figure></p>
+        <blockquote>
+<p>本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。</p>
 <blockquote>
-<p>参数：</p>
+<p>课本第07～08章主要知识点</p>
+</blockquote>
+</blockquote>
+<h2 id="一，SQL-Server-2005概述"><a href="#一，SQL-Server-2005概述" class="headerlink" title="一，SQL Server 2005概述"></a>一，SQL Server 2005概述</h2><p>1，<strong><code>SQL Server 2005</code> 新特性</strong></p>
+<p><code>SQL Server</code> 是一个全面的，集成的数据库解决方案，为企业中的用户提供了用于企业数据管理和商业智能的一个安全，可靠和高效的平台。</p>
+<p>1）<code>Service Broker</code></p>
 <blockquote>
 <ul>
-<li>table_name:是要对其当前标识值进行检查的表名。指定的表必须包含标识列。表名必须符合标识符规则。</li>
-<li>NORESEED:指定不应更改当前标识值。</li>
-<li>RESEED:指定应该更改当前标识值。</li>
-<li>new_reseed_value:用作标识列的当前值的新值。</li>
-<li>WITH NO_INFOMSGS:取消显示所有信息性消息。</li>
+<li>提供了一个功能强大的，异步编程的新模型。数据库应用程序通常使用异步编程来缩短交互式响应时间，并增加应用程序总吞吐量。</li>
+<li>帮助数据库开发人员生成可靠且可扩展的应用程序。</li>
+<li>在<code>SQL Server</code>实例之间提供可靠的消息传递服务。</li>
 </ul>
 </blockquote>
+<p>2）<code>CLR</code>集成<br>3）专用管理员<code>DAC</code>：<code>SQL Server 2005</code>为管理员提供了一种特殊的诊断连接，以供在无法与服务器建立标准连接时使用。<br>4）用户与架构分离</p>
+<blockquote>
+<ul>
+<li>简化删除数据库用户的操作</li>
+<li>多个用户可以用户同一个架构</li>
+</ul>
 </blockquote>
-<p>查看某表当前的种子值，示例：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dbcc checkident('mainTable',noreseed);</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">------------显示如下--------------</span></span><br><span class="line"><span class="ruby">--检查标识信息: 当前标识值 <span class="string">'2707'</span>，当前列值 <span class="string">'2707'</span>。</span></span><br><span class="line"><span class="ruby">--DBCC 执行完毕。如果 DBCC 输出了错误信息，请与系统管理员联系。</span></span><br></pre></td></tr></table></figure>
-<p>重置表mainTable的当前标识值为1，示例：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dbcc checkident('mainTable',reseed,1);</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">------------显示如下--------------</span></span><br><span class="line"><span class="ruby">--检查标识信息: 当前标识值 <span class="string">'NULL'</span>，当前列值 <span class="string">'1'</span>。</span></span><br><span class="line"><span class="ruby">--DBCC 执行完毕。如果 DBCC 输出了错误信息，请与系统管理员联系。</span></span><br></pre></td></tr></table></figure>
-<h4 id="3，几个有用的存储过程"><a href="#3，几个有用的存储过程" class="headerlink" title="3，几个有用的存储过程"></a>3，几个有用的存储过程</h4><ul>
-<li><p>修改xx表中所有值null</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*************************</span></span><br><span class="line"><span class="comment">   功能：修改xx表中所有列为NULL=''</span></span><br><span class="line"><span class="comment">   作者：by zhangbc</span></span><br><span class="line"><span class="comment">   时间：2015-10-19</span></span><br><span class="line"><span class="comment">*************************/</span></span><br><span class="line">if (OBJECT_ID('modifyNull','P') is not null)</span><br><span class="line">     <span class="keyword">drop</span> <span class="keyword">procedure</span> modifyNull</span><br><span class="line"><span class="keyword">go</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> modifyNull(@<span class="keyword">table</span> <span class="built_in">char</span>(<span class="number">100</span>))</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="comment">--定义游标</span></span><br><span class="line">    <span class="keyword">declare</span> col_cur <span class="keyword">cursor</span> <span class="keyword">scroll</span> dynamic <span class="comment">--scroll表示可以向前或向后移动    dynamic：表示可写也可读</span></span><br><span class="line"> <span class="keyword">for</span></span><br><span class="line"> <span class="keyword">select</span> b.name <span class="keyword">from</span> sysobjects a</span><br><span class="line">  <span class="keyword">inner</span> <span class="keyword">join</span> syscolumns b <span class="keyword">on</span> a.id=b.id</span><br><span class="line">  <span class="keyword">where</span> a.name=@<span class="keyword">table</span></span><br><span class="line">    <span class="comment">--打开游标</span></span><br><span class="line">    <span class="keyword">open</span> col_cur</span><br><span class="line"> <span class="keyword">declare</span> @columnName <span class="keyword">nvarchar</span>(<span class="number">100</span>)</span><br><span class="line"> <span class="keyword">fetch</span> <span class="keyword">next</span> <span class="keyword">from</span> col_cur <span class="keyword">into</span> @columnName</span><br><span class="line"> <span class="keyword">declare</span> @<span class="keyword">sql</span> <span class="keyword">nvarchar</span>(<span class="number">1000</span>)</span><br><span class="line"> <span class="keyword">while</span> (@@FETCH_STATUS=<span class="number">0</span>)</span><br><span class="line"> <span class="keyword">begin</span></span><br><span class="line">   <span class="keyword">set</span> @<span class="keyword">sql</span>=<span class="string">'update '</span> + @<span class="keyword">table</span> + <span class="string">' set '</span> + @columnName + <span class="string">' = ISNULL('</span> + @columnName + <span class="string">', '''')'</span></span><br><span class="line">   exec(@<span class="keyword">sql</span>)</span><br><span class="line">   <span class="keyword">fetch</span> <span class="keyword">next</span> <span class="keyword">from</span> col_cur <span class="keyword">into</span> @columnName</span><br><span class="line"> <span class="keyword">end</span></span><br><span class="line"> <span class="comment">--关闭游标</span></span><br><span class="line"> <span class="keyword">close</span> col_cur</span><br><span class="line"> <span class="comment">--释放游标</span></span><br><span class="line"> <span class="keyword">deallocate</span> col_cur</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>5）分区：<code>分区</code>是大型数据表和索引采取的优化存储性能和数据存储的技术。</p>
+<p>2，<strong><code>SQL Server 2005</code> 体系结构</strong><br><img src="/images/db_table_manager_architecture_20190417.png" alt="SQL Server体系结构"></p>
+<p>1）<strong>数据库引擎组件</strong>：为数据存储、处理和安全实现高可伸缩性和高可用性服务。<br>2）<strong>报表组件服务组件</strong>：提供了全面的报表解决方案，可创建、管理和发布传统的、可打印的报表和交互性的、基于<code>Web</code>的报表。<br>3）<strong>分析服务组件</strong>：提供数据分析服务。利用分析服务开发人员设计、创建和管理多种数据源和多种数据结构，通过数据分析规律，获取数据知识。<br>4）<strong>集成服务组件</strong>：用于构建高性能数据集成解决方案（包括为数据仓库提取、转换和加载（<code>ETL</code>）包）的平台。<br>5）<strong>其他组件</strong>：复制服务组件，通知服务组件，服务代理组件，全文搜索。</p>
+<p>3，<strong><code>SQL Server 2005</code>安装</strong></p>
+<p>1）<strong><code>SQL Server 2005</code>版本选择</strong></p>
+<blockquote>
+<ul>
+<li><code>SQL Server 2005</code>企业版：支持<code>32位</code>和<code>64位</code>系统，适合超大型企业。包括联机事务处理，高度复杂的数据分析，数据仓库系统和网站所需的基本功能。</li>
+<li><code>SQL Server 2005</code>标准版：支持<code>32位</code>和<code>64位</code>系统，适合中小型企业。包括电子商务，数据仓库和业务流解决方案所需的基本功能。</li>
+<li><code>SQL Server 2005</code>工作组版：仅支持<code>32位</code>系统，适合小型企业使用。包括<code>SQL Server</code>产品系列的核心数据库功能，可升级至标准版或者企业版。</li>
+<li><code>SQL Server 2005</code>开发版：支持<code>32位</code>和<code>64位</code>系统，仅适合于开发和测试系统使用。具备和企业版完全一样的功能，但有许可限制，只能用于开发和测试。</li>
+<li><code>SQL Server 2005</code>简易版：仅支持<code>32位</code>系统，是一个免费的，使用简单，易于管理的数据库。</li>
+<li><code>SQL Server 2005</code>精简版：仅支持<code>32位</code>系统，适合在移动智能设备上使用。</li>
+</ul>
+</blockquote>
+<h2 id="二，数据库的类型"><a href="#二，数据库的类型" class="headerlink" title="二，数据库的类型"></a>二，数据库的类型</h2><p>1，<strong>系统数据库</strong></p>
+<p><code>数据库</code>是表、视图、索引、存储过程等对象的集合，是数据库管理系统的核心，数据库与管理它的数据库管理系统统一组成数据库服务器。</p>
+<p> 1）<strong><code>master</code></strong>：记录了<code>SQL Server</code>系统的所有服务器的系统信息，包括实例范围的元数据，端点，链接服务器和系统配置设置。</p>
+<p> 2）<strong><code>model</code></strong>：用于在<code>SQL Server</code>实例上创建的所有数据库的模板。</p>
+<p> 3）<strong><code>msdb</code></strong>：提供给<code>SQL Server</code>代理服务器使用的数据库，主要用于为警报，作业，任务调度及记录操作员的操作提供相应的支持。</p>
+<p> 4）<strong><code>tempdb</code></strong>：连接到<code>SQL Server</code>实例的所有用户都可用的全局资源，保存所有临时表和临时存储过程。</p>
+<p> 5）<strong><code>resource</code></strong>：是一个隐藏的只读数据库，包含了<code>SQL Server</code>中的所有系统对象，但不包含用户数据或者用户元数据。</p>
+<p>2，<strong>用户数据库</strong></p>
+<ul>
+<li>数据库<code>命名规则</code>如下：<blockquote>
+<ul>
+<li>第一个字符必须是字母<code>a～z</code>和<code>A~Z</code>、汉字或者下画线(<code>_</code>)、符号<code>@</code>，<code>#</code>；</li>
+<li>后续字符可以是字母<code>a～z</code>和<code>A~Z</code>、汉字、数字或者下画线(<code>_</code>)、符号<code>@</code>，<code>$</code>、数字符号；</li>
+<li>标识符不能是<code>T-SQL</code>的保留字；</li>
+<li>长度不能超过128。</li>
+</ul>
+</blockquote>
 </li>
-<li><p>修改数据库中所有表的所有列为null</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*************************</span></span><br><span class="line"><span class="comment">   功能：修改数据库中所有表的所有列为NULL=''</span></span><br><span class="line"><span class="comment">   作者：by zhangbc</span></span><br><span class="line"><span class="comment">   时间：2015-10-19</span></span><br><span class="line"><span class="comment">*************************/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> [dbo].[modifyAllNull]</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">  <span class="keyword">declare</span> tab_cur <span class="keyword">cursor</span> <span class="keyword">scroll</span> dynamic <span class="comment">--scroll表示可以向前或向后移动    dynamic：表示可写也可读</span></span><br><span class="line"> <span class="keyword">for</span></span><br><span class="line"> <span class="keyword">select</span> <span class="keyword">name</span> <span class="keyword">from</span> sysobjects <span class="keyword">where</span> xtype=<span class="string">'U'</span></span><br><span class="line">    <span class="comment">--打开游标</span></span><br><span class="line">    <span class="keyword">open</span> tab_cur</span><br><span class="line"> <span class="keyword">declare</span> @tableName <span class="keyword">nvarchar</span>(<span class="number">100</span>)</span><br><span class="line"> <span class="keyword">fetch</span> <span class="keyword">next</span> <span class="keyword">from</span> tab_cur <span class="keyword">into</span> @tableName</span><br><span class="line"> <span class="keyword">declare</span> @<span class="keyword">sql</span> <span class="keyword">nvarchar</span>(<span class="number">1000</span>)</span><br><span class="line"> <span class="keyword">while</span> (@@FETCH_STATUS=<span class="number">0</span>)</span><br><span class="line"> <span class="keyword">begin</span></span><br><span class="line">   <span class="keyword">set</span> @<span class="keyword">sql</span>=<span class="string">'exec dbo.modifyNull '</span> +<span class="string">''''</span> + @tableName + <span class="string">''''</span></span><br><span class="line">   exec(@<span class="keyword">sql</span>)</span><br><span class="line">   <span class="keyword">fetch</span> <span class="keyword">next</span> <span class="keyword">from</span> tab_cur <span class="keyword">into</span> @tableName</span><br><span class="line"> <span class="keyword">end</span></span><br><span class="line"> <span class="comment">--关闭游标</span></span><br><span class="line"> <span class="keyword">close</span> tab_cur</span><br><span class="line"> <span class="comment">--释放游标</span></span><br><span class="line"> <span class="keyword">deallocate</span> tab_cur</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
 </ul>
+<p>3，<strong>数据库快照</strong></p>
+<p>1）<strong><code>数据库快照</code>的定义</strong>：<code>数据库快照</code>是用户数据库的只读、静态视图，不包括未提交的事务。</p>
+<p>2）<strong><code>数据库快照</code>的特点</strong>：</p>
+<blockquote>
+<ul>
+<li>反映某个时刻（完成数据库快照创建的时刻）数据库的数据；</li>
+<li>不允许更新；</li>
+<li>一个用户数据库可以创建多个数据库快照，并且必须与数据库在同一个服务器实例上。</li>
+</ul>
+</blockquote>
+<h2 id="三，数据库存储文件"><a href="#三，数据库存储文件" class="headerlink" title="三，数据库存储文件"></a>三，数据库存储文件</h2><p><code>SQL Server 2005</code>数据库<strong>文件名称</strong>包括：</p>
+<blockquote>
+<ul>
+<li><code>逻辑文件名</code>：在所有 <code>T-SQL</code> 语句中引用物理文件时所使用的名称，必须符合<code>SQL Server</code> 标识符规则，而且是唯一的。</li>
+<li><code>物理文件名</code>：包括目录路径的物理文件名称，必须符合操作系统文件命名规则。</li>
+</ul>
+</blockquote>
+<p><code>SQL Server 2005</code>数据库<strong>操作系统文件</strong>包括：</p>
+<blockquote>
+<ul>
+<li><code>数据文件</code>：包括数据和对象，如表、索引、存储过程和视图。</li>
+<li><code>日志文件</code>：包含恢复数据库中的所有事务所需的信息。</li>
+</ul>
+</blockquote>
+<p>1，<strong>数据库文件</strong></p>
+<blockquote>
+<ul>
+<li><strong>主要数据库文件（<code>.mdf</code>）</strong>：数据库的起点，包括数据库的启动信息，并指向数据库中其他文件。</li>
+<li><strong>次要数据库文件（<code>.ndf</code>）</strong>：是可选的，由用户定义并存储用户数据。</li>
+<li><strong>事务日志文件（<code>.ldf</code>）</strong>：用于恢复数据库的日志信息。</li>
+</ul>
+</blockquote>
+<p>2，<strong>数据库文件组</strong></p>
+<blockquote>
+<ul>
+<li><strong>主文件组</strong>：包含主要数据文件和任何没有明确分配给其他文件组的其他文件。<code>系统表</code>的所有页均分配在主文件组中。</li>
+<li><strong>用户定义文件组</strong>：通过在 <code>create database</code> 或者 <code>alter database</code> 语句中使用 <code>filegroup</code> 关键字指定的任何文件组。</li>
+<li><strong>默认文件组（<code>primary</code>文件组）</strong>：如果在数据库中创建对象时没有指定对象所属的文件组，对象将被分配给默认文件组。</li>
+</ul>
+</blockquote>
+<p><strong><code>注意</code></strong>：日志文件包括在文件组内。</p>
+<h2 id="四，数据库的对象"><a href="#四，数据库的对象" class="headerlink" title="四，数据库的对象"></a>四，数据库的对象</h2><p>1，<strong>数据库关系图</strong>：以<code>图形</code>方式来表示表之间的关系。</p>
+<p>2，<strong>表</strong>：组织和存储数据。</p>
+<p>3，<strong>索引</strong>：提高数据检索速度，但增加了系统存储空间的开销。</p>
+<p>4，<strong>视图</strong>：实现用户对数据对查询，但是视图的结构和数据是建立在对表的查询基础上的。</p>
+<p>5，<strong>存储过程和触发器</strong>：数据库中的对编程对象。</p>
+<blockquote>
+<ul>
+<li><code>存储过程</code>独立于表，存储在服务器上，供客户端调用，提供应用程序的效率。</li>
+<li><code>触发器</code>是一种特殊的存储过程，可以大大增强应用程序的健壮性，数据的可恢复性和可管理性。</li>
+</ul>
+</blockquote>
+<p>6，<strong>规则和约束</strong>：对能够放入表中的内容进行限定。</p>
+<blockquote>
+<ul>
+<li><code>规则</code>：用于在用户定义数据类型上加以限制。</li>
+<li><code>约束</code>：本身并非实际的对象，而只是描述特定表的元数据。</li>
+</ul>
+</blockquote>
+<p>7，<strong>默认值</strong>：</p>
+<ul>
+<li><code>默认值</code>有两种类型：<blockquote>
+<ul>
+<li>默认值默认其本身是一个对象；</li>
+<li>默认值不是实际的对象，只描述表特定列的元数据。</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>8，<strong>全文目录</strong>：<code>全文目录</code>是数据的映射，以加速对启用了全文搜索的列中特定文本块的搜索。</p>
+<h2 id="五，创建数据库"><a href="#五，创建数据库" class="headerlink" title="五，创建数据库"></a>五，创建数据库</h2><ul>
+<li>一个<code>SQL Server</code>实例，最多可以创建<code>32767</code>个数据库。</li>
+</ul>
+<p>1，<strong>使用<code>SQL Server</code>管理工具创建</strong></p>
+<p>2，<strong>使用<code>T-SQL</code>创建</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> xsxk </span><br><span class="line"><span class="keyword">on</span> primary                   <span class="comment">-- 建立主要数据文件</span></span><br><span class="line">(</span><br><span class="line">    <span class="keyword">name</span> = <span class="string">'xsxk_data'</span>,         <span class="comment">-- 逻辑名称</span></span><br><span class="line">    filename = <span class="string">'E:\students\xsxk_data.mdf'</span>,   <span class="comment">-- 物理文件路径和名称</span></span><br><span class="line">    <span class="keyword">size</span> = <span class="number">1024</span>KB,         <span class="comment">-- 初始大小</span></span><br><span class="line">    <span class="keyword">maxsize</span> = <span class="keyword">unlimited</span>,   <span class="comment">-- 最大尺寸为无限大</span></span><br><span class="line">    filegrowth = <span class="number">10</span>%       <span class="comment">-- 增长速度</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">log</span> <span class="keyword">on</span></span><br><span class="line">(</span><br><span class="line">    <span class="keyword">name</span> = <span class="string">'xsxk_log'</span>,         <span class="comment">-- 建立日志文件</span></span><br><span class="line">    filename = <span class="string">'E:\students\xsxk_log.ldf'</span>,   <span class="comment">-- 物理文件路径和名称</span></span><br><span class="line">    <span class="keyword">size</span> = <span class="number">1024</span>KB,         <span class="comment">-- 初始大小</span></span><br><span class="line">    <span class="keyword">maxsize</span> = <span class="number">5120</span>KB,  </span><br><span class="line">    filegrowth = <span class="number">1024</span>KB</span><br><span class="line"> )</span><br></pre></td></tr></table></figure>
+<h2 id="六，维护数据库"><a href="#六，维护数据库" class="headerlink" title="六，维护数据库"></a>六，维护数据库</h2><p>1，<strong>查看数据库状态</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="keyword">master</span>;</span><br><span class="line">go</span><br><span class="line">​</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">name</span>,state,state_desc <span class="keyword">from</span> sys.databases;</span><br></pre></td></tr></table></figure>
+<p>2，<strong>修改数据库</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">database</span> xsxk </span><br><span class="line"><span class="keyword">modify</span> <span class="keyword">file</span></span><br><span class="line">(</span><br><span class="line">    <span class="keyword">name</span> = <span class="string">'xsxk_data'</span>,         <span class="comment">-- 逻辑名称</span></span><br><span class="line">    <span class="keyword">size</span> = <span class="number">5</span>MB,         <span class="comment">-- 初始大小</span></span><br><span class="line">    <span class="keyword">maxsize</span> = <span class="number">50</span>MB,   </span><br><span class="line">    filegrowth = <span class="number">2</span>%       <span class="comment">-- 增长速度</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">database</span> xsxk</span><br><span class="line"><span class="keyword">log</span> <span class="keyword">on</span></span><br><span class="line">(</span><br><span class="line">    <span class="keyword">name</span> = <span class="string">'xsxk_log'</span>,         <span class="comment">-- 建立日志文件</span></span><br><span class="line">    filename = <span class="string">'E:\students\xsxk_log.ldf'</span>,   <span class="comment">-- 物理文件路径和名称</span></span><br><span class="line">    <span class="keyword">size</span> = <span class="number">1024</span>KB,         <span class="comment">-- 初始大小</span></span><br><span class="line">    <span class="keyword">maxsize</span> = <span class="number">5120</span>KB,  </span><br><span class="line">    filegrowth = <span class="number">2</span>MB</span><br><span class="line"> )</span><br><span class="line"> <span class="keyword">go</span></span><br></pre></td></tr></table></figure>
+<p>3，<strong>删除数据库</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">database</span> xsxk;</span><br></pre></td></tr></table></figure>
+<p>4，<strong>分离和附加数据库</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 分离数据库</span></span><br><span class="line">sp_detach_db xsxk;</span><br><span class="line">​</span><br><span class="line"><span class="comment">-- 附加数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> xsxk <span class="keyword">on</span></span><br><span class="line">(</span><br><span class="line">    filename = <span class="string">'E:\students\xsxk_data.mdf'</span></span><br><span class="line">),(</span><br><span class="line">    filename = <span class="string">'E:\students\xsxk_log.ldf'</span></span><br><span class="line">)</span><br><span class="line">    <span class="keyword">for</span> attach;</span><br><span class="line">go</span><br></pre></td></tr></table></figure>
+<p>5，<strong>其他操作</strong></p>
+<p>1）<strong>脱机用户数据库</strong></p>
+<p>2）<strong>联机用户数据库</strong></p>
+<p>3）<strong>重命名数据库</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">database</span> xsxk <span class="keyword">modify</span> <span class="keyword">name</span> = xsxks</span><br></pre></td></tr></table></figure>
+<p>4）<strong>收缩数据库</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 将userDB用户数据库中的文件减小，以使userDB中的文件有10%的可用空间</span></span><br><span class="line">dbcc sharinkdatabases(userDB, 10)</span><br><span class="line">​</span><br><span class="line"><span class="comment">-- 将userDB用户数据库中名为DataFile的文件大小收缩到7M</span></span><br><span class="line">DBCC shrinkfile(DataFile, 7)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -511,7 +636,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://zhangbc.github.io/2019/04/07/sql_used_script/" title="【数据库实战】SQL Server数据库常用脚本">https://zhangbc.github.io/2019/04/07/sql_used_script/</a>
+    <a href="https://zhangbc.github.io/2019/04/17/db_table_manager/" title="【数据库实践】 数据库及其管理">https://zhangbc.github.io/2019/04/17/db_table_manager/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -526,7 +651,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/db-actual-combat/" rel="tag"> <i class="fa fa-tag"> 数据库实战</i></a>
+            <a href="/tags/数据库实践/" rel="tag"> <i class="fa fa-tag"> 数据库实践</i></a>
           
         </div>
       
@@ -539,8 +664,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/06/db_introduction/" rel="next" title="【数据库理论】绪论">
-                <i class="fa fa-chevron-left"></i> 【数据库理论】绪论
+              <a href="/2019/04/14/db_security/" rel="next" title="【数据库理论】数据库的安全和保护">
+                <i class="fa fa-chevron-left"></i> 【数据库理论】数据库的安全和保护
               </a>
             
           </div>
@@ -548,10 +673,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/08/java_introductory_knowledge/" rel="prev" title="【Java基础】Java入门知识">
-                【Java基础】Java入门知识 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -755,7 +876,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1，创建链接远程服务器及其删除"><span class="nav-text">1，创建链接远程服务器及其删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2，重置SQLSERVER表的自增列，让自增列重新计数"><span class="nav-text">2，重置SQLSERVER表的自增列，让自增列重新计数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3，几个有用的存储过程"><span class="nav-text">3，几个有用的存储过程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一，SQL-Server-2005概述"><span class="nav-text">一，SQL Server 2005概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二，数据库的类型"><span class="nav-text">二，数据库的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三，数据库存储文件"><span class="nav-text">三，数据库存储文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四，数据库的对象"><span class="nav-text">四，数据库的对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五，创建数据库"><span class="nav-text">五，创建数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六，维护数据库"><span class="nav-text">六，维护数据库</span></a></li></ol></div>
             
 
           </div>
