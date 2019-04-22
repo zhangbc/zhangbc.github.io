@@ -58,10 +58,14 @@ default_category: uncategorized
 category_map:
   数据库技术: database
   Java: java
+  心路历程: mental_journey
+
 tag_map:
   数据库理论: db_theory
   数据库实战: db_actual_combat
   Java基础: java_basic
+  数据库实践: db_practice
+  心路历程: mental_journey
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
