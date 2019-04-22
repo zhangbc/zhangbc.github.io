@@ -56,7 +56,12 @@ index_generator:
 # Category & Tag
 default_category: uncategorized
 category_map:
+  数据库技术: database
+  Java: java
 tag_map:
+  数据库理论: db_theory
+  数据库实战: db_actual_combat
+  Java基础: java_basic
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
