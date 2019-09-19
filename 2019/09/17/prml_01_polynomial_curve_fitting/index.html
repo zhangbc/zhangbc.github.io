@@ -90,13 +90,13 @@
 
 
 
-<meta name="description" content="举例：多项式曲线拟合假设给定一个训练集。这个训练集由 $x$ 的 $N$ 次观测组成，写作 $\mathbf{x}\equiv(x_1,\dots, x_N)^T $ ，伴随这对应的 $t$ 的观测值，记作 $\mathbf{t}\equiv  (t_1,\dots, t_N)^T$。其中，输入数据集合 $\mathbf{x}$ 通过选择$x_n(n=1,\dots,N)$ 的值来生成，这些 $x">
+<meta name="description" content="本系列为《模式识别与机器学习》的读书笔记。  举例：多项式曲线拟合假设给定一个训练集。这个训练集由 $x$ 的 $N$ 次观测组成，写作 $\mathbf{x}\equiv(x_1,\dots, x_N)^T $ ，伴随这对应的 $t$ 的观测值，记作 $\mathbf{t}\equiv  (t_1,\dots, t_N)^T$。其中，输入数据集合 $\mathbf{x}$ 通过选择$x_n(n">
 <meta name="keywords" content="机器学习基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【机器学习基础】从回归问题引基础：多项式曲线拟合">
 <meta property="og:url" content="https://zhangbc.github.io/2019/09/17/prml_01_polynomial_curve_fitting/index.html">
 <meta property="og:site_name" content="天堂的鸽子">
-<meta property="og:description" content="举例：多项式曲线拟合假设给定一个训练集。这个训练集由 $x$ 的 $N$ 次观测组成，写作 $\mathbf{x}\equiv(x_1,\dots, x_N)^T $ ，伴随这对应的 $t$ 的观测值，记作 $\mathbf{t}\equiv  (t_1,\dots, t_N)^T$。其中，输入数据集合 $\mathbf{x}$ 通过选择$x_n(n=1,\dots,N)$ 的值来生成，这些 $x">
+<meta property="og:description" content="本系列为《模式识别与机器学习》的读书笔记。  举例：多项式曲线拟合假设给定一个训练集。这个训练集由 $x$ 的 $N$ 次观测组成，写作 $\mathbf{x}\equiv(x_1,\dots, x_N)^T $ ，伴随这对应的 $t$ 的观测值，记作 $\mathbf{t}\equiv  (t_1,\dots, t_N)^T$。其中，输入数据集合 $\mathbf{x}$ 通过选择$x_n(n">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190917090037.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190917090255.png">
@@ -112,10 +112,10 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190917152029.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190917152043.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190917152101.png">
-<meta property="og:updated_time" content="2019-09-17T14:21:10.944Z">
+<meta property="og:updated_time" content="2019-09-18T09:09:39.039Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【机器学习基础】从回归问题引基础：多项式曲线拟合">
-<meta name="twitter:description" content="举例：多项式曲线拟合假设给定一个训练集。这个训练集由 $x$ 的 $N$ 次观测组成，写作 $\mathbf{x}\equiv(x_1,\dots, x_N)^T $ ，伴随这对应的 $t$ 的观测值，记作 $\mathbf{t}\equiv  (t_1,\dots, t_N)^T$。其中，输入数据集合 $\mathbf{x}$ 通过选择$x_n(n=1,\dots,N)$ 的值来生成，这些 $x">
+<meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  举例：多项式曲线拟合假设给定一个训练集。这个训练集由 $x$ 的 $N$ 次观测组成，写作 $\mathbf{x}\equiv(x_1,\dots, x_N)^T $ ，伴随这对应的 $t$ 的观测值，记作 $\mathbf{t}\equiv  (t_1,\dots, t_N)^T$。其中，输入数据集合 $\mathbf{x}$ 通过选择$x_n(n">
 <meta name="twitter:image" content="https://zhangbc.github.io/images/prml_20190917090037.png">
 
 
@@ -451,7 +451,10 @@
       
 
       
-        <h2 id="举例：多项式曲线拟合"><a href="#举例：多项式曲线拟合" class="headerlink" title="举例：多项式曲线拟合"></a>举例：多项式曲线拟合</h2><p>假设给定一个训练集。这个训练集由 $x$ 的 $N$ 次观测组成，写作 $<br>\mathbf{x}\equiv(x_1,\dots, x_N)^T $ ，伴随这对应的 $t$ 的观测值，记作 $\mathbf{t}\equiv  (t_1,\dots, t_N)^T$。其中，输入数据集合 $\mathbf{x}$ 通过选择$x_n(n=1,\dots,N)$ 的值来生成，这些 $x_n$ 均匀分布在区间[0, 1]，目标数据集 $\mathbf{t}$ 的获得方式是：首先计算函数$sin(2\pi x)$ 的对应的值，然后给每个点增加一个小的符合高斯分布的随机噪声，从而得到对应的$t_n$ 的值。 我们的<strong>目标</strong>是利用这个训练集预测对于输入变量的新值 $ \hat{x}$ 得到的目标变量的值 $\hat{t}$。 </p>
+        <blockquote>
+<p>本系列为《模式识别与机器学习》的读书笔记。</p>
+</blockquote>
+<h2 id="举例：多项式曲线拟合"><a href="#举例：多项式曲线拟合" class="headerlink" title="举例：多项式曲线拟合"></a>举例：多项式曲线拟合</h2><p>假设给定一个训练集。这个训练集由 $x$ 的 $N$ 次观测组成，写作 $<br>\mathbf{x}\equiv(x_1,\dots, x_N)^T $ ，伴随这对应的 $t$ 的观测值，记作 $\mathbf{t}\equiv  (t_1,\dots, t_N)^T$。其中，输入数据集合 $\mathbf{x}$ 通过选择$x_n(n=1,\dots,N)$ 的值来生成，这些 $x_n$ 均匀分布在区间[0, 1]，目标数据集 $\mathbf{t}$ 的获得方式是：首先计算函数$sin(2\pi x)$ 的对应的值，然后给每个点增加一个小的符合高斯分布的随机噪声，从而得到对应的$t_n$ 的值。 我们的<strong>目标</strong>是利用这个训练集预测对于输入变量的新值 $ \hat{x}$ 得到的目标变量的值 $\hat{t}$。 </p>
 <p>如下图1.1，由 $N$ =10个数据点组成的训练集的图像，用蓝色圆圈表示。</p>
 <p><img src="/images/prml_20190917090037.png" alt="训练集"></p>
 <p>如图1.2，误差函数对应于每个数据点与函数$y(x, \boldsymbol{w})$之间位移（绿⾊垂直线）的平⽅和（的⼀半）。</p>
@@ -578,6 +581,10 @@ E_{R M S}=\sqrt{2 E\left(\boldsymbol{w}^{*}\right) / N}</script><p>如图1.7，�
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/09/19/prml_01_pandect/" rel="prev" title="【机器学习基础】总论">
+                【机器学习基础】总论 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -696,7 +703,7 @@ E_{R M S}=\sqrt{2 E\left(\boldsymbol{w}^{*}\right) / N}</script><p>如图1.7，�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -821,7 +828,7 @@ E_{R M S}=\sqrt{2 E\left(\boldsymbol{w}^{*}\right) / N}</script><p>如图1.7，�
     
       <span class="post-meta-item-text">本站字数统计&#58;</span>
     
-    <span title="本站字数统计">85.9k</span>
+    <span title="本站字数统计">93.5k</span>
   
 </div>
 
