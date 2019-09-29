@@ -119,7 +119,7 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_%2020190928095829.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190928095839.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190928095852.png">
-<meta property="og:updated_time" content="2019-09-29T10:04:17.029Z">
+<meta property="og:updated_time" content="2019-09-29T13:00:16.408Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【机器学习基础】概率分布之高斯分布">
 <meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，多元高斯分布考虑⾼斯分布的⼏何形式，⾼斯对于 $\boldsymbol{x}$ 的依赖是通过下⾯形式的⼆次型公式(2.30)：  \Delta^{2} = (\boldsymbol{x} - \boldsymbol{\mu})^{T} \boldsymbol{\Sigma}^{-1}(\boldsymbol{x} - \boldsymbol{\m">
@@ -575,7 +575,7 @@ f(\theta) \equiv \mathbb{E}[z|\theta] = \int zp(z|\theta)\mathrm{d}z</script><p>
 <script type="math/tex; mode=display">
 \mathbb{E}[(z-f)^2|\theta] \lt \infty</script><p>并且不失⼀般性， 我们也假设当 $\theta \gt \theta^{∗}$ 时 $f(\theta) \gt 0$， 当 $\theta \lt \theta^{∗}$ 时 $f(\theta) \lt 0$，<strong><code>Robbins-Monro</code></strong> 的⽅法定义了⼀个根 $\theta^{∗}$ 的顺序估计的序列，由公式(2.75)给出。</p>
 <script type="math/tex; mode=display">
-\theta^{(N)} = \theta^{(N-1)} - \alpha_{N-1}z(\theta^{(N-1)})</script><p>其中 $z(\theta^{(N)})$ 是当 $\theta$ 的取值为 $\theta (N)$ 时 $z$ 的观测值。系数 $\{\alpha_N\}$ 表⽰⼀个满⾜下列条件的正数序列：</p>
+\theta^{(N)} = \theta^{(N-1)} + \alpha_{N-1}z(\theta^{(N-1)})</script><p>其中 $z(\theta^{(N)})$ 是当 $\theta$ 的取值为 $\theta (N)$ 时 $z$ 的观测值。系数 $\{\alpha_N\}$ 表⽰⼀个满⾜下列条件的正数序列：</p>
 <script type="math/tex; mode=display">
 \lim_{N \to \infty}\alpha_{N}=0</script><script type="math/tex; mode=display">
 \sum_{N=1}^{\infty} \alpha_{N} = \infty</script><script type="math/tex; mode=display">
@@ -784,6 +784,10 @@ p(\boldsymbol{x}) = \sum_{k=1}^{K} \pi_{k} \mathcal{N}(\boldsymbol{x} |\boldsymb
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/09/29/prml_02_03/" rel="prev" title="【机器学习基础】概率分布之指数族分布">
+                【机器学习基础】概率分布之指数族分布 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -902,7 +906,7 @@ p(\boldsymbol{x}) = \sum_{k=1}^{K} \pi_{k} \mathcal{N}(\boldsymbol{x} |\boldsymb
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1027,7 +1031,7 @@ p(\boldsymbol{x}) = \sum_{k=1}^{K} \pi_{k} \mathcal{N}(\boldsymbol{x} |\boldsymb
     
       <span class="post-meta-item-text">本站字数统计&#58;</span>
     
-    <span title="本站字数统计">101.3k</span>
+    <span title="本站字数统计">104.7k</span>
   
 </div>
 
