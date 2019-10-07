@@ -112,7 +112,7 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191005141838.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191005141852.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191005144308.png">
-<meta property="og:updated_time" content="2019-10-07T08:31:37.590Z">
+<meta property="og:updated_time" content="2019-10-07T15:22:18.873Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【机器学习基础】线性基函数模型">
 <meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，线性基函数模型1，线性基函数回归问题的⽬标是在给定 $D$ 维输⼊（input） 变量 $\boldsymbol{x}$ 的情况下， 预测⼀个或者多个连续⽬标（target）变量 $t$ 的值。 通过将⼀组输⼊变量的⾮线性函数进⾏线性组合， 我们可以获得⼀类更加有⽤的函数， 被称为基函数（basis function）。 回归问题的最简单模型是输">
@@ -473,7 +473,7 @@ y(\boldsymbol{x},\boldsymbol{w}) = \sum_{j=0}^{M-1}w_{j}\phi_{j}(\boldsymbol{x})
 <script type="math/tex; mode=display">
 \phi_{j}(x)=\sigma\left(\frac{x-\mu_{j}}{s}\right)\tag{3.5}</script><p>其中 $\sigma(a)$ 是 <strong><code>logistic sigmoid</code>函数</strong>，定义为：</p>
 <script type="math/tex; mode=display">
-\sigma_{a}=\frac{1}{1+\exp(-a)}\tag{3.6}</script><p>除此之外，基函数还可以选择<strong>傅⾥叶基函数</strong>，<strong><code>tanh</code>函数</strong>等等。其中，<strong><code>tanh</code>函数</strong>和<strong><code>logistic sigmoid</code>函数</strong>的关系如下：$\tanh(a)=2\sigma(2a)-1$。</p>
+\sigma_{a}=\frac{1}{1+\exp(-a)}\tag{3.6}</script><p>除此之外，基函数还可以选择<strong>傅⾥叶基函数</strong>，<strong><code>tanh</code>函数</strong>等等。其中，<strong><code>tanh</code>函数</strong> 和 <strong><code>logistic sigmoid</code>函数</strong> 的关系如下：$\tanh(a)=2\sigma(2a)-1$。</p>
 <p>如图3.1～3.3，分别为是多项式基函数，⾼斯基函数，<code>sigmoid</code>基函数。</p>
 <p><img src="/images/prml_20190929233008.png" alt="多项式基函数"></p>
 <p><img src="/images/prml_20190929 233018.png" alt="⾼斯基函数"></p>
@@ -498,7 +498,7 @@ E_{D}(\boldsymbol{w})=\frac{1}{2}\sum_{n=1}^{N}\{t_{n}-\boldsymbol{w}^{T}\boldsy
 <script type="math/tex; mode=display">
 \mathbf{\Phi}=\left(\begin{array}{cccc}{\phi_{0}\left(\boldsymbol{x}_{1}\right)} & {\phi_{1}\left(\boldsymbol{x}_{1}\right)} & {\cdots} & {\phi_{M-1}\left(\boldsymbol{x}_{1}\right)} \\ {\phi_{0}\left(\boldsymbol{x}_{2}\right)} & {\phi_{1}\left(\boldsymbol{x}_{2}\right)} & {\cdots} & {\phi_{M-1}\left(\boldsymbol{x}_{2}\right)} \\ {\vdots} & {\vdots} & {\ddots} & {\vdots} \\ {\phi_{0}\left(\boldsymbol{x}_{N}\right)} & {\phi_{1}\left(\boldsymbol{x}_{N}\right)} & {\cdots} & {\phi_{M-1}\left(\boldsymbol{x}_{N}\right)}\end{array}\right)</script><p>其中，量</p>
 <script type="math/tex; mode=display">
-\mathbf{\Phi}^{\dagger} \equiv\left(\mathbf{\Phi}^{T} \mathbf{\Phi}\right)^{-1} \mathbf{\Phi}^{T}</script><p>被称为矩阵 $\mathbf{\Phi}$ 的<strong><code>Moore-Penrose</code>伪逆矩阵</strong>（<code>pseudo-inverse matrix</code>）（<code>Rao and Mitra</code>, 1971; <code>Golub and Van Loan</code>, 1996）。</p>
+\mathbf{\Phi}^{\dagger} \equiv\left(\mathbf{\Phi}^{T} \mathbf{\Phi}\right)^{-1} \mathbf{\Phi}^{T}</script><p>被称为矩阵 $\mathbf{\Phi}$ 的 <strong><code>Moore-Penrose</code>伪逆矩阵</strong>（<code>pseudo-inverse matrix</code>）（<code>Rao and Mitra</code>, 1971; <code>Golub and Van Loan</code>, 1996）。</p>
 <p>图3.4，最⼩平⽅解的⼏何表⽰，在⼀个 $N$ 维空间中，坐标轴是 $t_1,\dots , t_N$ 的值。<strong>最⼩平⽅回归函数</strong>可以通过下⾯的⽅式得到：寻找数据向量 $\mathbf{t}$ 在由基函数 $\phi_{j}(\boldsymbol{x})$ 张成的⼦空间上的正交投影，其中每个基函数都可以看成⼀个长度为 $N$ 的向量 $\varphi_j$ ，它的元素为 $\phi_{j}(\boldsymbol{x}_{n})$ 。注意， $\varphi_j$ 对应于 $\mathbf{\Phi}$ 的第 $j$ 列， ⽽ $\boldsymbol{\phi}(\boldsymbol{x}_{n})$ 对应于 $\mathbf{\Phi}$ 的第 $i$ ⾏。</p>
 <p><img src="/images/prml_20190930113538.png" alt="最⼩平⽅解的⼏何表⽰"></p>
 <p>如果显式地写出偏置参数，那么误差函数公式(3.10)变为：</p>
@@ -516,7 +516,7 @@ w_0=\bar{t}-\sum_{j=1}^{M-1}w_{j}\bar\phi_{j}</script><p>其中，</p>
 <script type="math/tex; mode=display">
 \boldsymbol{w}^{(\tau+1)}=\boldsymbol{w}^{(\tau)}-\eta\nabla E_{n}\tag{3.15}</script><p>其中 $\tau$ 表⽰迭代次数，$\eta$  是学习率参数。 $\boldsymbol{w}$ 被初始化为某个起始向 量  $\boldsymbol{w}^{(0)}$ 。对于平⽅和误差函数公式(3.10)的情形，我们有：</p>
 <script type="math/tex; mode=display">
-\boldsymbol{w}^{(\tau+1)}=\boldsymbol{w}^{(\tau)}+\eta(t_{n}-\boldsymbol{w}^{(\tau)T}\boldsymbol{\phi}_{n})\boldsymbol{\phi}_{n}\tag{3.16}</script><p>其中 $\boldsymbol{\phi}_{n}=\boldsymbol{\phi}(\boldsymbol{x}_{n})$。 这被称为<strong>最⼩均⽅</strong>（<code>least-mean-squares</code>）或者<strong><code>LMS</code>算法</strong>。$\eta$ 的值需要仔细选择，确保<strong>算法收敛</strong>（<code>Bishop and Nabney</code>, 2008）。</p>
+\boldsymbol{w}^{(\tau+1)}=\boldsymbol{w}^{(\tau)}+\eta(t_{n}-\boldsymbol{w}^{(\tau)T}\boldsymbol{\phi}_{n})\boldsymbol{\phi}_{n}\tag{3.16}</script><p>其中 $\boldsymbol{\phi}_{n}=\boldsymbol{\phi}(\boldsymbol{x}_{n})$。 这被称为<strong>最⼩均⽅</strong>（<code>least-mean-squares</code>）或者 <strong><code>LMS</code>算法</strong>。$\eta$ 的值需要仔细选择，确保<strong>算法收敛</strong>（<code>Bishop and Nabney</code>, 2008）。</p>
 <h2 id="4，正则化最⼩平⽅"><a href="#4，正则化最⼩平⽅" class="headerlink" title="4，正则化最⼩平⽅"></a>4，正则化最⼩平⽅</h2><p>为误差函数添加正则化项的思想来控制过拟合，因此需要最⼩化的总的误差函数的形式为</p>
 <script type="math/tex; mode=display">
 E_{D}(\boldsymbol{w})+\lambda E_{W}(\boldsymbol{w})</script><p>其中 $\lambda$ 是正则化系数，正则化项的⼀个最简单的形式为权向量的各个元素的平⽅和</p>

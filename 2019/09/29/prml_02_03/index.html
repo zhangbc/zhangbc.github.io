@@ -102,7 +102,7 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190929000307.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190929121905.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190929121914.png">
-<meta property="og:updated_time" content="2019-10-07T11:47:59.036Z">
+<meta property="og:updated_time" content="2019-10-07T15:41:45.228Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【机器学习基础】概率分布之指数族分布">
 <meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，指数族分布1，指数族分布基本概念参数为 $\boldsymbol{\eta}$ 的变量 $\boldsymbol{x}$ 的指数族分布定义为具有下⾯形式的概率分布的集合：  p(\boldsymbol{x|\eta}) = h(\boldsymbol{x})g(\boldsymbol{\eta})\exp \{\boldsymbol{\eta}^">
@@ -458,7 +458,7 @@ p(x|\mu) = \text {Bern}(x|\mu) = \mu^{x}(1-\mu)^{1-x}\tag{2.108}</script><p>变�
 <script type="math/tex; mode=display">
 \eta = \ln \left(\frac{\mu}{1-\mu}\right)</script><p>从而，有：</p>
 <script type="math/tex; mode=display">
-\begin{aligned}\mu &= \sigma(\eta) \\ &= \frac{1}{1+\exp(-\eta)}\end{aligned}\tag{2.110}</script><p>被称为<strong><code>logistic sigmoid</code>函数</strong>。<br>因此，伯努利分布的指数族分布标准形式：</p>
+\begin{aligned}\mu &= \sigma(\eta) \\ &= \frac{1}{1+\exp(-\eta)}\end{aligned}\tag{2.110}</script><p>被称为 <strong><code>logistic sigmoid</code>函数</strong>。<br>因此，伯努利分布的指数族分布标准形式：</p>
 <script type="math/tex; mode=display">
 p(x|\mu) = \sigma(-\eta)\exp(\eta x)\tag{2.111}</script><p>其中，</p>
 <script type="math/tex; mode=display">
@@ -474,7 +474,7 @@ p(\boldsymbol{x|\mu}) = \exp(\boldsymbol{\eta}^{T}\boldsymbol{x})\tag{2.113}</sc
 <script type="math/tex; mode=display">
 \eta_{k} = \ln\left(\frac{\mu_{k}}{1-\sum_{j=1}^{M-1}\mu_{j}}\right)</script><p>即得：</p>
 <script type="math/tex; mode=display">
-\mu_{k} = \frac{\exp (\eta_{k})}{1+\sum_{j=1}^{M-1}\exp(\eta_{j})}\tag{2.115}</script><p>这被称为<strong><code>softmax</code>函数</strong>，或者<strong>归⼀化指数</strong>（<code>normalized exponential</code>）。因此，单⼀观测 $\boldsymbol{x}$ 的多项式分布的指数族分布标准形式：</p>
+\mu_{k} = \frac{\exp (\eta_{k})}{1+\sum_{j=1}^{M-1}\exp(\eta_{j})}\tag{2.115}</script><p>这被称为 <strong><code>softmax</code>函数</strong>，或者<strong>归⼀化指数</strong>（<code>normalized exponential</code>）。因此，单⼀观测 $\boldsymbol{x}$ 的多项式分布的指数族分布标准形式：</p>
 <script type="math/tex; mode=display">
 p(\boldsymbol{x}|\boldsymbol{\eta}) = \left(1+\sum_{k=1}^{M-1}\exp(\eta_{k})\right)^{-1}\exp(\boldsymbol{\mu}^T\boldsymbol{x})\tag{2.116}</script><p>其中 $\boldsymbol{\eta}=(\eta_1,\dots,\eta_{M-1},0)^T$，并且</p>
 <script type="math/tex; mode=display">
@@ -486,7 +486,7 @@ p(\boldsymbol{x}|\boldsymbol{\eta}) = \left(1+\sum_{k=1}^{M-1}\exp(\eta_{k})\rig
 <script type="math/tex; mode=display">
 \left\{\frac{\partial f}{\partial x_0},\frac{\partial f}{\partial y_0} \right\} = f_x(x_0,y_0)\boldsymbol{i} + f_y(x_0,y_0)\boldsymbol{j}</script><p>，该向量称为函数 $z=f(x,y)$ 在点$P_0(x_0,y_0)$的<strong>梯度</strong>，记作 $\text{gradf}(x_0,y_0)$ 或 $\nabla f(x_0, y_0)$<br>即有：</p>
 <script type="math/tex; mode=display">
-\text { gradf }(x_0, y_0)=\nabla f(x_0, y_0)=\left\{\frac{\partial f}{\partial x_0}, \frac{\partial f}{\partial y_0}\right\}=f_{x}(x_0, y_0) \boldsymbol{i}+f_{y}(x_0, y_0) \boldsymbol{j}\tag{2.118}</script><p>其中 $\nabla =\frac{\partial}{\partial x} \boldsymbol{i} + \frac{\partial}{\partial y}\boldsymbol{j}$ 称为（二维的）<strong>向量微分算子</strong>或<strong><code>Nabla</code>算子</strong>，  $\nabla {f}=\frac{\partial {f}}{\partial x} \boldsymbol{i} + \frac{\partial{f}}{\partial y}\boldsymbol{j}$ 。</p>
+\text { gradf }(x_0, y_0)=\nabla f(x_0, y_0)=\left\{\frac{\partial f}{\partial x_0}, \frac{\partial f}{\partial y_0}\right\}=f_{x}(x_0, y_0) \boldsymbol{i}+f_{y}(x_0, y_0) \boldsymbol{j}\tag{2.118}</script><p>其中 $\nabla =\frac{\partial}{\partial x} \boldsymbol{i} + \frac{\partial}{\partial y}\boldsymbol{j}$ 称为（二维的）<strong>向量微分算子</strong>或 <strong><code>Nabla</code>算子</strong>，  $\nabla {f}=\frac{\partial {f}}{\partial x} \boldsymbol{i} + \frac{\partial{f}}{\partial y}\boldsymbol{j}$ 。</p>
 <p>对公式(2.107)的两侧关于 $\boldsymbol{\mu}$ 取梯度，有：</p>
 <script type="math/tex; mode=display">
 \begin{aligned} \nabla g(\boldsymbol{\eta})\int h(\boldsymbol{x})\exp \{\boldsymbol{\eta}^{T}\boldsymbol{\mu}(\boldsymbol{x})\}\mathrm{d}\boldsymbol{x} + g(\boldsymbol{\eta})\int h(\boldsymbol{x})\exp \{\boldsymbol{\eta}^{T}\boldsymbol{\mu}(\boldsymbol{x})\}\boldsymbol{\mu}(\boldsymbol{x})\mathrm{d}\boldsymbol{x} =0 \end{aligned}\tag{2.119}</script><p>从而可以推导出：</p>
@@ -530,9 +530,9 @@ p(\boldsymbol{x}) = \frac{K}{NV}\tag{2.134}</script><p>我们有两种⽅式利�
 <script type="math/tex; mode=display">
 k(\boldsymbol{\mu})=\left\{\begin{array}{l}{1，|\mu_i| \le \frac{1}{2}, i=1,\dots,D} \\ {0，其他情况}\end{array}\right.\tag{2.135}</script><p>并且满足：</p>
 <p>1）$k(\boldsymbol{\mu}) \ge 0$<br>2）$\int k(\boldsymbol{\mu}) \mathrm{d} \boldsymbol{\mu} = 1$</p>
-<p>这表⽰⼀个以原点为中⼼的单位⽴⽅体。 函数 $k(\boldsymbol{\mu})$ 是 <strong>核函数</strong>（<code>kernel function</code>）的⼀个例⼦， 在这个问题中也被称为<strong><code>Parzen</code>窗</strong>（<code>Parzen window</code>）。 不难发现，如果数据点 $\boldsymbol{x}_n$ 位于以 $\boldsymbol{x}$ 为中⼼的边长为 $h$ 的⽴⽅体中，则位于这个⽴⽅体内的数据点的总数为：</p>
+<p>这表⽰⼀个以原点为中⼼的单位⽴⽅体。 函数 $k(\boldsymbol{\mu})$ 是 <strong>核函数</strong>（<code>kernel function</code>）的⼀个例⼦， 在这个问题中也被称为 <strong><code>Parzen</code>窗</strong>（<code>Parzen window</code>）。 不难发现，如果数据点 $\boldsymbol{x}_n$ 位于以 $\boldsymbol{x}$ 为中⼼的边长为 $h$ 的⽴⽅体中，则位于这个⽴⽅体内的数据点的总数为：</p>
 <script type="math/tex; mode=display">
-K=\sum_{k=1}^{K}k\left(\frac{\boldsymbol{x}-\boldsymbol{x_n}}{h}\right)\tag{2.136}</script><p>由公式(2.134)可得点 $\boldsymbol{x}$ 处的概率密度估计，称为<strong>核密度估计</strong>，或者<strong><code>Parzen</code>估计</strong>：</p>
+K=\sum_{k=1}^{K}k\left(\frac{\boldsymbol{x}-\boldsymbol{x_n}}{h}\right)\tag{2.136}</script><p>由公式(2.134)可得点 $\boldsymbol{x}$ 处的概率密度估计，称为<strong>核密度估计</strong>，或者 <strong><code>Parzen</code>估计</strong>：</p>
 <script type="math/tex; mode=display">
 p(\boldsymbol{x})=\frac{1}{N}\sum_{n=1}^{N}\frac{1}{h^{D}} k \left(\frac{\boldsymbol{x}-\boldsymbol{x_n}}{h}\right)\tag{2.137}</script><p>其中，记 $D$ 维边长为 $h$ 的⽴⽅体的体积公式 $V = h^D$ 。</p>
 <p>使⽤<strong>⾼斯核函数</strong>，可以得到下⾯的核概率密度模型：</p>
@@ -541,7 +541,7 @@ p(\boldsymbol{x})=\frac{1}{N}\sum_{n=1}^{N}\frac{1}{\left(2 \pi h^{2}\right)^{\f
 <p>如图2.33，核密度模型。</p>
 <p><img src="/images/prml_20190929000243.png" alt="核密度模型"></p>
 <h2 id="2，近邻⽅法"><a href="#2，近邻⽅法" class="headerlink" title="2，近邻⽅法"></a>2，近邻⽅法</h2><p><strong>核⽅法</strong>进⾏概率密度估计的⼀个难点是控制核宽度的参数 $h$ 对于所有的核都是固定的。 在⾼数据密度的区域，⼤的 $h$ 值可能会造成过度平滑，并且破坏了本应从数据中提取出的结构； 但是，减⼩ $h$ 的值可能导致数据空间中低密度区域估计的噪声。因此，$h$ 的最优选择可能依赖于数据空间的位置。这个问题可以通过概率密度的<strong>近邻⽅法</strong>解决。</p>
-<p>假设球体的半径可以⾃由增长，直到它精确地包含 $K$ 个数据点。 这样，概率密度 $p(\boldsymbol{x})$ 的估计就由公式(2.232)给出， 其中 $V$ 等于最终球体的体积。这种⽅法被称为 <strong><code>K</code>近邻⽅法</strong>。</p>
+<p>假设球体的半径可以⾃由增长，直到它精确地包含 $K$ 个数据点。 这样，概率密度 $p(\boldsymbol{x})$ 的估计就由公式(2.134)给出， 其中 $V$ 等于最终球体的体积。这种⽅法被称为 <strong><code>K</code>近邻⽅法</strong>。</p>
 <p>如图2.34，$K$ 近邻⽅法。</p>
 <p><img src="/images/prml_20190929000307.png" alt="K近邻⽅法"></p>
 <p>现在讨论明概率密度估计的 $K$ <strong>近邻⽅法</strong>如何推⼴到分类问题。</p>

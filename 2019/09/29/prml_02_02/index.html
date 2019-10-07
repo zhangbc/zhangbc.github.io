@@ -119,7 +119,7 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_%2020190928095829.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190928095839.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190928095852.png">
-<meta property="og:updated_time" content="2019-10-07T11:17:46.067Z">
+<meta property="og:updated_time" content="2019-10-07T15:04:47.210Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【机器学习基础】概率分布之高斯分布">
 <meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，多元高斯分布考虑⾼斯分布的⼏何形式，⾼斯对于 $\boldsymbol{x}$ 的依赖是通过下⾯形式的⼆次型：  \Delta^{2} = (\boldsymbol{x} - \boldsymbol{\mu})^{T} \boldsymbol{\Sigma}^{-1}(\boldsymbol{x} - \boldsymbol{\mu})\tag{">
@@ -483,9 +483,9 @@ I_{i j}=\left\{\begin{array}{l}{1，如果 i=j} \\ {0，其他情况}\end{array}
 <p>⼀个特征值严格⼤于零的矩阵被称为<strong>正定（<code>positive definite</code>）矩阵</strong>。偶尔遇到⼀个或者多个特征值为零的⾼斯分布，那种情况下分布是奇异的，被限制在 了⼀个低维的⼦空间中。如果所有的特征值都是⾮负的，那么这个矩阵被称为<strong>半正定（<code>positive semidefine</code>）矩阵</strong>。</p>
 <p>如图2.12，红⾊曲线表⽰⼆维空间 $\boldsymbol{x} = (x_1 , x_2)$ 的⾼斯分布的常数概率密度的椭圆⾯， 它表⽰的概率密度为 $\exp(−\frac{1}{2})$，值是在 $\boldsymbol{x} = \boldsymbol{\mu}$ 处计算的。椭圆的轴由协⽅差矩阵的特征向量 $\mu_i$ 定义，对应的特征值为 $\lambda_i$ 。</p>
 <p><img src="/images/prml_20190920171000.png" alt="椭圆面"></p>
-<p>现在考虑在由 $y_i$ 定义的新坐标系下⾼斯分布的形式。 从 $\boldsymbol{x}$ 坐标系到 $\boldsymbol{y}$ 坐标系， 我们有⼀ 个<strong><code>Jacobian</code>矩阵</strong> $\boldsymbol{J}$ ，它的元素为：</p>
+<p>现在考虑在由 $y_i$ 定义的新坐标系下⾼斯分布的形式。 从 $\boldsymbol{x}$ 坐标系到 $\boldsymbol{y}$ 坐标系， 我们有⼀个 <strong><code>Jacobian</code>矩阵</strong> $\boldsymbol{J}$ ，它的元素为：</p>
 <script type="math/tex; mode=display">
-\boldsymbol{J}_{ij} = \frac{\partial {x_i}}{\partial {j_j}} = U_{ij}\tag{2.38}</script><p>其中 $U_{ji}$ 是矩阵 $\boldsymbol{U}^T$ 的元素。使⽤矩阵 $\boldsymbol{U}$ 的单位正交性质，我们看到<strong><code>Jacobian</code>矩阵</strong>⾏列式的平⽅为：</p>
+\boldsymbol{J}_{ij} = \frac{\partial {x_i}}{\partial {j_j}} = U_{ij}\tag{2.38}</script><p>其中 $U_{ji}$ 是矩阵 $\boldsymbol{U}^T$ 的元素。使⽤矩阵 $\boldsymbol{U}$ 的单位正交性质，我们看到 <strong><code>Jacobian</code>矩阵</strong> ⾏列式的平⽅为：</p>
 <script type="math/tex; mode=display">
 | \boldsymbol{J}^{2} | = |\boldsymbol{U}^{T}|^{2} = |\boldsymbol{U}^{T}||\boldsymbol{U}| = |\boldsymbol{U}^{T}\boldsymbol{U}| = |\boldsymbol{I}| = 1\tag{2.39}</script><p>从而可知，$|\boldsymbol{J}|=1$ ，并且，⾏列式 $|\boldsymbol{\Sigma}|$ 的协⽅差矩阵可以写成特征值的乘积，因此：</p>
 <script type="math/tex; mode=display">
@@ -533,7 +533,7 @@ p(\boldsymbol{x}_a) = \int p(\boldsymbol{x}_a, \boldsymbol{x}_b) \mathrm{d} \bol
 \mathbb{E}[\boldsymbol{x}_a] = \boldsymbol{\mu}_a\tag{2.55}</script><script type="math/tex; mode=display">
 \text{cov}[\boldsymbol{x}_a] = \boldsymbol{\Sigma}_{aa}\tag{2.56}</script><p>如图2.13，两个变量上的⾼斯概率分布 $p(x_a , x_b)$ 的轮廓线。</p>
 <p><img src="/images/prml_20190920214738.png" alt="⾼斯概率分布轮廓线"></p>
-<p>如图2.14，边缘概率分布 $p(x_a)$（蓝⾊曲线）和 $x_b = 0.7$ 的条件概率分布 $p(x_a | x_b)$（红⾊曲线）。</p>
+<p>如图2.14，边缘概率分布 $p(x_a)$（蓝⾊曲线）和 $x_b = 0.7$ 的条件概率分布 $p(x_a|x_b)$（红⾊曲线）。</p>
 <p><img src="/images/prml_20190920214747.png" alt="边缘概率分布和条件概率分布"></p>
 <h1 id="四，⾼斯变量的贝叶斯定理"><a href="#四，⾼斯变量的贝叶斯定理" class="headerlink" title="四，⾼斯变量的贝叶斯定理"></a>四，⾼斯变量的贝叶斯定理</h1><p>令边缘概率分布和条件概率分布的形式：</p>
 <script type="math/tex; mode=display">
@@ -571,7 +571,7 @@ p(\boldsymbol{y} | \boldsymbol{x}) = \mathcal{N}(\boldsymbol{y} |\boldsymbol{Ax+
 <script type="math/tex; mode=display">
 f(\theta) \equiv \mathbb{E}[z|\theta] = \int zp(z|\theta)\mathrm{d}z\tag{2.74}</script><p>如图2.15，回归函数 $f(\theta)$ 。</p>
 <p><img src="/images/prml_20190924081124.png" alt="z的条件期望"></p>
-<p>⽬标是寻找根 $\theta^{∗}$ 使得 $f(\theta^{∗}) = 0$。 如果有观测 $z$ 和 $\theta$ 的⼀个⼤数据集， 那么可以直接对回归函数建模， 得到根的⼀个估计。 但是假设每次观测到⼀个 $z$ 的值， 我们想找到⼀个对应的<strong>顺序估计⽅法</strong>来找到 $\theta^{∗}$ 。 下⾯的解决这种问题的通⽤步骤由<strong><code>Robbins and Monro</code></strong>（1951）给出。假定 $z$ 的条件⽅差是有穷的，即：</p>
+<p>⽬标是寻找根 $\theta^{∗}$ 使得 $f(\theta^{∗}) = 0$。 如果有观测 $z$ 和 $\theta$ 的⼀个⼤数据集， 那么可以直接对回归函数建模， 得到根的⼀个估计。 但是假设每次观测到⼀个 $z$ 的值， 我们想找到⼀个对应的<strong>顺序估计⽅法</strong>来找到 $\theta^{∗}$ 。 下⾯的解决这种问题的通⽤步骤由 <strong><code>Robbins and Monro</code></strong>（1951）给出。假定 $z$ 的条件⽅差是有穷的，即：</p>
 <script type="math/tex; mode=display">
 \mathbb{E}[(z-f)^2|\theta] \lt \infty</script><p>并且不失⼀般性， 我们也假设当 $\theta \gt \theta^{∗}$ 时 $f(\theta) \gt 0$， 当 $\theta \lt \theta^{∗}$ 时 $f(\theta) \lt 0$，<strong><code>Robbins-Monro</code></strong> 的⽅法定义了⼀个根 $\theta^{∗}$ 的顺序估计的序列，由公式(2.75)给出。</p>
 <script type="math/tex; mode=display">
@@ -637,9 +637,9 @@ p(\boldsymbol{\mu,\Lambda|\mu}_0,\beta,\boldsymbol{W}, \nu) = \mathcal{N}(\bolds
 \text{St}(x|\mu,\lambda,\nu) = \frac{\Gamma(\frac{\nu}{2}+\frac{1}{2})}{\Gamma(\frac{\nu}{2})}\left(\frac{\lambda}{\pi \nu}\right)^{\frac{1}{2}}\left[1+\frac{\lambda(x-\mu)^2}{\nu}\right]^{-\frac{\nu}{2}-\frac{1}{2}}\tag{2.93}</script><p>称为<strong>学生 t 分布</strong>（<code>Student&#39;s t-distribution</code>）。 参数 $\lambda$ 有时被称为 $\mathbf{t}$ 分布的<strong>精度</strong>（<code>precision</code>）， 即使它通常不等于⽅差的倒数。参数 $\nu$ 被称为<strong>⾃由度</strong>（<code>degrees of freedom</code>）。如图2.22：</p>
 <p><img src="/images/prml_20190927221621.png" alt="学生t分布"></p>
 <p>学生 $\mathbf{t}$ 分布的⼀个<strong>重要性质</strong>：<strong>鲁棒性</strong>（robustness），即对于数据集⾥的⼏个离群点<code>outlier</code>的出现，分布不会像⾼斯分布那样敏感。</p>
-<p>图 2.23：从⼀个<strong>⾼斯分布</strong>中抽取的30个数据点的直⽅图，以及得到的最⼤似然拟合。红⾊曲线表⽰使⽤ $\mathbf{t}$ 分布进⾏的拟合，绿⾊曲线（⼤部分隐藏在了红⾊曲 线后⾯）表⽰使⽤⾼斯分布进⾏的拟合。由于 $\mathbf{t}$  分布将⾼斯分布作为⼀种特例，因此它给出了与⾼斯分布⼏乎相同的解。</p>
+<p>图 2.23，从⼀个<strong>⾼斯分布</strong>中抽取的30个数据点的直⽅图，以及得到的最⼤似然拟合。红⾊曲线表⽰使⽤ $\mathbf{t}$ 分布进⾏的拟合，绿⾊曲线（⼤部分隐藏在了红⾊曲 线后⾯）表⽰使⽤⾼斯分布进⾏的拟合。由于 $\mathbf{t}$  分布将⾼斯分布作为⼀种特例，因此它给出了与⾼斯分布⼏乎相同的解。</p>
 <p><img src="/images/prml_20190927223450.png" alt="t分布与高斯分布a"></p>
-<p>图 2.24：与图 2.23同样的数据集，但是多了三个异常数据点。这幅图展⽰了⾼斯分布（绿⾊曲线）是如 何被异常点强烈地⼲扰的，⽽ $\mathbf{t}$ 分布（红⾊曲线）相对不受影响。</p>
+<p>图 2.24，与图2.23同样的数据集，但是多了三个异常数据点。这幅图展⽰了⾼斯分布（绿⾊曲线）是如 何被异常点强烈地⼲扰的，⽽ $\mathbf{t}$ 分布（红⾊曲线）相对不受影响。</p>
 <p><img src="/images/prml_20190927223502.png" alt="t分布与高斯分布b"></p>
 <p>推⼴到多元⾼斯分布 $\mathcal{N}(\boldsymbol{x|\mu, \Lambda})$ 来得到对应的多元学生 $\mathbf{t}$ 分布，形式为：</p>
 <script type="math/tex; mode=display">
@@ -673,7 +673,7 @@ I_0(m) = \frac{1}{2\pi} \int_{0}^{2\pi}\exp\{m\cos \theta\}\mathrm{d}\theta\tag{
 <p><img src="/images/prml_20190927234914.png" alt="极坐标系"></p>
 <p>如图2.28， <code>Bessel</code>函数 $I_0 (m)$ 的图像。</p>
 <p><img src="/images/prml_20190928090610.png" alt="Bessel函数"></p>
-<p>现在考虑<strong><code>von Mises</code>分布</strong>的参数 $\theta_0$ 和参数 $m$ 的最⼤似然估计。对数似然函数为：</p>
+<p>现在考虑 <strong><code>von Mises</code>分布</strong> 的参数 $\theta_0$ 和参数 $m$ 的最⼤似然估计。对数似然函数为：</p>
 <script type="math/tex; mode=display">
 \ln p(\mathcal{D} | \theta_0,m)=-N\ln (2\pi)-\ln I_0(m)+m\sum_{n=1}^{N}\cos(\theta_n-\theta_0)\tag{2.101}</script><p>令其关于 $\theta_0$ 的导数等于零，从⽽可以得到：</p>
 <script type="math/tex; mode=display">

@@ -109,7 +109,7 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190920160607.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190920160615.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190920160621.png">
-<meta property="og:updated_time" content="2019-10-07T10:08:52.696Z">
+<meta property="og:updated_time" content="2019-10-07T14:37:49.296Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【机器学习基础】概率分布之变量">
 <meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，二元变量1，二项分布考虑⼀个⼆元随机变量 $x \in \{0, 1\}$。 例如，$x$ 可能描述了扔硬币的结果，$x = 1$ 表⽰“正⾯”，$x = 0$ 表⽰反⾯。我们可以假设有⼀个损坏的硬币，这枚硬币正⾯朝上的概率未必等于反⾯朝上的概率。$x = 1$ 的概率被记作参数 $\mu$，因此有：  p(x=1|\mu) = \mu\tag{">
@@ -485,7 +485,7 @@ p(\mathcal{D}|\mu) = \prod_{n=1}^{N}p(x_{n}|\mu) = \prod_{n=1}^{N}\mu^{x_{n}}(1-
 \text{var}[\mu] = \frac{ab}{(a+b)^{2}(a+b+1)}\tag{2.15}</script><p>把<code>Beta</code>先验与⼆项似然函数相乘，然后归⼀化。只保留依赖于 $\mu$ 的因⼦，从而得到后验概率分布的形式为：</p>
 <script type="math/tex; mode=display">
 p(\mu | m, l, a,b) = \frac{\Gamma{(m+a+l+b)}}{\Gamma{(m+a)}\Gamma{(l+b)}} \mu^{(m+a-1)}(1-\mu)^{(l+b-1)}\tag{2.16}</script><p>其中 $l = N − m$。</p>
-<p>如图 2.2～2.5： 对于不同的超参数 $a$ 和 $b$，公式(2.13)给出的<code>Beta</code>分布 $\text{Beta}(\mu | a, b)$ 关于 $\mu$ 的函数图像。</p>
+<p>如图2.2～2.5： 对于不同的超参数 $a$ 和 $b$，公式(2.13)给出的<code>Beta</code>分布 $\text{Beta}(\mu | a, b)$ 关于 $\mu$ 的函数图像。</p>
 <p><img src="/images/prml_20190920095614.png" alt="a=0.1,b=0.1"></p>
 <p><img src="/images/prml_20190920095624.png" alt="a=1,b=1"></p>
 <p><img src="/images/prml_20190920095635.png" alt="a=2,b=3"></p>
@@ -517,7 +517,7 @@ m_k = \sum_{n}x_{nk}\tag{2.25}</script><p>它表⽰观测到 $x_k = 1$ 的次数
 \text{Mult}(m_1 ,\dots , m_K | \boldsymbol{\mu}, N) = \dbinom{N}{m_1 \dots  m_K}\prod_{k=1}^{K} \mu_{k}^{m_k}\tag{2.27}</script><p>这被称为<strong>多项式分布</strong>（<code>multinomial distribution</code>）。 归⼀化系数是把 $N$ 个物体分成⼤⼩为 $m_1 ,\dots , m_K$ 的 $K$ 组的⽅案总数，定义为：</p>
 <script type="math/tex; mode=display">
 \dbinom{N}{m_1 \dots  m_K} = \frac{N!}{m_1!m_2! \dots m_K!}\tag{2.28}</script><p>其中，$m_k$ 满足以下限制 $\sum_{k=1}^{K} m_k = N$ 。</p>
-<h2 id="2，狄利克雷分布"><a href="#2，狄利克雷分布" class="headerlink" title="2，狄利克雷分布"></a>2，狄利克雷分布</h2><p><strong>狄利克雷分布</strong>（<code>Dirichlet distribution</code>）或<strong>多元<code>Beta</code>分布</strong>（<code>multivariate Beta distribution</code>）是一类在实数域以正单纯形（<code>standard simplex</code>）为支撑集（<code>support</code>）的高维连续概率分布，是<strong><code>Beta</code>分布</strong>在高维情形的推广  。狄利克雷分布是<strong>指数族分布</strong>之一，也是<strong>刘维尔分布</strong>（<code>Liouville distribution</code>）的特殊形式，将狄利克雷分布的解析形式进行推广可以得到<strong>广义狄利克雷分布</strong>（<code>generalized Dirichlet distribution</code>）和<strong>组合狄利克雷分布</strong>（<code>Grouped Dirichlet distribution</code>）。</p>
+<h2 id="2，狄利克雷分布"><a href="#2，狄利克雷分布" class="headerlink" title="2，狄利克雷分布"></a>2，狄利克雷分布</h2><p><strong>狄利克雷分布</strong>（<code>Dirichlet distribution</code>）或<strong>多元<code>Beta</code>分布</strong>（<code>multivariate Beta distribution</code>）是一类在实数域以正单纯形（<code>standard simplex</code>）为支撑集（<code>support</code>）的高维连续概率分布，是 <strong><code>Beta</code>分布</strong>在高维情形的推广  。狄利克雷分布是<strong>指数族分布</strong>之一，也是<strong>刘维尔分布</strong>（<code>Liouville distribution</code>）的特殊形式，将狄利克雷分布的解析形式进行推广可以得到<strong>广义狄利克雷分布</strong>（<code>generalized Dirichlet distribution</code>）和<strong>组合狄利克雷分布</strong>（<code>Grouped Dirichlet distribution</code>）。</p>
 <p><strong>狄利克雷分布</strong>概率的归⼀化形式为：</p>
 <script type="math/tex; mode=display">
 \text{Dir}(\boldsymbol{\mu}|\boldsymbol{\alpha}) = \frac{\Gamma{(\alpha_{0})}}{\Gamma{(\alpha_{1})} \dots \Gamma{(\alpha_{K})}} \prod_{k=1}^{K}\mu_{k}^{\alpha_{k-1}}\tag{2.29}</script><p>其中，$\alpha_{0}=\sum_{k=1}^{K} \alpha_{k}$ 。</p>
