@@ -112,7 +112,7 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190917152029.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190917152043.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190917152101.png">
-<meta property="og:updated_time" content="2019-09-29T07:00:24.561Z">
+<meta property="og:updated_time" content="2019-10-07T08:59:52.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【机器学习基础】从回归问题引基础：多项式曲线拟合">
 <meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一， 举例：多项式曲线拟合假设给定一个训练集。这个训练集由 $x$ 的 $N$ 次观测组成，写作 $\mathbf{x}\equiv(x_1,\dots, x_N)^T$ ，伴随这对应的 $t$ 的观测值，记作 $\mathbf{t}\equiv (t_1,\dots, t_N)^T$。其中，输入数据集合 $\mathbf{x}$ 通过选择$x_n(">
@@ -459,30 +459,30 @@
 <p><img src="/images/prml_20190917090037.png" alt="训练集"></p>
 <p>如图1.2，误差函数对应于每个数据点与函数 $y(x, \boldsymbol{w})$ 之间位移（绿⾊垂直线）的平⽅和（的⼀半）。</p>
 <p><img src="/images/prml_20190917090255.png" alt="误差分析"></p>
-<p>但是现在，我们要⽤⼀种相当⾮正式的、相当简单的⽅式来进⾏曲线拟合。特别地，我们将使⽤下⾯形式的多项式函数来拟合数据，公式(1.1)如下：</p>
+<p>但是现在，我们要⽤⼀种相当⾮正式的、相当简单的⽅式来进⾏曲线拟合。特别地，将使⽤下⾯形式的多项式函数来拟合数据：</p>
 <script type="math/tex; mode=display">
-y(x, \boldsymbol{w})=w_{0}+w_{1} x+w_{2} x^{2}+\ldots+w_{M} x^{M}=\sum_{i=0}^{M} w_{j} x^{j}</script><p>其中 $M$ 是多项式的阶数（<code>order</code>），$x^j$ 表⽰ $x$ 的 $j$ 次幂。 多项式系数 $w_0 , \dots , w_M$ 整体记作向量 $\boldsymbol{w}$。 注意，虽然多项式函数 $y(x, \boldsymbol{w})$ 是 $x$ 的⼀个⾮线性函数，它是系数 $\boldsymbol{w}$ 的⼀个线性函数。类似多项式函数的这种关于未知参数满⾜线性关系的函数有着重要的性质，被叫做<strong>线性模型</strong>。</p>
-<p>系数的值可以通过调整多项式函数拟合训练数据的⽅式确定。 这可以通过<strong>最⼩化误差函数</strong> （<code>error function</code>）的⽅法实现。公式(1.2)如下：</p>
+y(x, \boldsymbol{w})=w_{0}+w_{1} x+w_{2} x^{2}+\ldots+w_{M} x^{M}=\sum_{i=0}^{M} w_{j} x^{j}\tag{1.1}</script><p>其中 $M$ 是多项式的阶数（<code>order</code>），$x^j$ 表⽰ $x$ 的 $j$ 次幂。 多项式系数 $w_0 , \dots , w_M$ 整体记作向量 $\boldsymbol{w}$。 注意，虽然多项式函数 $y(x, \boldsymbol{w})$ 是 $x$ 的⼀个⾮线性函数，它是系数 $\boldsymbol{w}$ 的⼀个线性函数。类似多项式函数的这种关于未知参数满⾜线性关系的函数有着重要的性质，被叫做<strong>线性模型</strong>。</p>
+<p>系数的值可以通过调整多项式函数拟合训练数据的⽅式确定。 这可以通过<strong>最⼩化误差函数</strong> （<code>error function</code>）的⽅法实现。</p>
 <script type="math/tex; mode=display">
-E(\boldsymbol{w})=\frac{1}{2} \sum_{n=1}^{N}\left\{y\left(x_{n}, \boldsymbol{w}\right)-t_{n}\right\}^{2}</script><p>我们可以通过过选择使得 $E(\boldsymbol{w})$ 尽量⼩的 $\boldsymbol{w}$ 来解决曲线拟合问题。由于误差函数是系数 $\boldsymbol{w}$ 的⼆次函数， 因此它关于系数的导数是 $\boldsymbol{w}$ 的线性函数， 所以误差函数的最⼩值有⼀个唯⼀解， 记作 $\boldsymbol{w}^*$ ，可以⽤解析的⽅式求出。最终的多项式函数由函数 $y\left(x, \boldsymbol{w}^*\right)$ 给出。</p>
+E(\boldsymbol{w})=\frac{1}{2} \sum_{n=1}^{N}\left\{y\left(x_{n}, \boldsymbol{w}\right)-t_{n}\right\}^{2}\tag{1.2}</script><p>我们可以通过过选择使得 $E(\boldsymbol{w})$ 尽量⼩的 $\boldsymbol{w}$ 来解决曲线拟合问题。由于误差函数是系数 $\boldsymbol{w}$ 的⼆次函数， 因此它关于系数的导数是 $\boldsymbol{w}$ 的线性函数， 所以误差函数的最⼩值有⼀个唯⼀解， 记作 $\boldsymbol{w}^*$ ，可以⽤解析的⽅式求出。最终的多项式函数由函数 $y\left(x, \boldsymbol{w}^*\right)$ 给出。</p>
 <p>如下图1.3～1.6，不同阶数的多项式曲线，⽤红⾊曲线表⽰，拟合了图1.1中的数据集。</p>
 <p><img src="/images/prml_20190917092654.png" alt="M=0"></p>
 <p><img src="/images/prml_20190917092714.png" alt="M=1"></p>
 <p><img src="/images/prml_20190917092731.png" alt="M=3"></p>
 <p><img src="/images/prml_20190917092742.png" alt="M=9"></p>
 <p>当 $M=9$ 时，多项式函数精确地通过了每⼀个数据点，$E(\boldsymbol{w}^*) = 0$。 然⽽， 拟合的曲线剧烈震荡，就表达函数 $sin(2\pi x)$ ⽽⾔表现很差。这种⾏为叫做<strong>过拟合</strong>（<code>over-fitting</code>）。</p>
-<p>通常用<strong>根均⽅</strong>（<code>RMS</code>）<strong>误差</strong>来计算，公式(1.3)如下：</p>
+<p>通常用<strong>根均⽅</strong>（<code>RMS</code>）<strong>误差</strong>来计算：</p>
 <script type="math/tex; mode=display">
-E_{R M S}=\sqrt{2 E\left(\boldsymbol{w}^{*}\right) / N}</script><p>如图1.7，当M 的取值为 $3 \leq M \leq 8$ 时， 测试误差较⼩， 对于⽣成函数 $sin(2\pi x)$ 也能给出合理的模拟。</p>
+E_{R M S}=\sqrt{2 E\left(\boldsymbol{w}^{*}\right) / N}\tag{1.3}</script><p>如图1.7，当M 的取值为 $3 \leq M \leq 8$ 时， 测试误差较⼩， 对于⽣成函数 $sin(2\pi x)$ 也能给出合理的模拟。</p>
 <p><img src="/images/prml_20190917101815.png" alt="根均方误差"></p>
 <p>如图1.8，不同阶数的多项式的系数 $\boldsymbol{w}^{*}$ 的值。观察随着多项式阶数的增加，系数的⼤⼩是如何剧烈增⼤的。</p>
 <p><img src="/images/prml_20190917105109.png" alt="系数变化"></p>
 <p>如图1.9～1.10，使⽤ $M = 9$ 的多项式对 $N = 15$ 个数据点和 $N = 100$ 个数据点通过最⼩化平⽅和误差函数的⽅法得到的解。</p>
 <p><img src="/images/prml_20190917105954.png" alt="N=15"></p>
 <p><img src="/images/prml_20190917110004.png" alt="N=100"></p>
-<p>常⽤来控制过拟合现象的⼀种技术是<strong>正则化</strong>（<code>regularization</code>）。 这种技术涉及到给误差函数增加⼀个<strong>惩罚项</strong>，使得系数不会达到很⼤的值。这种惩罚项最简单的形式采⽤所有系数的平⽅和的形式。这推导出了误差函数的修改后的形式，公式(1.4)如下：</p>
+<p>常⽤来控制过拟合现象的⼀种技术是<strong>正则化</strong>（<code>regularization</code>）。 这种技术涉及到给误差函数增加⼀个<strong>惩罚项</strong>，使得系数不会达到很⼤的值。这种惩罚项最简单的形式采⽤所有系数的平⽅和的形式。这推导出了误差函数的修改后的形式：</p>
 <script type="math/tex; mode=display">
-\tilde{E}(\boldsymbol{w})=\frac{1}{2} \sum_{n=1}^{N}\left\{y\left(x_{n}, \boldsymbol{w}\right)-t_{n}\right\}^{2}+\frac{\lambda}{2}\|\boldsymbol{w}\|^{2}</script><p>其中，系数 $\lambda$ 控制了正则化项相对于平⽅和误差项的重要性；</p>
+\tilde{E}(\boldsymbol{w})=\frac{1}{2} \sum_{n=1}^{N}\left\{y\left(x_{n}, \boldsymbol{w}\right)-t_{n}\right\}^{2}+\frac{\lambda}{2}\|\boldsymbol{w}\|^{2}\tag{1.4}</script><p>其中，系数 $\lambda$ 控制了正则化项相对于平⽅和误差项的重要性；</p>
 <script type="math/tex; mode=display">
 \|\boldsymbol{w}\|^{2} \equiv \boldsymbol{w}^{T} \boldsymbol{w}=w_{0}^{2}+w_{1}^{2}+\ldots+w_{M}^{2}</script><p>通过把给定的数据中的⼀部分从测试集中分离出，来确定系数 $\boldsymbol{w}$。这个分离出来的验证集（<code>validation set</code>），也被称为<strong>拿出集</strong>（<code>hold-out set</code>），⽤来最优化模型的复杂度（$M$ 或者 $\lambda$）。</p>
 <p>如图1.11～1.12，使⽤正则化的误差函数，⽤ $M = 9$ 的多项式拟合图中的数据集。其中正则化参数 $\lambda$ 选择了两个值，分别对应于 $\ln \lambda=-18$ 和 $\ln \lambda=0$。</p>
@@ -702,7 +702,7 @@ E_{R M S}=\sqrt{2 E\left(\boldsymbol{w}^{*}\right) / N}</script><p>如图1.7，�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -827,7 +827,7 @@ E_{R M S}=\sqrt{2 E\left(\boldsymbol{w}^{*}\right) / N}</script><p>如图1.7，�
     
       <span class="post-meta-item-text">本站字数统计&#58;</span>
     
-    <span title="本站字数统计">104.7k</span>
+    <span title="本站字数统计">113.4k</span>
   
 </div>
 

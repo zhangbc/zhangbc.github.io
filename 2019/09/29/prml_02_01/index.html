@@ -90,13 +90,13 @@
 
 
 
-<meta name="description" content="本系列为《模式识别与机器学习》的读书笔记。  一，二元变量1，二项分布考虑⼀个⼆元随机变量 $x \in \{0, 1\}$。 例如，$x$ 可能描述了扔硬币的结果，$x = 1$ 表⽰“正⾯”，$x = 0$ 表⽰反⾯。我们可以假设有⼀个损坏的硬币，这枚硬币正⾯朝上的概率未必等于反⾯朝上的概率。$x = 1$ 的概率被记作参数 $\mu$，因此有公式(2.1)：  p(x=1|\mu) = \">
+<meta name="description" content="本系列为《模式识别与机器学习》的读书笔记。  一，二元变量1，二项分布考虑⼀个⼆元随机变量 $x \in \{0, 1\}$。 例如，$x$ 可能描述了扔硬币的结果，$x = 1$ 表⽰“正⾯”，$x = 0$ 表⽰反⾯。我们可以假设有⼀个损坏的硬币，这枚硬币正⾯朝上的概率未必等于反⾯朝上的概率。$x = 1$ 的概率被记作参数 $\mu$，因此有：  p(x=1|\mu) = \mu\tag{">
 <meta name="keywords" content="机器学习基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【机器学习基础】概率分布之变量">
 <meta property="og:url" content="https://zhangbc.github.io/2019/09/29/prml_02_01/index.html">
 <meta property="og:site_name" content="天堂的鸽子">
-<meta property="og:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，二元变量1，二项分布考虑⼀个⼆元随机变量 $x \in \{0, 1\}$。 例如，$x$ 可能描述了扔硬币的结果，$x = 1$ 表⽰“正⾯”，$x = 0$ 表⽰反⾯。我们可以假设有⼀个损坏的硬币，这枚硬币正⾯朝上的概率未必等于反⾯朝上的概率。$x = 1$ 的概率被记作参数 $\mu$，因此有公式(2.1)：  p(x=1|\mu) = \">
+<meta property="og:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，二元变量1，二项分布考虑⼀个⼆元随机变量 $x \in \{0, 1\}$。 例如，$x$ 可能描述了扔硬币的结果，$x = 1$ 表⽰“正⾯”，$x = 0$ 表⽰反⾯。我们可以假设有⼀个损坏的硬币，这枚硬币正⾯朝上的概率未必等于反⾯朝上的概率。$x = 1$ 的概率被记作参数 $\mu$，因此有：  p(x=1|\mu) = \mu\tag{">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190919231340.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190920095614.png">
@@ -109,10 +109,10 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190920160607.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190920160615.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20190920160621.png">
-<meta property="og:updated_time" content="2019-09-29T08:04:52.371Z">
+<meta property="og:updated_time" content="2019-10-07T10:08:52.696Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【机器学习基础】概率分布之变量">
-<meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，二元变量1，二项分布考虑⼀个⼆元随机变量 $x \in \{0, 1\}$。 例如，$x$ 可能描述了扔硬币的结果，$x = 1$ 表⽰“正⾯”，$x = 0$ 表⽰反⾯。我们可以假设有⼀个损坏的硬币，这枚硬币正⾯朝上的概率未必等于反⾯朝上的概率。$x = 1$ 的概率被记作参数 $\mu$，因此有公式(2.1)：  p(x=1|\mu) = \">
+<meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，二元变量1，二项分布考虑⼀个⼆元随机变量 $x \in \{0, 1\}$。 例如，$x$ 可能描述了扔硬币的结果，$x = 1$ 表⽰“正⾯”，$x = 0$ 表⽰反⾯。我们可以假设有⼀个损坏的硬币，这枚硬币正⾯朝上的概率未必等于反⾯朝上的概率。$x = 1$ 的概率被记作参数 $\mu$，因此有：  p(x=1|\mu) = \mu\tag{">
 <meta name="twitter:image" content="https://zhangbc.github.io/images/prml_20190919231340.png">
 
 
@@ -451,76 +451,76 @@
         <blockquote>
 <p>本系列为《模式识别与机器学习》的读书笔记。</p>
 </blockquote>
-<h1 id="一，二元变量"><a href="#一，二元变量" class="headerlink" title="一，二元变量"></a>一，二元变量</h1><h2 id="1，二项分布"><a href="#1，二项分布" class="headerlink" title="1，二项分布"></a>1，二项分布</h2><p>考虑⼀个⼆元随机变量 $x \in \{0, 1\}$。 例如，$x$ 可能描述了扔硬币的结果，$x = 1$ 表⽰“正⾯”，$x = 0$ 表⽰反⾯。我们可以假设有⼀个损坏的硬币，这枚硬币正⾯朝上的概率未必等于反⾯朝上的概率。$x = 1$ 的概率被记作参数 $\mu$，因此有公式(2.1)：</p>
+<h1 id="一，二元变量"><a href="#一，二元变量" class="headerlink" title="一，二元变量"></a>一，二元变量</h1><h2 id="1，二项分布"><a href="#1，二项分布" class="headerlink" title="1，二项分布"></a>1，二项分布</h2><p>考虑⼀个⼆元随机变量 $x \in \{0, 1\}$。 例如，$x$ 可能描述了扔硬币的结果，$x = 1$ 表⽰“正⾯”，$x = 0$ 表⽰反⾯。我们可以假设有⼀个损坏的硬币，这枚硬币正⾯朝上的概率未必等于反⾯朝上的概率。$x = 1$ 的概率被记作参数 $\mu$，因此有：</p>
 <script type="math/tex; mode=display">
-p(x=1|\mu) = \mu</script><p>其中 $0\le \mu\le 1$ 。$x$ 的概率分布因此可以写成公式(2.2)：</p>
+p(x=1|\mu) = \mu\tag{2.1}</script><p>其中 $0\le \mu\le 1$ 。$x$ 的概率分布因此可以写成：</p>
 <script type="math/tex; mode=display">
-\text {Bern}(x|\mu) = \mu^{x}(1-\mu)^{1-x}</script><p>这被叫做<strong>伯努利分布</strong>（<code>Bernoulli distribution</code>）。容易证明，这个分布是归⼀化的，并且均值和⽅差分别为公式(2.3～2.4)：</p>
+\text {Bern}(x|\mu) = \mu^{x}(1-\mu)^{1-x}\tag{2.2}</script><p>这被叫做<strong>伯努利分布</strong>（<code>Bernoulli distribution</code>）。容易证明，这个分布是归⼀化的，并且均值和⽅差分别为：</p>
 <script type="math/tex; mode=display">
-\mathbb{E}[x] = \mu</script><script type="math/tex; mode=display">
-\text{var}[x] = \mu(1-\mu)</script><p>如图 2.1： ⼆项分布关于 $m$ 的函数的直⽅图，其中 $N = 10$ 且 $\mu = 0.25$。</p>
+\mathbb{E}[x] = \mu\tag{2.3}</script><script type="math/tex; mode=display">
+\text{var}[x] = \mu(1-\mu)\tag{2.4}</script><p>如图 2.1，⼆项分布关于 $m$ 的函数的直⽅图，其中 $N = 10$ 且 $\mu = 0.25$。</p>
 <p><img src="/images/prml_20190919231340.png" alt="⼆项分布"></p>
-<p>假设我们有⼀个 $x$ 的观测值的数据集 $\mathcal{D} = \{x_1 ,\dots, x_N\}$。假设每次观测都是独⽴地从 $p(x | \mu)$ 中抽取的，因此可以构造关于 $\mu$ 的似然函数公式(2.5)：</p>
+<p>假设我们有⼀个 $x$ 的观测值的数据集 $\mathcal{D} = \{x_1 ,\dots, x_N\}$。假设每次观测都是独⽴地从 $p(x | \mu)$ 中抽取的，因此可以构造关于 $\mu$ 的似然函数：</p>
 <script type="math/tex; mode=display">
-p(\mathcal{D}|\mu) = \prod_{n=1}^{N}p(x_{n}|\mu) = \prod_{n=1}^{N}\mu^{x_{n}}(1-\mu)^{1-x_{n}}</script><p>其对数似然函数公式(2.6)：</p>
+p(\mathcal{D}|\mu) = \prod_{n=1}^{N}p(x_{n}|\mu) = \prod_{n=1}^{N}\mu^{x_{n}}(1-\mu)^{1-x_{n}}\tag{2.5}</script><p>其对数似然函数：</p>
 <script type="math/tex; mode=display">
-\ln p(\mathcal{D}|\mu) = \sum_{n=1}^{N}\ln p(x_{n}|\mu) = \sum_{n=1}^{N}\{ x^n \ln \mu + (1-x^n) \ln (1-\mu)\}</script><p>在公式(2.6)中，令 $\ln p(\mathcal{D}|\mu)$ 关于 $\mu$ 的导数等于零，就得到了最⼤似然的估计值，也被称为<strong>样本均值</strong>（<code>sample mean</code>），公式(2.7)：</p>
+\ln p(\mathcal{D}|\mu) = \sum_{n=1}^{N}\ln p(x_{n}|\mu) = \sum_{n=1}^{N}\{ x^n \ln \mu + (1-x^n) \ln (1-\mu)\}\tag{2.6}</script><p>在公式(2.6)中，令 $\ln p(\mathcal{D}|\mu)$ 关于 $\mu$ 的导数等于零，就得到了最⼤似然的估计值，也被称为<strong>样本均值</strong>（<code>sample mean</code>）：</p>
 <script type="math/tex; mode=display">
-\mu_{ML} = \frac{1}{N} \sum_{n=1}^{N} x_{n}</script><p>求解给定数据集规模 $N$ 的条件下，$x = 1$ 的观测出现的数量 $m$ 的概率分布。 这被称为<strong>⼆项分布</strong> （<code>binomial distribution</code>），公式(2.8)：</p>
+\mu_{ML} = \frac{1}{N} \sum_{n=1}^{N} x_{n}\tag{2.7}</script><p>求解给定数据集规模 $N$ 的条件下，$x = 1$ 的观测出现的数量 $m$ 的概率分布。 这被称为<strong>⼆项分布</strong> （<code>binomial distribution</code>）：</p>
 <script type="math/tex; mode=display">
-\text {Bin}(m|N, \mu) = \dbinom{N}{m} \mu^{m}(1-\mu)^{N-m}</script><p>其中，公式(2.9)：</p>
+\text {Bin}(m|N, \mu) = \dbinom{N}{m} \mu^{m}(1-\mu)^{N-m}\tag{2.8}</script><p>其中，</p>
 <script type="math/tex; mode=display">
-\dbinom{N}{m} = \frac{N!}{(N-m)!m!}</script><p><strong>二项分布</strong> 的均值和⽅差分别为公式(2.10～2.11)：</p>
+\dbinom{N}{m} = \frac{N!}{(N-m)!m!}\tag{2.9}</script><p><strong>二项分布</strong> 的均值和⽅差分别为：</p>
 <script type="math/tex; mode=display">
-\mathbb{E}[m] = \sum_{m=0}^{N} \text{Bin}(m|N, \mu) = N\mu</script><script type="math/tex; mode=display">
-\text{var}[m] = \sum_{m=0}^{N} (m-\mathbb{E}[m])^{2} \text{Bin}(m|N, \mu) = N\mu(1-\mu)</script><h2 id="2，Beta分布"><a href="#2，Beta分布" class="headerlink" title="2，Beta分布"></a>2，<code>Beta</code>分布</h2><p>首先，<strong><code>Gamma</code>函数</strong>的定义为公式(2.12)：</p>
+\mathbb{E}[m] = \sum_{m=0}^{N} \text{Bin}(m|N, \mu) = N\mu\tag{2.10}</script><script type="math/tex; mode=display">
+\text{var}[m] = \sum_{m=0}^{N} (m-\mathbb{E}[m])^{2} \text{Bin}(m|N, \mu) = N\mu(1-\mu)\tag{2.11}</script><h2 id="2，Beta分布"><a href="#2，Beta分布" class="headerlink" title="2，Beta分布"></a>2，<code>Beta</code>分布</h2><p>首先，<strong><code>Gamma</code>函数</strong>的定义为：</p>
 <script type="math/tex; mode=display">
-\Gamma(x) \equiv \int_{0}^{\infty} u^{x-1} e^{-u} \mathrm{d} u</script><p><strong><code>Gamma</code>函数</strong>具有如下性质：</p>
+\Gamma(x) \equiv \int_{0}^{\infty} u^{x-1} e^{-u} \mathrm{d} u\tag{2.12}</script><p><strong><code>Gamma</code>函数</strong>具有如下性质：</p>
 <p>1）$\Gamma(x+1) = x \Gamma(x)$<br>2）$\Gamma(1)=1$<br>3）当 $n$ 为整数时，$\Gamma(n+1) = n!$</p>
-<p>如果我们选择⼀个正⽐于 $\mu$ 和 $(1 − \mu)$ 的幂指数的先验概率分布， 那么后验概率分布（正⽐于先验和似然函数的乘积）就会有着与先验分布相同的函数形式。这 个性质被叫做<strong>共轭性（<code>conjugacy</code>）</strong>。<br>先验分布选择<strong><code>Beta</code>分布</strong>定义为公式(2.13)：</p>
+<p>如果我们选择⼀个正⽐于 $\mu$ 和 $(1 − \mu)$ 的幂指数的先验概率分布， 那么后验概率分布（正⽐于先验和似然函数的乘积）就会有着与先验分布相同的函数形式。这 个性质被叫做<strong>共轭性（<code>conjugacy</code>）</strong>。<br>先验分布选择<strong><code>Beta</code>分布</strong>定义为：</p>
 <script type="math/tex; mode=display">
-\text {Beta}(\mu | a,b) = \frac{\Gamma{(a+b)}}{\Gamma{(a)}\Gamma{(b)}} \mu^{(a-1)}(1-\mu)^{(b-1)}</script><p>其中参数 $a$ 和 $b$ 经常被称为<strong>超参数</strong>（<code>hyperparameter</code>），均值和⽅差分别为公式(2.14～2.15)：</p>
+\text {Beta}(\mu | a,b) = \frac{\Gamma{(a+b)}}{\Gamma{(a)}\Gamma{(b)}} \mu^{(a-1)}(1-\mu)^{(b-1)}\tag{2.13}</script><p>其中参数 $a$ 和 $b$ 经常被称为<strong>超参数</strong>（<code>hyperparameter</code>），均值和⽅差分别为：</p>
 <script type="math/tex; mode=display">
-\mathbb{E}[\mu] = \frac{a}{a+b}</script><script type="math/tex; mode=display">
-\text{var}[\mu] = \frac{ab}{(a+b)^{2}(a+b+1)}</script><p>把<code>Beta</code>先验与⼆项似然函数相乘，然后归⼀化。只保留依赖于 $\mu$ 的因⼦，从而得到后验概率分布的形式为公式(2.16)：</p>
+\mathbb{E}[\mu] = \frac{a}{a+b}\tag{2.14}</script><script type="math/tex; mode=display">
+\text{var}[\mu] = \frac{ab}{(a+b)^{2}(a+b+1)}\tag{2.15}</script><p>把<code>Beta</code>先验与⼆项似然函数相乘，然后归⼀化。只保留依赖于 $\mu$ 的因⼦，从而得到后验概率分布的形式为：</p>
 <script type="math/tex; mode=display">
-p(\mu | m, l, a,b) = \frac{\Gamma{(m+a+l+b)}}{\Gamma{(m+a)}\Gamma{(l+b)}} \mu^{(m+a-1)}(1-\mu)^{(l+b-1)}</script><p>其中 $l = N − m$。</p>
+p(\mu | m, l, a,b) = \frac{\Gamma{(m+a+l+b)}}{\Gamma{(m+a)}\Gamma{(l+b)}} \mu^{(m+a-1)}(1-\mu)^{(l+b-1)}\tag{2.16}</script><p>其中 $l = N − m$。</p>
 <p>如图 2.2～2.5： 对于不同的超参数 $a$ 和 $b$，公式(2.13)给出的<code>Beta</code>分布 $\text{Beta}(\mu | a, b)$ 关于 $\mu$ 的函数图像。</p>
 <p><img src="/images/prml_20190920095614.png" alt="a=0.1,b=0.1"></p>
 <p><img src="/images/prml_20190920095624.png" alt="a=1,b=1"></p>
 <p><img src="/images/prml_20190920095635.png" alt="a=2,b=3"></p>
 <p><img src="/images/prml_20190920095646.png" alt="a=8,b=4"></p>
 <p><strong>贝叶斯学习过程</strong>存在⼀个共有的属性：随着我们观测到越来越多的数据，后验概率表⽰的不确定性将会持续下降。</p>
-<p>为了说明这⼀点，我们可以⽤频率学家的观点考虑贝叶斯学习问题。考虑⼀个⼀般的贝叶斯推断问题，参数为 $\boldsymbol {\theta}$ ，并且我们观测到了⼀个数据集 $\mathcal{D}$，由联合概率分布 $p(\boldsymbol {\theta}, \mathcal{D})$ 描述。有如下公式(2.17)：</p>
+<p>为了说明这⼀点，我们可以⽤频率学家的观点考虑贝叶斯学习问题。考虑⼀个⼀般的贝叶斯推断问题，参数为 $\boldsymbol {\theta}$ ，并且我们观测到了⼀个数据集 $\mathcal{D}$，由联合概率分布 $p(\boldsymbol {\theta}, \mathcal{D})$ 描述，有：</p>
 <script type="math/tex; mode=display">
-\mathbb{E}_{\boldsymbol {\theta}}[\boldsymbol {\theta}] = \mathbb{E}_{\mathcal{D}}[\mathbb{E}_{\boldsymbol {\theta}}[\boldsymbol {\theta}|\mathcal{D}]]</script><p>其中，公式(2.18~2.19)：</p>
+\mathbb{E}_{\boldsymbol {\theta}}[\boldsymbol {\theta}] = \mathbb{E}_{\mathcal{D}}[\mathbb{E}_{\boldsymbol {\theta}}[\boldsymbol {\theta}|\mathcal{D}]]\tag{2.17}</script><p>其中，</p>
 <script type="math/tex; mode=display">
-\mathbb{E}_{\boldsymbol {\theta}}[\boldsymbol {\theta}] = \int p(\boldsymbol {\theta}) \boldsymbol {\theta} \mathrm{d} \boldsymbol {\theta}</script><script type="math/tex; mode=display">
-\mathbb{E}_{\mathcal{D}}[\mathbb{E}_{\boldsymbol {\theta}}[\boldsymbol {\theta}|\mathcal{D}]] = \int \left \{ \int \boldsymbol {\theta}p(\boldsymbol {\theta}|\mathcal{D}) \mathrm{d} \boldsymbol {\theta} \right \} p(\mathcal{D})\mathrm{d} \mathcal{D}</script><p>方差为公式(2.20)：</p>
+\mathbb{E}_{\boldsymbol {\theta}}[\boldsymbol {\theta}] = \int p(\boldsymbol {\theta}) \boldsymbol {\theta} \mathrm{d} \boldsymbol {\theta}\tag{2.18}</script><script type="math/tex; mode=display">
+\mathbb{E}_{\mathcal{D}}[\mathbb{E}_{\boldsymbol {\theta}}[\boldsymbol {\theta}|\mathcal{D}]] = \int \left \{ \int \boldsymbol {\theta}p(\boldsymbol {\theta}|\mathcal{D}) \mathrm{d} \boldsymbol {\theta} \right \} p(\mathcal{D})\mathrm{d} \mathcal{D}\tag{2.19}</script><p>方差，</p>
 <script type="math/tex; mode=display">
-\text{var}_{\boldsymbol {\theta}}[\boldsymbol {\theta}] = \mathbb{E}_{\mathcal{D}}[\text{var}[\boldsymbol {\theta}|\mathcal{D}]] + \text{var}_{\mathcal{D}} [\mathbb{E}_{\boldsymbol {\theta}}[\boldsymbol {\theta}|\mathcal{D}]]</script><h1 id="二，多项式变量"><a href="#二，多项式变量" class="headerlink" title="二，多项式变量"></a>二，多项式变量</h1><h2 id="1，多项式分布"><a href="#1，多项式分布" class="headerlink" title="1，多项式分布"></a>1，多项式分布</h2><p><strong>“1-of-K ”表⽰法</strong> ： 变量被表⽰成⼀个 $K$ 维向量 $\boldsymbol{x}$，向量中的⼀个元素 $x_k$ 等于1，剩余的元素等于0。注意，这样的向量 $\boldsymbol{x}$ 满足 $\sum_{k=1}^{K} x_k = 1$ ，如果我们⽤参数 $\mu_k$ 表⽰ $x_k = 1$ 的概率，那么 $\boldsymbol{x}$ 的分布就是公式(2.21)：</p>
+\text{var}_{\boldsymbol {\theta}}[\boldsymbol {\theta}] = \mathbb{E}_{\mathcal{D}}[\text{var}[\boldsymbol {\theta}|\mathcal{D}]] + \text{var}_{\mathcal{D}} [\mathbb{E}_{\boldsymbol {\theta}}[\boldsymbol {\theta}|\mathcal{D}]]\tag{2.20}</script><h1 id="二，多项式变量"><a href="#二，多项式变量" class="headerlink" title="二，多项式变量"></a>二，多项式变量</h1><h2 id="1，多项式分布"><a href="#1，多项式分布" class="headerlink" title="1，多项式分布"></a>1，多项式分布</h2><p><strong>“1-of-K ”表⽰法</strong> ： 变量被表⽰成⼀个 $K$ 维向量 $\boldsymbol{x}$，向量中的⼀个元素 $x_k$ 等于1，剩余的元素等于0。注意，这样的向量 $\boldsymbol{x}$ 满足 $\sum_{k=1}^{K} x_k = 1$ ，如果我们⽤参数 $\mu_k$ 表⽰ $x_k = 1$ 的概率，那么 $\boldsymbol{x}$ 的分布：</p>
 <script type="math/tex; mode=display">
-p(\boldsymbol{x}|\boldsymbol{\mu}) = \prod_{k=1}^{K} \mu_{k}^{x_k}</script><p>其中 $\boldsymbol{\mu} = (\mu_1 ,\dots, \mu_K)^T$ ， 参数 $\mu_k$ 要满⾜ $\mu_k \ge 0$ 和 $\sum_{k} \mu_k = 1$ 。</p>
-<p>容易看出，这个分布是归⼀化的，公式(2.22)：</p>
+p(\boldsymbol{x}|\boldsymbol{\mu}) = \prod_{k=1}^{K} \mu_{k}^{x_k}\tag{2.21}</script><p>其中 $\boldsymbol{\mu} = (\mu_1 ,\dots, \mu_K)^T$ ， 参数 $\mu_k$ 要满⾜ $\mu_k \ge 0$ 和 $\sum_{k} \mu_k = 1$ 。</p>
+<p>容易看出，这个分布是归⼀化的：</p>
 <script type="math/tex; mode=display">
-\sum_{\boldsymbol {x}}p(\boldsymbol{x} | \boldsymbol{\mu}) = \sum_{k=1}^{K} \mu_k = 1</script><p>并且，公式(2.23)：</p>
+\sum_{\boldsymbol {x}}p(\boldsymbol{x} | \boldsymbol{\mu}) = \sum_{k=1}^{K} \mu_k = 1\tag{2.22}</script><p>并且，</p>
 <script type="math/tex; mode=display">
-\mathbb{E}[\boldsymbol{x}|\boldsymbol{\mu}] = \sum_{\boldsymbol {x}}p(\boldsymbol{x} | \boldsymbol{\mu}) \boldsymbol{x} = (\mu_1 ,\dots, \mu_K)^T = \boldsymbol {\mu}</script><p>现在考虑⼀个有 $N$ 个独⽴观测值 $\boldsymbol {x}_1 ,\dots, \boldsymbol {x}_N$ 的数据集 $\mathcal{D}$。对应的似然函数的形式为公式(2.24)：</p>
+\mathbb{E}[\boldsymbol{x}|\boldsymbol{\mu}] = \sum_{\boldsymbol {x}}p(\boldsymbol{x} | \boldsymbol{\mu}) \boldsymbol{x} = (\mu_1 ,\dots, \mu_K)^T = \boldsymbol {\mu}\tag{2.23}</script><p>现在考虑⼀个有 $N$ 个独⽴观测值 $\boldsymbol {x}_1 ,\dots, \boldsymbol {x}_N$ 的数据集 $\mathcal{D}$。对应的似然函数的形式为：</p>
 <script type="math/tex; mode=display">
-p(\mathcal{D}|\boldsymbol{\mu}) = \prod_{n=1}^{N} \prod_{k=1}^{K} \mu_{k}^{x_{nk}} = \prod_{k=1}^{K} \mu_{k}^{(\sum_{n}x_{nk})} = \prod_{k=1}^{K} \mu_{k}^{m_k}</script><p>看到似然函数对于 $N$ 个数据点的依赖只是通过 $K$ 个下⾯形式的量，公式(2.25)：</p>
+p(\mathcal{D}|\boldsymbol{\mu}) = \prod_{n=1}^{N} \prod_{k=1}^{K} \mu_{k}^{x_{nk}} = \prod_{k=1}^{K} \mu_{k}^{(\sum_{n}x_{nk})} = \prod_{k=1}^{K} \mu_{k}^{m_k}\tag{2.24}</script><p>看到似然函数对于 $N$ 个数据点的依赖只是通过 $K$ 个下⾯形式的量：</p>
 <script type="math/tex; mode=display">
-m_k = \sum_{n}x_{nk}</script><p>它表⽰观测到 $x_k = 1$ 的次数。这被称为这个分布的<strong>充分统计量</strong>（<code>sufficient statistics</code>）。</p>
-<p>通过<strong>拉格朗⽇乘数法</strong>容易求得最大似然函数，公式(2.26)：</p>
+m_k = \sum_{n}x_{nk}\tag{2.25}</script><p>它表⽰观测到 $x_k = 1$ 的次数。这被称为这个分布的<strong>充分统计量</strong>（<code>sufficient statistics</code>）。</p>
+<p>通过<strong>拉格朗⽇乘数法</strong>容易求得最大似然函数：</p>
 <script type="math/tex; mode=display">
-\mu_k^{ML} = \frac{m_k}{N}</script><p>考虑 $m_1 ,\dots , m_K$ 在参数 $\boldsymbol{\mu}$ 和观测总数 $N$ 条件下的联合分布。根据公式(2.24)，这 个分布的形式为公式(2.27)：</p>
+\mu_k^{ML} = \frac{m_k}{N}\tag{2.26}</script><p>考虑 $m_1 ,\dots , m_K$ 在参数 $\boldsymbol{\mu}$ 和观测总数 $N$ 条件下的联合分布。根据公式(2.24)，这个分布的形式为：</p>
 <script type="math/tex; mode=display">
-\text{Mult}(m_1 ,\dots , m_K | \boldsymbol{\mu}, N) = \dbinom{N}{m_1 \dots  m_K}\prod_{k=1}^{K} \mu_{k}^{m_k}</script><p>这被称为<strong>多项式分布</strong>（<code>multinomial distribution</code>）。 归⼀化系数是把 $N$ 个物体分成⼤⼩为 $m_1 ,\dots , m_K$ 的 $K$ 组的⽅案总数，定义为公式(2.28)：</p>
+\text{Mult}(m_1 ,\dots , m_K | \boldsymbol{\mu}, N) = \dbinom{N}{m_1 \dots  m_K}\prod_{k=1}^{K} \mu_{k}^{m_k}\tag{2.27}</script><p>这被称为<strong>多项式分布</strong>（<code>multinomial distribution</code>）。 归⼀化系数是把 $N$ 个物体分成⼤⼩为 $m_1 ,\dots , m_K$ 的 $K$ 组的⽅案总数，定义为：</p>
 <script type="math/tex; mode=display">
-\dbinom{N}{m_1 \dots  m_K} = \frac{N!}{m_1!m_2! \dots m_K!}</script><p>其中，$m_k$ 满足以下限制 $\sum_{k=1}^{K} m_k = N$ 。</p>
+\dbinom{N}{m_1 \dots  m_K} = \frac{N!}{m_1!m_2! \dots m_K!}\tag{2.28}</script><p>其中，$m_k$ 满足以下限制 $\sum_{k=1}^{K} m_k = N$ 。</p>
 <h2 id="2，狄利克雷分布"><a href="#2，狄利克雷分布" class="headerlink" title="2，狄利克雷分布"></a>2，狄利克雷分布</h2><p><strong>狄利克雷分布</strong>（<code>Dirichlet distribution</code>）或<strong>多元<code>Beta</code>分布</strong>（<code>multivariate Beta distribution</code>）是一类在实数域以正单纯形（<code>standard simplex</code>）为支撑集（<code>support</code>）的高维连续概率分布，是<strong><code>Beta</code>分布</strong>在高维情形的推广  。狄利克雷分布是<strong>指数族分布</strong>之一，也是<strong>刘维尔分布</strong>（<code>Liouville distribution</code>）的特殊形式，将狄利克雷分布的解析形式进行推广可以得到<strong>广义狄利克雷分布</strong>（<code>generalized Dirichlet distribution</code>）和<strong>组合狄利克雷分布</strong>（<code>Grouped Dirichlet distribution</code>）。</p>
-<p><strong>狄利克雷分布</strong>概率的归⼀化形式为公式(2.29)：</p>
+<p><strong>狄利克雷分布</strong>概率的归⼀化形式为：</p>
 <script type="math/tex; mode=display">
-\text{Dir}(\boldsymbol{\mu}|\boldsymbol{\alpha}) = \frac{\Gamma{(\alpha_{0})}}{\Gamma{(\alpha_{1})} \dots \Gamma{(\alpha_{K})}} \prod_{k=1}^{K}\mu_{k}^{\alpha_{k-1}}</script><p>其中，$\alpha_{0}=\sum_{k=1}^{K} \alpha_{k}$ 。</p>
+\text{Dir}(\boldsymbol{\mu}|\boldsymbol{\alpha}) = \frac{\Gamma{(\alpha_{0})}}{\Gamma{(\alpha_{1})} \dots \Gamma{(\alpha_{K})}} \prod_{k=1}^{K}\mu_{k}^{\alpha_{k-1}}\tag{2.29}</script><p>其中，$\alpha_{0}=\sum_{k=1}^{K} \alpha_{k}$ 。</p>
 <p>如图 2.6～2.8： 在不同的参数 $\alpha_{k}$ 的情况下，单纯形上的狄利克雷分布的图像。</p>
 <p><img src="/images/prml_20190920160005.png" alt="ak=0.1"></p>
 <p><img src="/images/prml_20190920160012.png" alt="ak=1"></p>
@@ -739,7 +739,7 @@ m_k = \sum_{n}x_{nk}</script><p>它表⽰观测到 $x_k = 1$ 的次数。这被�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -864,7 +864,7 @@ m_k = \sum_{n}x_{nk}</script><p>它表⽰观测到 $x_k = 1$ 的次数。这被�
     
       <span class="post-meta-item-text">本站字数统计&#58;</span>
     
-    <span title="本站字数统计">104.7k</span>
+    <span title="本站字数统计">113.4k</span>
   
 </div>
 
