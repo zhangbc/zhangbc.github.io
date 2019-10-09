@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangbc.github.io/"/>
-  <updated>2019-10-07T15:13:36.222Z</updated>
+  <updated>2019-10-09T15:08:23.208Z</updated>
   <id>https://zhangbc.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【机器学习基础】判别函数</title>
+    <link href="https://zhangbc.github.io/2019/10/09/prml_04_01/"/>
+    <id>https://zhangbc.github.io/2019/10/09/prml_04_01/</id>
+    <published>2019-10-09T14:36:47.000Z</published>
+    <updated>2019-10-09T15:08:23.208Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本系列为《模式识别与机器学习》的读书笔记。</p></blockquote><h1 id="一，分类线性模型概述"><a href="#一，分类线性模型概述" class="headerlink" title="一，分类线性模型概述"></a>一，分类线性模型概述</h1><p>分类的⽬标是将输⼊变量 $\boldsymbol{x}$ 分到 $K$ 个离散的类别 $\mathcal{C}_k$ 中的某⼀类。 最常见的情况是， 类别互相不相交， 因此每个输⼊被分到唯⼀的⼀个类别中。因此输⼊空间被划分为不同的<strong>决策区域</strong>（<code>decision region</code>），它的边界被称为<strong>决策边界</strong>（<code>decision boundary</code>）或者<strong>决策⾯</strong>（<code>decision surface</code>）。</p><p><strong>分类线性模型</strong>是指决策⾯是输⼊向量 $\boldsymbol{x}$ 的线性函数，因此被定义为 $D$ 维输⼊空间中的 $(D − 1)$ 维超平⾯。如果数据集可以被线性决策⾯精确地分类，那么我们说这个数据集是<strong>线性可分</strong>的（<code>linearly separable</code>）。</p><p>在线性回归模型中，使⽤⾮线性函数 $f(·)$ 对 $\boldsymbol{w}$ 的线性函数进⾏变换，即</p><script type="math/tex; mode=display">y(\boldsymbol{x})=f(\boldsymbol{w}^{T}\boldsymbol{x}+w_0)\tag{4.1}</script><p>在机器学习的⽂献中，$f(·)$ 被称为<strong>激活函数</strong>（<code>activation function</code>），⽽它的反函数在统计学的⽂献中被称为<strong>链接函数</strong>（<code>link function</code>）。决策⾯对应于 $y(\boldsymbol{x}) = 常数$，即 $\boldsymbol{w}^{T}\boldsymbol{x} + w_0 = 常数$，因此决策⾯是 $\boldsymbol{x}$ 的线性函数，即使函数 $f(·)$ 是⾮线性函数也是如此。因此，由公式(4.1)描述的⼀类模型被称为<strong>推⼴的线性模型</strong>（<code>generalized linear model</code>）（<code>McCullagh and Nelder</code>, 1989）。</p><p>如图4.1，⼆维线性判别函数的⼏何表⽰。决策⾯（红⾊）垂直于 $\boldsymbol{w}$ ，它距离原点的偏移量由偏置参数 $w_0$ 控制。</p><p><img src="/images/prml_20191008233456.png" alt="⼆维线性判别函数的⼏何表⽰"></p><h1 id="二，判别函数"><a href="#二，判别函数" class="headerlink" title="二，判别函数"></a>二，判别函数</h1><p>判别函数是⼀个以向量 $\boldsymbol{x}$ 为输⼊，把它分配到 $K$ 个类别中的某⼀个类别（记作 $\mathcal{C}_k$ ）的函数。</p><h2 id="1，⼆分类"><a href="#1，⼆分类" class="headerlink" title="1，⼆分类"></a>1，⼆分类</h2><p>线性判别函数的最简单的形式是输⼊向量的线性函数，即</p><script type="math/tex; mode=display">y(\boldsymbol{x})=\boldsymbol{w}^{T}\boldsymbol{x}+w_0\tag{4.2}</script><p>其中 $\boldsymbol{w}$ 被称为<strong>权向量</strong>（<code>weight vector</code>），$w_0$ 被称为<strong>偏置</strong>（<code>bias</code>）。偏置的相反数有时被称为<strong>阈值</strong>（<code>threshold</code>）。</p><p>考虑两个点 $\boldsymbol{x}_A$ 和 $\boldsymbol{x}_B$ ，两个点都位于决策⾯上。 由于 $y(\boldsymbol{x}_A)=y(\boldsymbol{x}_B)=0$，我们有 $\boldsymbol{w}^{T}(\boldsymbol{x}_A-\boldsymbol{x}_B) = 0$，因此向量 $\boldsymbol{w}$ 与决策⾯内的任何向量都正交，从⽽ $\boldsymbol{w}$ 确定了决策⾯的⽅向。类似地，如果 $\boldsymbol{x}$ 是决策⾯内的⼀个点，那么 $y(\boldsymbol{x}) = 0$ ，因此从原点到决策⾯的垂直距离为</p><script type="math/tex; mode=display">\frac{\boldsymbol{w}^{T}\boldsymbol{x}}{\|\boldsymbol{w}\|}=-\frac{w_0}{\|\boldsymbol{x}\|}\tag{4.3}</script><p>其中，偏置参数 $\boldsymbol{w}_0$ 确定了决策⾯的位置。</p><p>记任意⼀点 $\boldsymbol{x}$ 到决策⾯的垂直距离 $r$ ，在决策⾯上的投影 $\boldsymbol{x}_{\perp}$ ，则有</p><script type="math/tex; mode=display">\boldsymbol{x}=\boldsymbol{x}_{\perp}+r \frac{\boldsymbol{w}}{\|\boldsymbol{w}\|}\tag{4.4}</script><p>利用已知公式和 $y(\boldsymbol{x}_{\perp})=0$ 可得</p><script type="math/tex; mode=display">r=\frac{y(\boldsymbol{x})}{\|w\|}\tag{4.5}</script><p>为方便简洁，引⼊“虚”输⼊ $x_0=1$ ，并且定义 $\tilde{\boldsymbol{w}} = (w_0,\boldsymbol{w})$ 以及 $\tilde{\boldsymbol{x}} = (x_0,\boldsymbol{x})$ ，从⽽</p><script type="math/tex; mode=display">y(\boldsymbol{x})=\tilde{\boldsymbol{w}}^{T}\tilde{\boldsymbol{x}}\tag{4.6}</script><p>在这种情况下， 决策⾯是⼀个 $D$ 维超平⾯， 并且这个超平⾯会穿过 $D+1$ 维扩展输⼊空间的原点。</p><h2 id="2，多分类"><a href="#2，多分类" class="headerlink" title="2，多分类"></a>2，多分类</h2><p>考虑把线性判别函数推⼴到 $K&gt;2$ 个类别。</p><p>方法一，使⽤ $K − 1$ 个分类器，每个分类器⽤来解决⼀个⼆分类问题，把属于类别 $\mathcal{C}_k$ 和不属于那个类别的点分开。这被称为“<strong>1对其他</strong>”（<code>one-versus-the-rest</code>）<strong>分类器</strong>。此方法的缺点在于产⽣了输⼊空间中⽆法分类的区域。</p><p>方法二，引⼊ $\frac{K(K−1)}{2}$ 个⼆元判别函数， 对每⼀对类别都设置⼀个判别函数。 这被称为“<strong>1对1</strong>”（<code>one-versus-one</code>）<strong>分类器</strong>。每个点的类别根据这些判别函数中的⼤多数输出类别确定，但是，这也会造成输⼊空间中的⽆法分类的区域。</p><p>如图4.2，尝试从⼀组两类的判别准则中构建出⼀个 $K$ 类的判别准则会导致具有奇异性的区域， ⽤绿⾊表⽰。</p><p><img src="/images/prml_20191009093808.png" alt="判别准则"></p><p>方法三，通过引⼊⼀个 $K$ 类判别函数，可以避免上述问题。这个 $K$ 类判别函数由 $K$ 个线性函数组成，形式为</p><script type="math/tex; mode=display">y_{k}(\boldsymbol{x})=\boldsymbol{w}_{k}^{T}\boldsymbol{x}+w_{k0}\tag{4.7}</script><p>对于点 $\boldsymbol{x}$ ，如果对于所有的 $j \ne k$ 都 有 $y_{k}(\boldsymbol{x})\gt y_{j}(\boldsymbol{x})$ ，那么就把它分到 $\mathcal{C}_k$ 。 于是类别 $\mathcal{C}_k$ 和 $\mathcal{C}_j$ 之间的决策⾯为 $y_{k}(\boldsymbol{x})=y_{j}(\boldsymbol{x})$，并且对应于⼀个 $(D − 1)$ 维超平⾯，形式为</p><script type="math/tex; mode=display">(\boldsymbol{w}_{k}-\boldsymbol{w}_{j})^{T}\boldsymbol{x}+(w_{k0}-w_{j0})=0\tag{4.8}</script><p>考虑两个点 $\boldsymbol{x}_A$ 和 $\boldsymbol{x}_B$ ，两个点都位于决策区域 $\mathcal{R}_k$ 中， 任何位于连接 $\boldsymbol{x}_A$ 和 $\boldsymbol{x}_B$ 的线段上的点都可以表⽰成下⾯的形式</p><script type="math/tex; mode=display">\hat{\boldsymbol{x}}=\lambda \boldsymbol{x}_{A}+(1-\lambda)\boldsymbol{x}_{B}\tag{4.9}</script><p>其中，$0\le\lambda\le1$ 。根据判别函数的线性性质，有</p><script type="math/tex; mode=display">y_{k}(\hat{\boldsymbol{x}})=\lambda y_{k}(\boldsymbol{x}_{A})+(1-\lambda)y_{k}(\boldsymbol{x}_{B})\tag{4.10}</script><p>由于 $\boldsymbol{x}_A$ 和 $\boldsymbol{x}_B$ 位于 $\mathcal{R}_k$ 内部，因此对于所有 $j \ne k$ ， 都有 $y_{k}(\boldsymbol{x}_{A})\gt y_{j}(\boldsymbol{x}_{A})$ 以及 $y_{k}(\boldsymbol{x}_{B})\gt y_{j}(\boldsymbol{x}_{B})$ ，因此 $y_{k}(\hat{\boldsymbol{x}})\gt y_{j}(\hat{\boldsymbol{x}})$ ，从⽽ $\hat{\boldsymbol{x}}$ 也位于 $\mathcal{R}_k$ 内部，即 $\mathcal{R}_k$ 是单连通的并且是凸的。</p><p>如图4.3，多类判别函数的决策区域的说明， 决策边界⽤红⾊表⽰。</p><p><img src="/images/prml_20191009101103.png" alt="多类判别函数的决策区域"></p><h2 id="3，⽤于分类的最⼩平⽅⽅法"><a href="#3，⽤于分类的最⼩平⽅⽅法" class="headerlink" title="3，⽤于分类的最⼩平⽅⽅法"></a>3，⽤于分类的最⼩平⽅⽅法</h2><p>每个类别 $\mathcal{C}_k$ 由⾃⼰的线性模型描述，即公式(4.7)，其中 $k = 1, \dots , K$ 。使⽤向量记号表⽰，即</p><script type="math/tex; mode=display">\boldsymbol{y}(\boldsymbol{x})=\tilde{\boldsymbol{W}}^{T}\tilde{\boldsymbol{x}}\tag{4.11}</script><p>其中 $\tilde{\boldsymbol{W}}$ 是⼀个矩阵，第 $k$ 列由 $D + 1$ 维向量 $\tilde{\boldsymbol{w}}_k=(w_{k0},w_{k}^{T})^{T}$ 组成，$\tilde{\boldsymbol{x}}$ 是对应的增⼴输⼊向量 $(1, \boldsymbol{x}^{T})^{T}$， 它带有⼀个虚输⼊ $x_0 = 1$ 。</p><p>现在通过最⼩化平⽅和误差函数来确定参数矩阵 $\tilde{\boldsymbol{W}}$  ，考虑⼀个训练数据集 $\{\boldsymbol{x}_n, \boldsymbol{t}_n\}$，其中 $n = 1,\dots , N $，然后定义⼀个矩阵 $\boldsymbol{T}$ ，它的第 $n$ ⾏是向量 $\boldsymbol{t}_{n}^{T}$ ，定义⼀个矩阵 $\tilde{\boldsymbol{X}}$ ，它的第 $n$ ⾏是 $\tilde{\boldsymbol{x}}_{n}^{T}$ 。这样，平⽅和误差函数可以写成</p><script type="math/tex; mode=display">E_{D}(\tilde{\boldsymbol{W}})=\frac{1}{2}\text{Tr}\{(\tilde{\boldsymbol{X}}\tilde{\boldsymbol{W}}-\boldsymbol{T})^{T}(\tilde{\boldsymbol{X}}\tilde{\boldsymbol{W}}-\boldsymbol{T})\}\tag{4.12}</script><p>令关于 $\tilde{\boldsymbol{W}}$ 的导数等于零，整理，可以得到 $\tilde{\boldsymbol{W}}$ 的解，形式为</p><script type="math/tex; mode=display">\tilde{\boldsymbol{W}}=(\tilde{\boldsymbol{X}}^{T}\tilde{\boldsymbol{W}})^{-1}\tilde{\boldsymbol{X}}^{T}\boldsymbol{T}=\tilde{\boldsymbol{X}}^{\dagger}\boldsymbol{T}\tag{4.13}</script><p>其中 $\tilde{\boldsymbol{X}}^{\dagger}$ 是矩阵 $\tilde{\boldsymbol{X}}$ 的伪逆矩阵。即得判别函数，形式为</p><script type="math/tex; mode=display">y(\boldsymbol{x})=\tilde{\boldsymbol{W}}^{T}\tilde{\boldsymbol{x}}=\boldsymbol{T}^{T}(\tilde{\boldsymbol{X}}^{\dagger})^{T}\tilde{\boldsymbol{x}}\tag{4.14}</script><p>如图4.4，左图给出了来⾃两个类别的数据，⽤红⾊叉形和蓝⾊圆圈表⽰。同时给出的还有通过最⼩平⽅⽅法找到的决策边界（洋红⾊曲线）以及<code>logistic</code>回归模型给出的决策边界（绿⾊曲线）；右图给出了当额外的数据点被添加到左图的底部之后得到的结果，这表明最⼩平⽅⽅法对于异常点很敏感，这与<code>logistic</code>回归不同。</p><p><img src="/images/prml_20191009104504.png" alt="⽤于分类的最⼩平⽅⽅法"></p><p>多⽬标变量的最⼩平⽅解的⼀个重要的<strong>性质</strong>是：如果训练集⾥的每个⽬标向量都满⾜某个线性限制</p><script type="math/tex; mode=display">\boldsymbol{a}^{T}\boldsymbol{t}_{n}+b=0\tag{4.15}</script><p>其中 $\boldsymbol{a}$ 和 $b$ 为常量，那么对于任何 $\boldsymbol{x}$ 值，模型的预测也满⾜同样的限制，即</p><script type="math/tex; mode=display">\boldsymbol{a}^{T}\boldsymbol{y}(\boldsymbol{x})+b=0\tag{4.16}</script><p>因此如果使⽤ $K$ 分类的“<strong>1-of-K</strong> ”表达⽅式，那么这个模型做出的预测会具有下⾯的<strong>性质</strong>：对于任意的 $\boldsymbol{x}$ 的值， $\boldsymbol{y}(\boldsymbol{x})$ 的元素的和等于1。</p><p>举例，由三个类别组成的⼈⼯数据集，训练数据点分别⽤红⾊（×）、绿⾊（+）、蓝⾊（◦）标出。 直线表⽰决策边界， 背景颜⾊表⽰决策区域代表的类别。<br>如图4.5，使⽤最⼩平⽅判别函数，分配到绿⾊类别的输⼊空间的区域过⼩，⼤部分来⾃这个类别的点都被错误分类。</p><p><img src="/images/prml_20191009110353.png" alt="最⼩平⽅判别函数训练"></p><p>如图4.6，使⽤<code>logistic</code>回归的结果，给出了训练数据的正确分类情况。</p><p><img src="/images/prml_20191009110405.png" alt="logistic回归训练"></p><h2 id="4，Fisher线性判别函数"><a href="#4，Fisher线性判别函数" class="headerlink" title="4，Fisher线性判别函数"></a>4，<code>Fisher</code>线性判别函数</h2><p>假设有⼀个 $D$ 维输⼊向量 $\boldsymbol{x}$ ，然后使⽤下式投影到⼀维</p><script type="math/tex; mode=display">y=\boldsymbol{w}^{T}\boldsymbol{x}\tag{4.17}</script><p>如果在 $y$ 上设置⼀个阈值，然后把 $y\ge -w_0$ 的样本分为 $\mathcal{C}_1$ 类，把其余的样本分为 $\mathcal{C}_2$ 类，那么就得到了一个标准的线性分类器。</p><p>考虑⼀个⼆分类问题，这个问题中有 $\mathcal{C}_1$ 类的 $N_1$ 个点以及 $\mathcal{C}_2$ 类的 $N_2$ 个点。因此两类的均值向量为</p><script type="math/tex; mode=display">\boldsymbol{m}_{1}=\frac{1}{N_1}\sum_{n\in\mathcal{C_1}}\boldsymbol{x}_{n}\\\boldsymbol{m}_{2}=\frac{1}{N_2}\sum_{n\in\mathcal{C_2}}\boldsymbol{x}_{n}</script><p>如果投影到 $\boldsymbol{w}$ 上，那么最简单的度量类别之间分开程度的⽅式就是类别均值投影之后的距离。这说明可以选择 $\boldsymbol{w}$ 使得下式取得最⼤值</p><script type="math/tex; mode=display">m_2-m_1=\boldsymbol{w}^{T}(\boldsymbol{m}_2-\boldsymbol{m}_1)\tag{4.18}</script><p>其中，</p><script type="math/tex; mode=display">m_k=\boldsymbol{w}^{T}\boldsymbol{m}_{k}</script><p>是来⾃类别 $\mathcal{C}_k$ 的投影数据的均值。</p><p>如图4.7，左图给出了来⾃两个类别（表⽰为红⾊和蓝⾊）的样本，以及在连接两个类别的均值的直线上的投影的直⽅图。注意，在投影空间中，存在⼀个⽐较严重的类别重叠。右图给出的基于<code>Fisher</code>线性判别准则的对应投影，表明了类别切分的效果得到了极⼤的提升。</p><p><img src="/images/prml_20191009110828.png" alt="Fisher线性判别准则"></p><p><code>Fisher</code>提出的<strong>思想</strong>是最⼤化⼀个函数，这个函数能够让类均值的投影分开得较⼤，同时让每个类别内部的⽅差较⼩，从⽽最⼩化了类别的重叠。</p><p>投影公式(4.17)将 $\boldsymbol{x}$ 的⼀组有标记的数据点变换为⼀位空间 $y$ 的⼀组有标记数据点。来⾃类别 $\mathcal{C}_k$ 的数据经过变换后的类内⽅差为</p><script type="math/tex; mode=display">s_{k}^{2}=\sum_{n\in \mathcal{C}_k}(y_n-m_k)^{2}\tag{4.19}</script><p>其中，$y_n=\boldsymbol{w}^{T}\boldsymbol{x}_{n}$ 。把整个数据集的总的类内⽅差定义为 $s_1^2+s_2^2$ ，<strong><code>Fisher</code>准则</strong> 根据类间⽅差和类内⽅差的⽐值定义，即</p><script type="math/tex; mode=display">J(\boldsymbol{w})=\frac{(m_2-m_1)^{2}}{s_1^2+s_2^2}\tag{4.20}</script><p>不难推导， $J(\boldsymbol{w})$ 对 $\boldsymbol{w}$ 的依赖</p><script type="math/tex; mode=display">J(\boldsymbol{w})=\frac{\boldsymbol{w}^{T}\boldsymbol{S}_B\boldsymbol{w}}{\boldsymbol{w}^{T}\boldsymbol{S}_W\boldsymbol{w}}\tag{4.21}</script><p>其中 $\boldsymbol{S}_B$ 是<strong>类间（<code>between-class</code>）协⽅差矩阵</strong>，形式为</p><script type="math/tex; mode=display">\boldsymbol{S}_B=(\boldsymbol{m}_2-\boldsymbol{m}_1)(\boldsymbol{m}_2-\boldsymbol{m}_1)^{T}</script><p>$\boldsymbol{S}_W$ 被称为<strong>类内（<code>within-class</code>）协⽅差矩阵</strong>，形式为</p><script type="math/tex; mode=display">\boldsymbol{S}_W=\sum_{n\in \mathcal{C}_1}(\boldsymbol{x}_n-\boldsymbol{m}_1)(\boldsymbol{x}_n-\boldsymbol{m}_1)^{T}+\sum_{n\in \mathcal{C}_2}(\boldsymbol{x}_n-\boldsymbol{m}_2)(\boldsymbol{x}_n-\boldsymbol{m}_2)^{T}</script><p>对公式(4.21)关于 $\boldsymbol{w}$ 求导，发现 $J(\boldsymbol{w})$ 取得最⼤值的条件为</p><script type="math/tex; mode=display">(\boldsymbol{w}^{T}\boldsymbol{S}_B\boldsymbol{w})\boldsymbol{S}_W\boldsymbol{w}=(\boldsymbol{w}^{T}\boldsymbol{S}_W\boldsymbol{w})\boldsymbol{S}_B\boldsymbol{w}\tag{4.22}</script><p>可以发现， $\boldsymbol{S}_B\boldsymbol{w}$ 总是在 $(\boldsymbol{m}_2−\boldsymbol{m}_1)$ 的⽅向上。 更重要的是， 若不关⼼ $\boldsymbol{w}$ 的⼤⼩， 只关⼼它的⽅向， 因此可以忽略标量因⼦ $(\boldsymbol{w}^{T}\boldsymbol{S}_B\boldsymbol{w})$ 和 $(\boldsymbol{w}^{T}\boldsymbol{S}_W\boldsymbol{w})$ 。 将公式(4.22)的两侧乘以 $\boldsymbol{S}_{W}^{-1}$ ，即得 <strong><code>Fisher</code>线性判别函数</strong>（<code>Fisher linear discriminant</code>）</p><script type="math/tex; mode=display">\boldsymbol{w}\propto \boldsymbol{S}_{W}^{-1}(\boldsymbol{m}_2-\boldsymbol{m}_1)\tag{4.23}</script><p>如果类内协⽅差矩阵是各向同性的，从⽽ $\boldsymbol{S}_W$ 正⽐于单位矩阵，那么我们看到 $\boldsymbol{w}$ 正⽐于类均值的差。</p><p>构建 <strong><code>Fisher</code>线性判别函数</strong> ，其⽅法为：选择⼀个阈值 $y_0$ ，使得当 $y(\boldsymbol{x})\ge y_0$ 时，把数据点分到 $\mathcal{C}_1$ ，否则把数据点分到 $\mathcal{C}_2$ 。</p><h2 id="5，与最⼩平⽅的关系"><a href="#5，与最⼩平⽅的关系" class="headerlink" title="5，与最⼩平⽅的关系"></a>5，与最⼩平⽅的关系</h2><p><strong>最⼩平⽅⽅法</strong>确定线性判别函数的⽬标是使模型的预测尽可能地与⽬标值接近。相反， <strong><code>Fisher</code>判别准则</strong> 的⽬标是使输出空间的类别有最⼤的区分度。</p><p>对于⼆分类问题，<code>Fisher</code>准则可以看成最⼩平⽅的⼀个特例。作如下假设：让属于 $\mathcal{C}_1$ 的⽬标值等于 $\frac{N}{N_1}$ ，其中 $N_1$ 是类别 $\mathcal{C}_1$ 的模式的数量，$N$ 是总的模式数量。这个⽬标值近似于类别 $\mathcal{C}_1$ 的先验概率的导数。 对于类别 $\mathcal{C}_2$ ， 令⽬标值等于 $−\frac{N}{N_2}$ ， 其中 $N_2$ 是类别 $\mathcal{C}_2$ 的模式的数量。平⽅和误差函数可以写成</p><script type="math/tex; mode=display">E=\frac{1}{2}\sum_{n=1}^{N}(\boldsymbol{w}^{T}\boldsymbol{x}_{n}+w_0-t_n)^{2}\tag{4.24}</script><p>令 $E$ 关于 $w_0$ 和 $\boldsymbol{w}$ 的导数等于零，使⽤对于⽬标值 $t_n$ 的表⽰⽅法，可以得到偏置的表达式</p><script type="math/tex; mode=display">w_0=-\boldsymbol{w}^{T}\boldsymbol{m}\tag{4.25}</script><p>其中，</p><script type="math/tex; mode=display">\sum_{n=1}^{N}t_n=N_1\frac{N}{N_1}-N_2\frac{N}{N_2}=0\\\boldsymbol{m}=\frac{1}{N}\sum_{n=1}^{N}\boldsymbol{x}_n=\frac{1}{N}(N_1\boldsymbol{m}_1+N_2\boldsymbol{m}_2)</script><p>使⽤对于 $t_n$ 的新的表⽰⽅法可得</p><script type="math/tex; mode=display">\left(\boldsymbol{S}_W+\frac{N_1N_2}{N}\boldsymbol{S}_B\right)\boldsymbol{w}=N(\boldsymbol{m_1}-\boldsymbol{m}_2)\tag{4.26}</script><p>由此可见，可以推导出公式(4.23)，即权向量恰好与根据<code>Fisher</code>判别准则得到的结果相同。</p><h2 id="6，多分类的Fisher判别函数"><a href="#6，多分类的Fisher判别函数" class="headerlink" title="6，多分类的Fisher判别函数"></a>6，多分类的<code>Fisher</code>判别函数</h2><p>现在考虑<code>Fisher</code>判别函数对于 $K&gt;2$ 个类别的推⼴。 假设输⼊空间的维度 $D$ ⼤于类别数量 $K$ ，引⼊ $D^{\prime} &gt; 1$ 个线性“特征” $y_k = \boldsymbol{w}_k^{T}\boldsymbol{x}$ ，其中 $k=1,\dots,D^{\prime}$ 。 为了⽅便， 这些特征值可以聚集起来组成向量 $\boldsymbol{y}$ ，类似地，权向量 $\{\boldsymbol{w}_k\}$ 可以被看成矩阵 $\boldsymbol{W}$ 的列。因此</p><script type="math/tex; mode=display">\boldsymbol{y}=\boldsymbol{W}^{T}\boldsymbol{x}\tag{4.27}</script><p>类内协⽅差矩阵推⼴到 $K$ 类，有</p><script type="math/tex; mode=display">\boldsymbol{S}_{W}=\sum_{k=1}^{K}\boldsymbol{S}_{k}\tag{4.28}</script><p>其中，</p><script type="math/tex; mode=display">\boldsymbol{S}_{k}=\sum_{n\in \mathcal{C}_k}(\boldsymbol{x}_n-\boldsymbol{m}_k)(\boldsymbol{x}_n-\boldsymbol{m}_k)^{T}\\\boldsymbol{m}_{k}=\frac{1}{N_k}\sum_{n\in\mathcal{C_k}}\boldsymbol{x}_{n}</script><p>其中 $N_k$ 是类别 $\mathcal{C}_k$ 中模式的数量。</p><p>为了找到类间协⽅差矩阵的推⼴，使⽤<code>Duda and Hart</code>（1973）的⽅法，⾸先考虑整体的协⽅差矩阵</p><script type="math/tex; mode=display">\boldsymbol{S}_{T}=\sum_{n=1}^{N}(\boldsymbol{x}_n-\boldsymbol{m})(\boldsymbol{x}_n-\boldsymbol{m})^{T}\tag{4.29}</script><p>其中 $\boldsymbol{m}$ 是全体数据的均值</p><script type="math/tex; mode=display">\boldsymbol{m}=\frac{1}{N}\sum_{n=1}^{N}\boldsymbol{x}_{n}=\frac{1}{N}\sum_{k=1}^{K}N_k\boldsymbol{m}_{k}</script><p>其中 $N = \sum_{k} N_k$ 是数据点的总数。</p><p>整体的协⽅差矩阵可以分解为公式(4.28)给出的类内协⽅差矩阵，加上另⼀个矩阵 $\boldsymbol{S}_B$ ，它可以看做类间协⽅差矩阵。</p><script type="math/tex; mode=display">\boldsymbol{S}_{T}=\boldsymbol{S}_{W}+\boldsymbol{S}_{B}\tag{4.30}</script><p>其中，</p><script type="math/tex; mode=display">\boldsymbol{S}_B=\sum_{k=1}^{K}N_k(\boldsymbol{m}_k-\boldsymbol{m})(\boldsymbol{m}_k-\boldsymbol{m})^{T}</script><p>协⽅差矩阵被定义在原始的 $\boldsymbol{x}$ 空间中。现在在投影的 $D^{\prime}$ 维 $\boldsymbol{y}$ 空间中定义类似的矩阵</p><script type="math/tex; mode=display">\boldsymbol{S}_{W}=\sum_{k=1}^{K}\sum_{n\in \mathcal{C}_k}(\boldsymbol{y}_n-\boldsymbol{\mu}_k)(\boldsymbol{y}_n-\boldsymbol{\mu}_k)^{T}\\\boldsymbol{S}_B=\sum_{k=1}^{K}N_k(\boldsymbol{\mu}_k-\boldsymbol{\mu})(\boldsymbol{\mu}_k-\boldsymbol{\mu})^{T}</script><p>其中，</p><script type="math/tex; mode=display">\boldsymbol{\mu}_k=\frac{1}{N_k}\sum_{n\in \mathcal{C}_k}\boldsymbol{y}_n\\\boldsymbol{\mu}=\frac{1}{N}\sum_{k=1}^{K}N_k\boldsymbol{\mu}_k</script><p>我们想构造⼀个标量，当类间协⽅差较⼤且类内协⽅差较⼩时，这个标量会较⼤。有许多可能的准则选择⽅式（<code>Fukunaga</code>, 1990）。其中⼀种选择是</p><script type="math/tex; mode=display">J(\boldsymbol{W})=\text{Tr}\{\boldsymbol{s}_{W}^{-1}\boldsymbol{s}_{B}\}\tag{4.31}</script><p>这个判别准则可以显式地写成投影矩阵 $\boldsymbol{W}$ 的函数，形式为</p><script type="math/tex; mode=display">J(\boldsymbol{W})=\text{Tr}\{(\boldsymbol{W}^{T}\boldsymbol{S}_{W}\boldsymbol{W})^{-1}(\boldsymbol{W}^{T}\boldsymbol{S}_{B}\boldsymbol{W})\}\tag{4.32}</script><h2 id="7，感知器算法"><a href="#7，感知器算法" class="headerlink" title="7，感知器算法"></a>7，感知器算法</h2><p>线性判别模型的另⼀个例⼦是<code>Rosenblatt</code>（1962）提出的<strong>感知器算法</strong>。对应于⼀个⼆分类的模型，输⼊向量 $\boldsymbol{x}$ ⾸先使⽤⼀个固定的⾮线性变换得到⼀个特征向量 $\boldsymbol{\phi}(\boldsymbol{x})$ ， 这个特征向量然后被⽤于构造⼀个⼀般的线性模型，形式为</p><script type="math/tex; mode=display">y(\boldsymbol{x})=f(\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x}))\tag{4.33}</script><p>其中⾮线性激活函数 $f(·)$ 是⼀个阶梯函数，形式为</p><script type="math/tex; mode=display">f(a)=\begin{cases}+1,&a\ge 0\\ -1,&a<0\end{cases}</script><p>向量 $\boldsymbol{\phi}(\boldsymbol{x})$ 通常包含⼀个偏置分量 $\phi_{0}(\boldsymbol{x})=0$ 。对于感知器，使⽤ $t=+1$ 表⽰ $\mathcal{C}_1$ ，使⽤ $t=−1$ 表⽰ $\mathcal{C}_2$ ，这与激活函数的选择相匹配。<br>为了推导误差函数，即<strong>感知器准则</strong>（<code>perceptron criterion</code>）， 注意到我们正在做的是寻找⼀个权向量 $\boldsymbol{w}$ 使得对于类别 $\mathcal{C}_1$ 中的模式 $\boldsymbol{x}_n$ 都有 $\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x}_n)&gt;0$ ， ⽽对于类别 $\mathcal{C}_2$ 中的模式 $\boldsymbol{x}_n$ 都有 $\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x}_n)<0$ 。 使⽤ $t \in\{−1, +1\}$ 这种⽬标变量的表⽰⽅法，要做的就是使得所有的模式都满⾜ $\boldsymbol{w}^{t}\boldsymbol{\phi}(\boldsymbol{x}_n)t_{n}>0$ 。 对于正确分类的模式，感知器准则赋予零误差，⽽对于误分类的模式 $\boldsymbol{x}_n$ ，它试着最⼩化 $-\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x}_n)t_{n}$ 。因此，<strong>感知器准则</strong>为</0$></p><script type="math/tex; mode=display">E_{P}(\boldsymbol{w})=-\sum_{n\in\mathcal{M}}\boldsymbol{w}^{T}\boldsymbol{\phi}_nt_{n}\tag{4.34}</script><p>其中 $\boldsymbol{\phi}_n=\boldsymbol{\phi}(\boldsymbol{x}_n)$ 和 $\mathcal{M}$ 表⽰所有误分类模式的集合。某个特定的误分类模式对于误差函数的贡献是 $\boldsymbol{w}$ 空间中模式被误分类的区域中 $\boldsymbol{w}$ 的线性函数， ⽽在正确分类的区域，误差函数等于零。 总的误差函数因此是分段线性的。</p><p>现在对这个误差函数使⽤随机梯度下降算法。这样，权向量 $\boldsymbol{w}$ 的变化为</p><script type="math/tex; mode=display">\begin{aligned}\boldsymbol{w}^{(\tau+1)}&=\boldsymbol{w}^{(\tau)}-\eta\nabla E_{P}(\boldsymbol{w})\\&=\boldsymbol{w}^{(\tau)}+\eta\boldsymbol{\phi}_{n}t_n\end{aligned}\tag{4.35}</script><p>其中 $\eta$ 是学习率参数，$\tau$ 是⼀个整数，是算法运⾏次数的索引。</p><p>感知器学习算法可以简单地表⽰如下：我们反复对于训练模式进⾏循环处理，对于每个模式 $\boldsymbol{x}_n$ 计算感知器函数(4.33)。如果模式正确分类，那么权向量保持不变，⽽如果模式被错误分类，那么对于类别 $\mathcal{C}_1$ ， 我们把向量 $\boldsymbol{\phi}(\boldsymbol{x}_n)$ 加到当前对于权向量 $\boldsymbol{w}$ 的估计值上，⽽对于类别 $\mathcal{C}_2$ ，我们从 $\boldsymbol{w}$ 中减掉向量 $\boldsymbol{\phi}(\boldsymbol{x}_n)$。</p><p>如图4.8～4.11，感知器算法收敛性的说明， 给出了⼆维特征空间 $(\phi_1,\phi_2)$ 中的来⾃两个类别的数据点（红⾊和蓝 ⾊）。图4.8给出了初始参数向量 $\boldsymbol{w}$ ，表⽰为⿊⾊箭头，以及对应的决策边界（⿊⾊直线），其中箭头指向被分类为红⾊类别的决策区域。⽤绿⾊圆圈标出的数据点被误分类，因此它的特征向量被加到当前的权向量中，给出了新的决策边界，如图4.9所⽰。 图4.10给出了下⼀个误分类的点，⽤绿⾊圆圈标出，它的特征向量再次被加到权向量上，给出了图4.11的决策边界。这个边界中所有的数据点都被正确分类。</p><p><img src="/images/prml_20191009110918.png" alt="初始参数向量"></p><p><img src="/images/prml_20191009110936.png" alt="新的决策边界"></p><p><img src="/images/prml_20191009110946.png" alt="下⼀个误分类的点"></p><p><img src="/images/prml_20191009111003.png" alt="正确分类"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;本系列为《模式识别与机器学习》的读书笔记。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;一，分类线性模型概述&quot;&gt;&lt;a href=&quot;#一，分类线性模型概述&quot; class=&quot;headerlink&quot; title=&quot;一，分类线性模型概述&quot;&gt;&lt;/a&gt;
+      
+    
+    </summary>
+    
+      <category term="机器学习" scheme="https://zhangbc.github.io/categories/machine-learning/"/>
+    
+    
+      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/machine-learning-foundation/"/>
+    
+  </entry>
   
   <entry>
     <title>【机器学习基础】贝叶斯线性模型</title>
@@ -37,10 +65,10 @@
     
     </summary>
     
-      <category term="机器学习" scheme="https://zhangbc.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="https://zhangbc.github.io/categories/machine-learning/"/>
     
     
-      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/"/>
+      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/machine-learning-foundation/"/>
     
   </entry>
   
@@ -65,10 +93,10 @@
     
     </summary>
     
-      <category term="机器学习" scheme="https://zhangbc.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="https://zhangbc.github.io/categories/machine-learning/"/>
     
     
-      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/"/>
+      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/machine-learning-foundation/"/>
     
   </entry>
   
@@ -93,10 +121,10 @@
     
     </summary>
     
-      <category term="机器学习" scheme="https://zhangbc.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="https://zhangbc.github.io/categories/machine-learning/"/>
     
     
-      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/"/>
+      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/machine-learning-foundation/"/>
     
   </entry>
   
@@ -121,10 +149,10 @@
     
     </summary>
     
-      <category term="机器学习" scheme="https://zhangbc.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="https://zhangbc.github.io/categories/machine-learning/"/>
     
     
-      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/"/>
+      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/machine-learning-foundation/"/>
     
   </entry>
   
@@ -149,10 +177,10 @@
     
     </summary>
     
-      <category term="机器学习" scheme="https://zhangbc.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="https://zhangbc.github.io/categories/machine-learning/"/>
     
     
-      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/"/>
+      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/machine-learning-foundation/"/>
     
   </entry>
   
@@ -177,10 +205,10 @@
     
     </summary>
     
-      <category term="机器学习" scheme="https://zhangbc.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="https://zhangbc.github.io/categories/machine-learning/"/>
     
     
-      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/"/>
+      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/machine-learning-foundation/"/>
     
   </entry>
   
@@ -205,10 +233,10 @@
     
     </summary>
     
-      <category term="机器学习" scheme="https://zhangbc.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="https://zhangbc.github.io/categories/machine-learning/"/>
     
     
-      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/"/>
+      <category term="机器学习基础" scheme="https://zhangbc.github.io/tags/machine-learning-foundation/"/>
     
   </entry>
   
@@ -232,10 +260,10 @@
     
     </summary>
     
-      <category term="杂七杂八" scheme="https://zhangbc.github.io/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/"/>
+      <category term="杂七杂八" scheme="https://zhangbc.github.io/categories/others/"/>
     
     
-      <category term="其他" scheme="https://zhangbc.github.io/tags/%E5%85%B6%E4%BB%96/"/>
+      <category term="其他" scheme="https://zhangbc.github.io/tags/others/"/>
     
   </entry>
   
@@ -263,7 +291,7 @@
       <category term="C++" scheme="https://zhangbc.github.io/categories/C/"/>
     
     
-      <category term="数据结构与算法" scheme="https://zhangbc.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+      <category term="数据结构与算法" scheme="https://zhangbc.github.io/tags/data-structure-and-algorithms/"/>
     
   </entry>
   
@@ -292,7 +320,7 @@
       <category term="C++" scheme="https://zhangbc.github.io/categories/C/"/>
     
     
-      <category term="数据结构与算法" scheme="https://zhangbc.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+      <category term="数据结构与算法" scheme="https://zhangbc.github.io/tags/data-structure-and-algorithms/"/>
     
   </entry>
   
@@ -374,7 +402,7 @@
       <category term="Python" scheme="https://zhangbc.github.io/categories/python/"/>
     
     
-      <category term="Python爬虫实例" scheme="https://zhangbc.github.io/tags/Python%E7%88%AC%E8%99%AB%E5%AE%9E%E4%BE%8B/"/>
+      <category term="Python爬虫实例" scheme="https://zhangbc.github.io/tags/python-crawler/"/>
     
   </entry>
   
@@ -524,32 +552,6 @@
       
       
         &lt;p&gt;上班已有几天了，可是思绪似乎还是停留在十一之行，也许是没有长大的表现，也许是该为这次的所见所闻记下点什么，一种发自内心的声音不停告诉自己，利用有限的时间，拿起一支拙劣的笔，为那个时刻，为已流失的光阴做一些补救脚印吧。此次杭州之行，收获还是蛮大的，且不说杭州风景，杭州美女，我
-      
-    
-    </summary>
-    
-      <category term="心路历程" scheme="https://zhangbc.github.io/categories/mental-journey/"/>
-    
-    
-      <category term="心路历程" scheme="https://zhangbc.github.io/tags/mental-journey/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【心路历程】做好自己，面对现实（四）</title>
-    <link href="https://zhangbc.github.io/2019/04/22/myself_05/"/>
-    <id>https://zhangbc.github.io/2019/04/22/myself_05/</id>
-    <published>2019-04-22T14:06:46.000Z</published>
-    <updated>2019-04-22T14:36:41.331Z</updated>
-    
-    <content type="html"><![CDATA[<p>水光潋滟晴方好，山色空蒙雨亦奇。<br>欲把西湖比西子，浓妆淡抹总相宜。<br>    ———-苏轼.《饮湖上初晴后雨》</p><p>一次疯狂的旅行，一次没有规划的旅行，一群不靠谱的靠谱的旅行， 除此之外，我实在是找不到什么适合的言语来表达这次国庆之行了。岁月总是在不经意的手指尖划过，用心去捕捉生活一瞬间的美，认认真真地感受其中的乐趣，我想这才是我所期盼的生活吧。写作的灵感也就来源于那一刹那之间，仔细回想学生时代，每当写作文的时候，真的就是这么一回事，其实生活亦如此，此次的国庆之行更是如此。</p><p>关于国庆之行的最初构想，是由大学班长何伟同志提出的，我只是从旁提提意见，准备十一回武汉聚聚，然后找个景点游哉悠哉。毕业一年了，大家是该聚聚的时候了，说长不长的一年，相信大家经历了很多，也收获了很多，相互叨叨，未必没人不期待吧。为此还特地，班长建了一个群，叫“十一去哪儿”，刚开始那会，激情四起，我心中甚喜，提前了一个月跟部门老大说十一想请假（要知道节前假后请个假有多么困难）。临近九月中旬，再次确定人数的时候，发现就不是原来那么回事了，各有各的忙，离别时难聚更难，相聚是多么不容易啊！没有闲人，既然如此，不必强求，也无须介怀，匆匆之间的生活，理解万岁。说实在话，我的内心依然不甘，计划的十一出行难道真的就要被不能班聚而葬送吗？思来想去，还是不甘心，十一不出行又能干嘛呢？他们都忙， 我闲人一个，那就一个人漂泊了，避远就近，人在苏州，苏杭苏杭，那就杭州了。所以一个人就默默地买好票了。原本不想打扰别人已有的安排，这实在不是我的风格，不强求于人，一切随心所愿的好。可我还是没有忍住，问了下何伟，令我意想不到的是他已经买好回家票了，三言两语，他也改签了去往杭州的高铁票，谁叫我们是好哥们呢？算是坑，也愿跳。9月13日，杭州的票就这么定了，最坏的打算是两个爷们独闯杭州，不为别的，只为西湖。期间，我们也各自咨询了很多亲们，问有没有意向去？回复都是模棱两可的，一句话，不靠谱。不靠谱就不靠谱吧，希望与现实总是存在差距的，那就算一次不靠谱的旅行吧。但是我依然没有放弃寻求伙伴的机会，直到9月27日，一条好友的说说振奋了我，平时少聊天，这次竟然答应得如此爽快，让我惊喜让我意外，此次旅行总算不是纯爷们的队伍了，振奋人心啊！杭州附近的城市，费费劲还是搞到了30日的火车票，算是尘埃落定了。</p><p>30日下午，三人分别从不同的三个城市（无锡，杭州，马鞍山）出发，经历火车时间也差不多（5H），就这么开始这次疯子旅行。说是一群疯子，其实也不过，列几个事实，疯不疯，看着说吧：</p><p>一，30日晚上相聚约九点，找个餐馆就餐，边吃边聊，彼此熟悉熟悉，然后开始找房子。都说人多不好找，我们也确实找了一阵子，十点多找到了。</p><p>二，第二天八点出发，临时看公交，上车，游西湖，随身没有一张地图，只是问了一下团价，觉得太贵，没报，索性两腿跑西湖，一天下来，跑的地点有：三潭印月，博物馆，雷峰塔（人多，没有买门票），钱王祠，苏堤（2.8公里，没走完），花巷观鱼，曲院风荷。小有遗憾，六点多出大门未见音乐喷泉。西湖之景，美不胜收，知足就行，开心便罢。开始寻找吃饭的地方，疯疯癫癫地走了不少路，耗时不少，总算找到一家快餐自助餐厅了。</p><p>三，原想着，吃罢饭，该找住的地方，十一游客特多，房子有限，没想到<em>*</em>来了一句，我们去看电影吧。快八点了，我们连电影院都不知道在哪儿，两部手机开始疯狂地搜索，好不容易找到号称浙江省最大的电影院——胜利剧院，话说今天没票了。不达目的决不罢休。又一次次探索，功夫不有心人，错过了《黄金时代》，迎来了《亲爱的》，九点25分准时上演了。</p><p>四，看完电影，十一点二十分了。我们还能找到住宿吗？我们真的要睡大街吗？我们真的要夜行杭州城吗？真的，这点着实让人担心，又是两部手机的开始漫无目标地搜寻，电话咨询，我的电话下午就关机了，电源准备不足（出行的亲们，引以为戒）。时至凌晨，我们找到价格不高不低的房子，说实在的，个人感觉杭州的租房价格有点奇葩，单间竟然和标准间一个价，或许我孤陋寡闻了吧。</p><p>五，第二天一觉睡到八九点，去了钱塘江，真不是时候，空荡荡的。然后，我们又开始找吃的，不能白来杭州，游的（西湖），乐的（亲爱的），就剩吃喝了。 找了一家比较远的自助餐人均价69元/人，对于我们这几个穷屌丝而言还是可以接受的。下午五点陆续离开杭州，杭州，我们不虚此行。</p><p>一篇流水记，即将尾声。写的总是没有亲身经历的来得实在，来得刺激，来得更有价值。许多事情看起来就那么回事，实际上做起来还真不是那么回事，其中的付出，艰辛与快乐并存，恐怕只有当事人才能真真切切地感受了。用朋友的一句话，那就是——一切尽在不言之中。十一行，算是圆满了，完成了我2014年的旅游计划，聚聚聊聊的目的也算达到了，在此特别感谢二位至亲的鼎力相助，我们共同实现了”西湖梦”。这一次疯子旅行，不靠谱的旅行，给我的收获远不止这些，疯疯狂狂的旅行，简简单单的生活，实实在在的人生，何忧之有？</p><p>最后，来一张具有纪念意义而且大家都见过的小照，以此证明我们的西湖之行：</p><p><img src="/images/myself_04_20190422.jpeg" alt="三潭映月"></p><p>by zhangbc<br>2014-10-06</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;水光潋滟晴方好，山色空蒙雨亦奇。&lt;br&gt;欲把西湖比西子，浓妆淡抹总相宜。&lt;br&gt;    ———-苏轼.《饮湖上初晴后雨》&lt;/p&gt;
-&lt;p&gt;一次疯狂的旅行，一次没有规划的旅行，一群不靠谱的靠谱的旅行， 除此之外，我实在是找不到什么适合的言语来表达这次国庆之行了。岁月总是在不经意
       
     
     </summary>
