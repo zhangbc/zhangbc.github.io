@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习基础,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本系列为《模式识别与机器学习》的读书笔记。  一，相容的⾼斯先验神经⽹络的输⼊单元和输出单元的数量通常由数据集的维度确定，⽽隐含单元的数量 $M$ 是⼀个⾃由的参数，可以通过调节来给出最好的预测性能。 控制神经⽹络的模型复杂度来避免过拟合，根据对多项式曲线拟合问题的讨论，⼀种⽅法是选择⼀个相对⼤的 $M$ 值，然后通过给误差函数增加⼀个正则化项，来控制模型的复杂度。最简单的正则化项是⼆次的，给出">
+<meta name="keywords" content="机器学习基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【机器学习基础】神经网络正则化">
+<meta property="og:url" content="https://zhangbc.github.io/2019/10/18/prml_05_03/index.html">
+<meta property="og:site_name" content="天堂的鸽子">
+<meta property="og:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，相容的⾼斯先验神经⽹络的输⼊单元和输出单元的数量通常由数据集的维度确定，⽽隐含单元的数量 $M$ 是⼀个⾃由的参数，可以通过调节来给出最好的预测性能。 控制神经⽹络的模型复杂度来避免过拟合，根据对多项式曲线拟合问题的讨论，⼀种⽅法是选择⼀个相对⼤的 $M$ 值，然后通过给误差函数增加⼀个正则化项，来控制模型的复杂度。最简单的正则化项是⼆次的，给出">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016102909.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016102918.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016102927.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016102936.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016102950.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016102959.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016103345.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016103406.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016103416.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016103843.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016103853.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016103906.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016103919.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016112651.png">
+<meta property="og:updated_time" content="2019-10-18T15:46:45.543Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【机器学习基础】神经网络正则化">
+<meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，相容的⾼斯先验神经⽹络的输⼊单元和输出单元的数量通常由数据集的维度确定，⽽隐含单元的数量 $M$ 是⼀个⾃由的参数，可以通过调节来给出最好的预测性能。 控制神经⽹络的模型复杂度来避免过拟合，根据对多项式曲线拟合问题的讨论，⼀种⽅法是选择⼀个相对⼤的 $M$ 值，然后通过给误差函数增加⼀个正则化项，来控制模型的复杂度。最简单的正则化项是⼆次的，给出">
+<meta name="twitter:image" content="https://zhangbc.github.io/images/prml_20191016102909.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>【机器学习基础】神经网络正则化 | 天堂的鸽子</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhangbc" class="github-corner" aria-label="View source on GitHub"><svg width="149" height="149" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天堂的鸽子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">天道酬勤</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangbc.github.io/2019/10/18/prml_05_03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bocheng Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天堂的鸽子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【机器学习基础】神经网络正则化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-18T18:02:19+08:00">
+                2019-10-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-line-chart"></i> 阅读
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <span id="busuanzi_value_page_pv"></span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数&#58;</span>
+                
+                <span title="字数">
+                  5.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">
+                  21
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本系列为《模式识别与机器学习》的读书笔记。</p>
+</blockquote>
+<h1 id="一，相容的⾼斯先验"><a href="#一，相容的⾼斯先验" class="headerlink" title="一，相容的⾼斯先验"></a>一，相容的⾼斯先验</h1><p>神经⽹络的输⼊单元和输出单元的数量通常由数据集的维度确定，⽽隐含单元的数量 $M$ 是⼀个⾃由的参数，可以通过调节来给出最好的预测性能。</p>
+<p>控制神经⽹络的模型复杂度来避免过拟合，根据对多项式曲线拟合问题的讨论，⼀种⽅法是选择⼀个相对⼤的 $M$ 值，然后通过给误差函数增加⼀个正则化项，来控制模型的复杂度。最简单的正则化项是⼆次的，给出了正则化的误差函数，形式为</p>
+<script type="math/tex; mode=display">
+\tilde{E}(\boldsymbol{w})=E(\boldsymbol{w})+\frac{\lambda}{2}\boldsymbol{w}^{T}\boldsymbol{w}\tag{5.73}</script><p>这个正则化项也被称为<strong>权值衰减</strong>（<code>weight decay</code>）。模型复杂度可以通过选择正则化系数 $\lambda$ 来确定，正则化项可以表⽰为权值 $\boldsymbol{w}$ 上的零均值⾼斯先验分布的负对数。</p>
+<p>公式(5.73)给出的简单权值衰减的⼀个<strong>局限性</strong>是：它与⽹络映射的确定缩放性质不相容。考虑⼀个多层感知器⽹络，这个⽹络有两层权值和线性输出单元，给出了从输⼊变量集合 $\{x_i\}$ 到输出变量集合 $\{y_k\}$ 的映射。第⼀个隐含层的隐含单元的激活的形式为</p>
+<script type="math/tex; mode=display">
+z_j=h\left(\sum_{i}w_{ji}x_{i}+w_{j0}\right)\tag{5.74}</script><p>输出单元的激活为</p>
+<script type="math/tex; mode=display">
+y_k=\sum_{j}w_{kj}z_j+w_{k0}\tag{5.75}</script><p>假设对输⼊变量进⾏⼀个线性变换，形式为</p>
+<script type="math/tex; mode=display">
+x_i\to\tilde{x}_{i}=ax_i+b\tag{5.76}</script><p>然后根据这个映射对⽹络进⾏调整，使得⽹络给出的映射不变。调整的⽅法为，对从输⼊单元到隐含层单元的权值和偏置也进⾏⼀个对应的线性变换，形式为</p>
+<script type="math/tex; mode=display">
+w_{ji}\to\tilde{w}_{ji}=\frac{1}{a}w_{ji}</script><script type="math/tex; mode=display">
+w_{j0}\to\tilde{w}_{j0}=w_{j0}-\frac{b}{a}\sum_{i}w_{ji}</script><p>⽹络的输出变量的线性变换</p>
+<script type="math/tex; mode=display">
+y_{k}\to\tilde{y}_{k}=cy_k+d\tag{5.77}</script><p>可以通过对第⼆层的权值和偏置进⾏线性变换的⽅式实现。变换的形式为</p>
+<script type="math/tex; mode=display">
+w_{kj}\to\tilde{w}_{kj}=cw_{kj}</script><script type="math/tex; mode=display">
+w_{k0}\to\tilde{w}_{k0}=cw_{k0}+d</script><p>于是要寻找⼀个正则化项，它在上述线性变换和下具有不变性，这需要正则化项应该对于权值的重新缩放不变，对于偏置的平移不变。这样的正则化项为</p>
+<script type="math/tex; mode=display">
+\frac{\lambda_1}{2}\sum_{w\in\mathcal{W_1}}w^2+\frac{\lambda_2}{2}\sum_{w\in\mathcal{W_2}}w^2</script><p>其中 $\mathcal{W}_1$ 表⽰第⼀层的权值集合，$\mathcal{W}_2$ 表⽰第⼆层的权值集合， 偏置未出现在求和式中。这个正则化项在权值的变换下不会发⽣变化，只要正则化参数进⾏下⾯的重新放缩即可：$\lambda_1 \to a^{\frac{1}{2}}\lambda_1$ 和 $\lambda_2 \to a^{-\frac{1}{2}}\lambda_2$  ， 正则化项对应于下⾯形式的先验概率分布。</p>
+<script type="math/tex; mode=display">
+p(\boldsymbol{w}|\alpha_1,\alpha_2)\propto\exp\left(-\frac{\alpha_1}{2}\sum_{w\in\mathcal{W_1}}w^2-\frac{\alpha_2}{2}\sum_{w\in\mathcal{W_2}}w^2\right)\tag{5.78}</script><p>注意， 这种形式的先验是反常的（<code>improper</code>）（不能够被归⼀化），因为偏置参数没有限制。</p>
+<p>图5.15～5.18，控制两层神经⽹络的权值和偏置的先验概率分布的超参数的效果说明。其中，神经⽹络有⼀个输⼊，⼀个线性输出，以及12个隐含结点，隐含结点的激活函数为 $tanh$。先验概率分布通过四个超参数 $\alpha_{1}^{b}$， $\alpha_{1}^{w}$， $\alpha_{2}^{b}$ ， $\alpha_{2}^{w}$ 控制，它们分别表⽰第⼀层的偏置、第⼀层的权值、第⼆层的偏置、第⼆层的权值。</p>
+<p><img src="/images/prml_20191016102909.png" alt="a=1,b=1"></p>
+<p><img src="/images/prml_20191016102918.png" alt="a=1,b=10"></p>
+<p><img src="/images/prml_20191016102927.png" alt="a=1000,b=100"></p>
+<p><img src="/images/prml_20191016102936.png" alt="a=1000,b=1000"></p>
+<p>⼀般地，可以考虑权值被分为任意数量的组 $\mathcal{W}_k$ 的情况下的先验，即</p>
+<script type="math/tex; mode=display">
+p(\boldsymbol{w})\propto\exp\left(-\frac{1}{2}\sum_{k}\alpha_{k}\|\boldsymbol{w}\|_{k}^2\right)\tag{5.79}</script><p>其中，</p>
+<script type="math/tex; mode=display">
+\|\boldsymbol{w}\|_{k}^2=\sum_{j\in\mathcal{W}_k}w_{j}^{2}</script><h1 id="二，早停止"><a href="#二，早停止" class="headerlink" title="二，早停止"></a>二，早停止</h1><p>另⼀种控制⽹络的复杂度的正则化⽅法是<strong>早停⽌</strong>（<code>early stopping</code>）。⾮线性⽹络模型的训练对应于误差函数的迭代减⼩，其中误差函数是关于训练数据集定义的。对于许多⽤于⽹络训练的最优化算法（例如共轭梯度法），误差函数是⼀个关于迭代次数的不增函数。然⽽，在独⽴数据（通常被称为<strong>验证集</strong>）上测量的误差，通常⾸先减⼩，接下来由于模型开始过拟合⽽逐渐增⼤。于是，训练过程可以在关于验证集误差最⼩的点停⽌，这样可以得到⼀个有着较好泛化性能的⽹络。</p>
+<p>图5.19～5.20，训练集误差和验证集误差在典型的训练阶段的⾏为说明。图像给出了误差与迭代次数的函数，数据集为正弦数据集。得到最好的泛化表现的⽬标表明，训练应该在垂直虚线表⽰的点处停⽌，对应于验证集误差的最⼩值。</p>
+<p><img src="/images/prml_20191016102950.png" alt="训练集误差"></p>
+<p><img src="/images/prml_20191016102959.png" alt="验证集误差"></p>
+<p>图5.21，在⼆次误差函数的情况下，关于早停⽌可以给出与权值衰减类似的结果的原因说明。椭圆给出了常数误差函数的轮廓线，$\boldsymbol{w}_{ML}$ 表⽰误差函数的最⼩值。如果权向量的起始点为原点，按照局部负梯度的⽅向移动，那么它会沿着曲线给出的路径移动。通过对训练过程早停⽌，我们找到了⼀个权值向量 $\tilde{\boldsymbol{w}}$。 定性地说，它类似于使⽤简单的权值衰减正则化项，然后最⼩化正则化误差函数的⽅法得到的权值。</p>
+<p><img src="/images/prml_20191016103345.png" alt="⼆次误差函数的早停⽌"></p>
+<h1 id="三，不变性"><a href="#三，不变性" class="headerlink" title="三，不变性"></a>三，不变性</h1><p>寻找让可调节的模型能够表述所需的不变性，⼤致可以分为四类：</p>
+<blockquote>
+<p>1）通过复制训练模式，同时根据要求的不变性进⾏变换，对训练集进⾏扩展。例如，在⼿写数字识别的例⼦中，我们可以将每个样本复制多次，每个复制后的样本中，图像被平移到 了不同的位置。</p>
+<p>2）为误差函数加上⼀个正则化项，⽤来惩罚当输⼊进⾏变换时，输出发⽣的改变。</p>
+<p>3）通过抽取在要求的变换下不发⽣改变的特征，不变性被整合到预处理过程中。任何后续的使⽤这些特征作为输⼊的回归或者分类系统就会具有这些不变性。</p>
+<p>4）把不变性的性质整合到神经⽹络的构建过程中，或者对于相关向量机的⽅法，整合到核函数中。</p>
+</blockquote>
+<p>图5.22，对⼿写数字进⾏⼈⼯形变的说明。 原始图像见左图。 在右图中， 上⾯⼀⾏给出了三个经过了形变的数字，对应的位移场在下⾯⼀⾏给出。这些位移场按照下⾯的⽅法⽣成：在每个像素处， 对唯 ⼀ $\Delta{x}$ , $\Delta{y}\in(0,1)$ 进⾏随机取样，然后分别与宽度为0.01,30,60的⾼斯分布做卷积，进⾏平滑。</p>
+<p><img src="/images/prml_20191016103406.png" alt="⼿写数字进⾏⼈⼯形变"></p>
+<p>图5.23，⼆维输⼊空间的例⼦，展⽰了在⼀个特定的输⼊向量 $\boldsymbol{x}_n$ 上的连续变换的效果。⼀个参数为连续变量 $\xi$ 的⼀维变换作⽤于 $\boldsymbol{x}_n$ 上会使它扫过⼀个⼀维流形 $\mathcal{M}$ 。局部来看，变换的效果可以⽤切向量 $\boldsymbol{\tau}_n$ 来近似。</p>
+<p><img src="/images/prml_20191016103416.png" alt="⼆维输⼊空间"></p>
+<h1 id="四，切线传播"><a href="#四，切线传播" class="headerlink" title="四，切线传播"></a>四，切线传播</h1><p>通过<strong>切线传播</strong>（<code>tangent propagation</code>）的⽅法，可以使⽤正则化来让模型对于输⼊的变换具有不变性（<code>Simard et al.</code>, 1992）。对于⼀个特定的输⼊向量 $\boldsymbol{x}_n$ ，考虑变换产⽣的效果。 假设变换是连续的（例如平移或者旋转，⽽不是镜像翻转），那么变换的模式会扫过 $D$ 维输⼊空间的⼀个流形 $\mathcal{M}$ 。假设变换由单⼀参数 $\xi$ 控制（例如，$\xi$ 可能是旋转的角度）。那么被 $\boldsymbol{x}_n$ 扫过的⼦空间 $\mathcal{M}$ 是⼀维的，并且以 $\xi$ 为参数。令这个变换作⽤于 $\boldsymbol{x}_n$ 上产⽣的向量为 $\boldsymbol{s}(\boldsymbol{x}_n,\xi)$ ， 且  $\boldsymbol{s}(\boldsymbol{x}_n,0)=\boldsymbol{x}$ 。 这样曲线 $\mathcal{M}$ 的切线就由⽅向导数 $\boldsymbol{\tau} =\frac{\partial\boldsymbol{x}}{\partial\xi}$ 给出，且点 $\boldsymbol{x}_n$ 处的切线向量为</p>
+<script type="math/tex; mode=display">
+\boldsymbol{\tau}_n=\frac{\partial{\boldsymbol{s}}(\boldsymbol{x}_n,\xi)}{\partial{\xi}}\Bigg{|}_{\xi=0}\tag{5.80}</script><p>对于输⼊向量进⾏变换之后，⽹络的输出通常会发⽣变化。输出 $k$ 关于 $\xi$ 的导数为</p>
+<script type="math/tex; mode=display">
+\frac{\partial{y_k}}{\partial{\xi}}\Bigg{|}_{\xi=0}=\sum_{i=1}^{D}\frac{\partial{y_k}}{\partial{x_i}}\frac{\partial{x_i}}{\partial{\xi}}\Bigg{|}_{\xi=0}=\sum_{i=1}^{D}J_{ki}\tau_{i}</script><p>其中 $J_{ki}$ 为<code>Jacobian</code>矩阵 $\boldsymbol{J}$ 的第 $(k, i)$ 个元素。这个结果可以⽤于修改标准的误差函数，使得在数据点的邻域之内具有不变性。修改的⽅法为：给原始的误差函数 $E$ 增加⼀个正则化函数 $\Omega$ ，得到下⾯形式的误差函数</p>
+<script type="math/tex; mode=display">
+\tilde{E}=E+\lambda\Omega\tag{5.81}</script><p>其中 $\lambda$ 是正则化系数，且</p>
+<script type="math/tex; mode=display">
+\Omega=\frac{1}{2}\sum_{n}\sum_{k}\left(\frac{\partial{y_{nk}}}{\partial{\xi}}\bigg{|}_{\xi=0}\right)^{2}=\frac{1}{2}\sum_{n}\sum_{k}\left(\sum_{i=1}^{D}J_{nki}\tau_{ni}\right)^{2}</script><p>当⽹络映射函数在每个模式向量的邻域内具有变换不变性时，正则化函数等于零。$\lambda$ 的值确定了训练数据和学习不变性之间的平衡。在实际执⾏过程中，切线向量 $\boldsymbol{\tau}_n$ 可以使⽤有限差近似，即将原始向量 $\boldsymbol{x}$ 从使⽤了⼩的 $\xi$ 进⾏变换后的对应的向量中减去，再除以 $\xi$ 。</p>
+<p>图5.24～5.27，(<code>a</code>)原始的⼿写数字 $\boldsymbol{x}$ ，(<code>b</code>)对应于⽆穷⼩顺时针旋转的切向量 $\boldsymbol{\tau}$ ，其中蓝⾊和黄⾊分别对应于正值和负值，(<code>c</code>)将来⾃这个切向量的微⼩贡献作⽤于原始图像的结果，得到了 $\boldsymbol{x}+\epsilon\boldsymbol{\tau}$  ，其中 $\epsilon=15$ 度。(<code>d</code>)真实的图像旋转，⽤作对⽐。</p>
+<p><img src="/images/prml_20191016103843.png" alt="a"></p>
+<p><img src="/images/prml_20191016103853.png" alt="b"></p>
+<p><img src="/images/prml_20191016103906.png" alt="c"></p>
+<p><img src="/images/prml_20191016103919.png" alt="d"></p>
+<p>如果变换由 $L$ 个参数控制（例如，对于⼆维图像的平移变换与⾯内旋转变换项结合），那么流形 $\mathcal{M}$ 的维度为 $L$ ，对应的正则化项由形如公式 $\Omega$ 的项求和得到，每个变换都对应求和式中的⼀项。如果同时考虑若⼲个变换，并且让⽹络映射对于每个变换分别具有不变性，那么对于变换的组合来说就会具有（局部）不变性（<code>Simard et al.</code>, 1992）。⼀个相关的技术，被称为<strong>切线距离（<code>tangent distance</code>）</strong>，可以⽤来构造基于距离的⽅法（例如最近邻分类器）的不变性（<code>Simard et al.</code>, 1993）。</p>
+<h1 id="五，⽤变换后的数据训练"><a href="#五，⽤变换后的数据训练" class="headerlink" title="五，⽤变换后的数据训练"></a>五，⽤变换后的数据训练</h1><p>考虑由单⼀参数 $\xi$ 控制的变换，且这个变换由函数 $\boldsymbol{s}(\boldsymbol{x},\xi)$ 描述， 其中 $\boldsymbol{s}(\boldsymbol{x}_n,0)=\boldsymbol{x}$ ，也会考虑平⽅和误差函数。对于未经过变换的输⼊，误差函数可以写成 （在⽆限数据集的极限情况下）</p>
+<script type="math/tex; mode=display">
+E=\frac{1}{2}\int\int\{y(\boldsymbol{x})-t\}^{2}p(t|\boldsymbol{x})p(\boldsymbol{x})\mathrm{d}\boldsymbol{x}\mathcal{d}t\tag{5.82}</script><p>为了保持记号的简洁，考虑有⼀个输出单元的⽹络。如果现在考虑每个数据点的⽆穷多个副本，每个副本都由⼀个变换施加了扰动，这个变换的参数为 $\xi$ ，且 $\xi$ 服从概率分布 $p(\xi)$ ，那么在这个扩展的误差函数上定义的误差函数可以写成</p>
+<script type="math/tex; mode=display">
+\tilde{E}=\frac{1}{2}\int\int\int\{y(\boldsymbol{s}(\boldsymbol{x},\xi))-t\}^{2}p(t|\boldsymbol{x})p(\boldsymbol{x})p(\xi)\mathrm{d}\boldsymbol{x}\mathcal{d}t\mathcal{d}\xi\tag{5.83}</script><p>现在假设分布 $p(\xi)$ 的均值为零，⽅差很⼩，即只考虑对原始输⼊向量的⼩的变换。可以对变换函数进⾏关于 $\xi$ 的展开，可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}\boldsymbol{s}(\boldsymbol{x},\xi)&=\boldsymbol{s}(\boldsymbol{x},0)+\xi\frac{\partial}{\partial{\xi}}\boldsymbol{s}(\boldsymbol{x},\xi)\bigg{|}_{\xi=0}+\frac{\xi^{2}}{2}\frac{\partial^{2}}{\partial{\xi^{2}}}\bigg{|}_{\xi=0}+O(\xi^{3})\\&=\boldsymbol{x}+\xi\boldsymbol{\tau}+\frac{1}{2}\xi^{2}\boldsymbol{\tau}^{\prime}+O(\xi^{3})\end{aligned}\tag{5.84}</script><p>其中 $\boldsymbol{\tau}^{\prime}$ 表⽰ $\boldsymbol{s}(\boldsymbol{x},\xi)$ 关于 $\xi$ 的⼆阶导数在 $\xi = 0$ 处的值。这使得可以展开模型函数，可得</p>
+<script type="math/tex; mode=display">
+y(\boldsymbol{s}(\boldsymbol{x},\xi))=y(\boldsymbol{x})+\xi\boldsymbol{\tau}^{T}\nabla{y(\boldsymbol{x})}+\frac{\xi^{2}}{2}[(\boldsymbol{\tau}^{\prime})^{T}\nabla{y(\boldsymbol{x})}+\boldsymbol{\tau}^{T}\nabla\nabla{y(\boldsymbol{x})}\boldsymbol{\tau}]+O(\xi^{3})</script><p>代⼊平均误差函数，有</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \tilde{E} &=\frac{1}{2} \iint\{y(x)-t\}^{2} p(t | \boldsymbol{x}) p(\boldsymbol{x}) \mathrm{d} \boldsymbol{x} \mathrm{d} t \\ &+\mathbb{E}[\xi] \iint\{y(\boldsymbol{x})-t\} \boldsymbol{\tau}^{T} \nabla y(\boldsymbol{x}) p(t | \boldsymbol{x}) p(\boldsymbol{x}) \mathrm{d} \boldsymbol{x} \mathrm{d} t \\ &+\mathbb{E}\left[\xi^{2}\right] \frac{1}{2} \iint\left[\{y(\boldsymbol{x})-t\}\left\{\left(\boldsymbol{\tau}^{\prime}\right)^{T} \nabla y(\boldsymbol{x})+\boldsymbol{\tau}^{T} \nabla \nabla y(\boldsymbol{x}) \boldsymbol{\tau}\right\}\right.\\ &\left.+\left(\boldsymbol{\tau}^{T} \nabla y(\boldsymbol{x})\right)^{2}\right] p(t | \boldsymbol{x}) p(\boldsymbol{x}) \mathrm{d} \boldsymbol{x} \mathrm{d} t+O\left(\xi^{3}\right) \end{aligned}\tag{5.85}</script><p>由于变换的分布的均值为零， 因此有 $\mathbb{E}[\xi] = 0$ ，并且把 $\mathbb{E}[\xi^{2}]$ 记作 $\lambda$ ，省略 $O(\xi^{3})$ 项，这样平均误差函数就变成了</p>
+<script type="math/tex; mode=display">
+\tilde{E}=E+\lambda\Omega\tag{5.86}</script><p>其中 $E$ 是原始的平⽅和误差，正则化项 $\Omega$ 的形式为</p>
+<script type="math/tex; mode=display">
+\Omega=\frac{1}{2}\int\bigg{[}\{y(\boldsymbol{x})-\mathbb{E}[t|\boldsymbol{x}]\}\left\{(\boldsymbol{\tau}^{\prime})^{T}\nabla{y(\boldsymbol{x})}+\boldsymbol{\tau}^{T}\nabla\nabla{y(\boldsymbol{x})\boldsymbol{\tau}}\right\}+(\boldsymbol{\tau}^{T}\nabla{y(\boldsymbol{x})})^{2}p(\boldsymbol{x})\bigg{]}\mathrm{d}\boldsymbol{x}</script><p>进⼀步简化这个正则化项，发现正则化的误差函数等于⾮正则化的误差函数加上⼀个 $O(\xi^{2})$ 的项，因此最⼩化总误差函数的⽹络函数的形式为</p>
+<script type="math/tex; mode=display">
+y(\boldsymbol{x})=\mathbb{E}[t|\boldsymbol{x}]+O(\xi^{3})\tag{5.87}</script><p>从⽽，正则化项中的第⼀项消失，剩下的项为</p>
+<script type="math/tex; mode=display">
+\Omega=\frac{1}{2}\int(\boldsymbol{\tau}^{T}\nabla{y(\boldsymbol{x})})^{2}p(\boldsymbol{x})\mathrm{d}\boldsymbol{x}</script><p>这等价于<strong>切线传播</strong>的正则化项。<br>如果考虑⼀个特殊情况，即输⼊变量的变换只是简单地添加随机噪声，从⽽ $\boldsymbol{x}\to\boldsymbol{x}+\boldsymbol{\xi}$ ，那么正则化项的形式为</p>
+<script type="math/tex; mode=display">
+\Omega=\frac{1}{2}\int\|\nabla{y(\boldsymbol{x})}\|^{2}p(\boldsymbol{x})\mathrm{d}\boldsymbol{x}\tag{5.88}</script><p>这被称为 <strong><code>Tikhonov</code>正则化</strong> （<code>Tikohonov and Arsenin</code>, 1977; <code>Bishop</code>, 1995<code>b</code>）。这个正则化项关于⽹络权值的导数可以使⽤扩展的反向传播算法求出（<code>Bishop</code>, 1993）。对于⼩的噪 声，<code>Tikhonov</code>正则化与对输⼊添加随机噪声有关系，在恰当的情况下，这种做法会提升模型的泛化能⼒。</p>
+<h1 id="六，卷积神经⽹络"><a href="#六，卷积神经⽹络" class="headerlink" title="六，卷积神经⽹络"></a>六，卷积神经⽹络</h1><p>另⼀种构造对输⼊变量的变换具有不变性的模型的⽅法是将不变性的性质融⼊到神经⽹络结构的构建中。这是<strong>卷积神经⽹络</strong>（<code>convolutional neural network</code>）（<code>LeCun et al.</code>, 1989; <code>LeCun et al.</code>, 1998）的基础，它被⼴泛地应⽤于图像处理领域。</p>
+<p>考虑⼿写数字识别这个具体的任务。每个输⼊图像由⼀组像素的灰度值组成，输出为10个数字类别的后验概率分布，数字的种类对于平移、缩放以及（微⼩的）旋转具有不变性。⼀种简单的⽅法是把图像作为⼀个完全链接的神经⽹络的输⼊，假设数据集充分⼤，那么这样的⽹络原则上可以产⽣这个问题的⼀个较好的解，从⽽可以从样本中学习到恰当的不变性。然⽽，这种⽅法忽略了图像的⼀个<strong>关键性质</strong>，即距离较近的像素的相关性要远⼤于距离较远的像素的相关性。这些想法被整合到了<strong>卷积神经⽹络</strong>中，通过下⾯三种⽅式：</p>
+<blockquote>
+<p>（1）局部接收场；<br>（2）权值共享；<br>（3）下采样。</p>
+</blockquote>
+<p>在卷积层， 各个单元被组织在⼀系列平⾯中，每个平⾯被称为⼀个<strong>特征地图</strong>（<code>feature map</code>）。⼀个特征地图中的每个单元只从图像的⼀个⼩的⼦区域接收输⼊，且⼀个特征地图中的所有单元被限制为共享相同的权值。</p>
+<p>例如，⼀个 特征地图可能由100个单元组成， 这些单元被放在了10×10的⽹格中， 每个单元从图像的⼀ 个5×5的像素块接收输⼊。于是，整个特征地图就有25个可调节的参数，加上⼀个可调节的偏置参数。 来⾃⼀个像素块的输⼊值被权值和偏置进⾏线性组合， 线性组合的结果通过公式给出的 $S$ 形⾮线性函数进⾏变换。如果我们把每个单元想象成特征检测器，那么特征地图中的所有单元都检测了输⼊图像中的相同的模式，但是位置不同。由于权值共享，这些单元的激活的计算等价于使⽤⼀个由权向量组成和“核”对图像像素的灰度值进⾏卷积。如果输⼊图像发⽣平移，那么特征地图的激活也会发⽣等量的平移，否则就不发⽣改变。这提供了神经⽹络输出对于输⼊图像的平移和变形的（近似）不变性的基础。由于通常需要检测多个特征来构造⼀个有效的模型，因此通常在卷积层会有多个特征地图，每个都有⾃⼰的权值和偏置参数。</p>
+<p>图5.28，卷积神经⽹络的⼀个例⼦，给出了⼀层卷积单元层跟着⼀个下采样单元层，可能连续使⽤这种层对。</p>
+<p><img src="/images/prml_20191016112651.png" alt="卷积神经⽹络"></p>
+<p>卷积单元的输出构成了⽹络的下采样层的输⼊。对于卷积层的每个特征地图，有⼀个下采样层的单元组成的平⾯，并且下采样层的每个单元从对应的卷积层的特征地图中的⼀个⼩的接收场接收输⼊，这些单元完成了下采样。 </p>
+<p>例如，每个下采样单元可能从对应的特征地图中的⼀个2×2单元的区域中接收输⼊，然后计算这些输⼊的平均值，乘以⼀个可调节的权值和可调节的偏置参数，然后使⽤ $S$ 形⾮线性激活函数进⾏变换。选择的接收场是连续的、⾮重叠的，从⽽ 下采样层的⾏数和列数都是卷积层的⼀半。使⽤这种⽅式，下采样层的单元的响应对于对应的输⼊空间区域中的图⽚的微⼩平移相对不敏感。</p>
+<h1 id="七，软权值共享"><a href="#七，软权值共享" class="headerlink" title="七，软权值共享"></a>七，软权值共享</h1><p>降低具有⼤量权值参数的⽹络复杂度的⼀种⽅法是将权值分组，然后令分组内的权值相等。 然⽽，它只适⽤于限制的形式可以事先确定的问题中。</p>
+<p>考虑<strong>软权值共享</strong> （<code>soft weight sharing</code>）（<code>Nowlan and Hinton</code>, 1992）。这种⽅法中，权值相等的硬限制被替换为 ⼀种形式的正则化，其中权值的分组倾向于取近似的值。<br>可以将权值分为若⼲组，⽽不是将所有权值分为⼀个组。分组的⽅法是使⽤⾼斯混合概率分布。混合分布中，每个⾼斯分量的均值、⽅差，以及混合系数，都会作为可调节的参数在学习过程中被确定。于是，有下⾯形式的概率密度</p>
+<script type="math/tex; mode=display">
+p(\boldsymbol{w})=\prod_{i}p(w_i)\tag{5.89}</script><p>其中，</p>
+<script type="math/tex; mode=display">
+p(w_i)=\sum_{j=1}^{M}\pi_{j}\mathcal{N}(w_i|\mu_j,\sigma_{j}^{2})</script><p>$\pi_j$ 为混合系数。取负对数，即可得到正则化函数，形式为</p>
+<script type="math/tex; mode=display">
+\Omega(\boldsymbol{w})=-\sum_{i}\ln\left(\sum_{j=1}^{M}\pi_{j}\mathcal{N}(w_i|\mu_j,\sigma_{j}^{2})\right)\tag{5.90}</script><p>从⽽，总的误差函数为</p>
+<script type="math/tex; mode=display">
+\tilde{E}(\boldsymbol{w})=E(\boldsymbol{w})+\lambda\Omega(\boldsymbol{w})\tag{5.91}</script><p>其中，$\lambda$ 是正则化系数。这个误差函数同时关于权值 $w_i$ 和混合模型参数 $\{\pi_j,\mu_j,\sigma_j\}$ 进⾏最⼩化。<br>为了最⼩化总的误差函数，把 $\{\pi_j\}$ 当成先验概率，引⼊对应的后验概率，根据相关公式，后验概率由贝叶斯定理给出，形式为</p>
+<script type="math/tex; mode=display">
+\gamma_{j}(w)=\frac{\pi_{j}\mathcal{N}(w|\mu_j,\sigma_{j}^{2})}{\sum_{k}\pi_{k}\mathcal{N}(w|\mu_k,\sigma_{k}^{2})}\tag{5.92}</script><p>总的误差函数关于权值的导数为</p>
+<script type="math/tex; mode=display">
+\frac{\partial{\tilde{E}}}{\partial{w_i}}=\frac{\partial{E}}{\partial{w_i}}+\lambda\sum_{j}\gamma_{j}(w_i)\frac{(w_i-\mu_j)}{\sigma_{j}^{2}}\tag{5.93}</script><p>于是，正则化项的效果是把每个权值拉向第 $j$ 个⾼斯分布的中⼼，拉⼒正⽐于对于给定权值的⾼斯分布的后验概率。<br>误差函数关于⾼斯分布的中⼼的导数为</p>
+<script type="math/tex; mode=display">
+\frac{\partial{\tilde{E}}}{\partial{\mu_j}}=\lambda\sum_{i}\gamma_{j}(w_i)\frac{(\mu_j-w_i)}{\sigma_{j}^{2}}\tag{5.94}</script><p>具有简单的直观含义：把 $\mu_j$ 拉向了权值的平均值，拉⼒为第 $j$ 个⾼斯分量产⽣的权值参数的后验概率。<br>关于⽅差的导数为</p>
+<script type="math/tex; mode=display">
+\frac{\partial{\tilde{E}}}{\partial{\sigma_j}}=\lambda\sum_{i}\gamma_{j}(w_i)\left(\frac{1}{\sigma_j}-\frac{(w_i-\mu_j)^{2}}{\sigma_{j}^{3}}\right)\tag{5.95}</script><p>将 $\sigma_j$ 拉向权值在对应的中⼼ $\mu_j$ 附近的偏差的平⽅的加权平均，加权平均的权系数等于由第 $j$ 个⾼斯分量产⽣的权值参数的后验概率。注意，在实际执⾏过程中，引⼊⼀个新的变量 $\xi_j$ ，它由下式定义</p>
+<script type="math/tex; mode=display">
+\sigma_{j}^{2}=\exp(\xi_j)\tag{5.96}</script><p>并且，最⼩化的过程是关于 $\xi_j$ 进⾏的，这确保了参数 $\sigma_j$ 是正数。</p>
+<p>对于关于混合系数 $\pi_j$ 的导数，需要考虑下⾯的限制条件</p>
+<script type="math/tex; mode=display">
+\sum_{j}\pi_{j}=1,    0 \le \pi_j \le 1</script><p>将混合系数通过⼀组辅助变量 $\{\eta_j\}$ ⽤<code>softmax</code>函数表⽰，即</p>
+<script type="math/tex; mode=display">
+\pi_j=\frac{\exp(\eta_j)}{\sum_{k=1}^{M}\exp(\eta_k)}\tag{5.97}</script><p>正则化的误差函数关于 $\{\eta_j\}$ 的导数的形式为</p>
+<script type="math/tex; mode=display">
+\frac{\partial{\tilde{E}}}{\partial{\eta_{j}}}=\sum_{i}\{\pi_j-\gamma_j(w_j)\}\tag{5.98}</script><p>由此可见，$\pi_j$ 被拉向第 $j$ 个⾼斯分量的平均后验概率。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechatpay.jpeg" alt="Bocheng Zhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Bocheng Zhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhangbc.github.io/2019/10/18/prml_05_03/" title="【机器学习基础】神经网络正则化">https://zhangbc.github.io/2019/10/18/prml_05_03/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning-foundation/" rel="tag"> <i class="fa fa-tag"> 机器学习基础</i></a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/16/prml_05_02/" rel="next" title="【机器学习基础】Hessian矩阵">
+                <i class="fa fa-chevron-left"></i> 【机器学习基础】Hessian矩阵
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/18/prml_05_04/" rel="prev" title="【机器学习基础】贝叶斯神经网络">
+                【机器学习基础】贝叶斯神经网络 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+  <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Bocheng Zhang">
+            
+              <p class="site-author-name" itemprop="name">Bocheng Zhang</p>
+              <p class="site-description motion-element" itemprop="description">每天积累一点，学习一点，只有不坚持的，没有做不到的！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/TIANTANGDEGEZI" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-feed"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhangbocheng189@126.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://theme-next.iissnan.com/theme-settings.html" title="NexT文档" target="_blank">NexT文档</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一，相容的⾼斯先验"><span class="nav-text">一，相容的⾼斯先验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二，早停止"><span class="nav-text">二，早停止</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三，不变性"><span class="nav-text">三，不变性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四，切线传播"><span class="nav-text">四，切线传播</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五，⽤变换后的数据训练"><span class="nav-text">五，⽤变换后的数据训练</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六，卷积神经⽹络"><span class="nav-text">六，卷积神经⽹络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七，软权值共享"><span class="nav-text">七，软权值共享</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bocheng Zhang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站字数统计&#58;</span>
+    
+    <span title="本站字数统计">144.9k</span>
+  
+</div>
+
+
+  <div class="powered-by">版权归 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 所有</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 总访客
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script scr="/js/scr/md5.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'c3e9e61886d65422eafe',
+          clientSecret: '5e136f2fd1ac0f977bbb2853e5f5798ef45e05d4',
+          repo: 'zhangbc.github.io',
+          owner: 'zhangbc',
+          admin: ['zhangbc'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.4"></script>
+
+
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
