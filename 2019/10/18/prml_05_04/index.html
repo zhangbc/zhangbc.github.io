@@ -110,7 +110,7 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016161835.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016163025.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191016163032.png">
-<meta property="og:updated_time" content="2019-10-18T15:53:22.804Z">
+<meta property="og:updated_time" content="2019-10-22T09:18:23.784Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【机器学习基础】贝叶斯神经网络">
 <meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，混合密度网络作为逆问题，考虑机械臂的运动学问题。正向问题（forward problem）是在给定连接角的情况下求解机械臂末端的位置，这个问题有唯⼀解。然⽽，在实际应⽤中，我们想把机械臂末端移动到⼀个具体的位置，为了完成移动，必须设定合适的连接角。正向问题通常对应于物理系统的因果关系，通常有唯⼀解。 图5.29～5.30，图5.29给展⽰了⼀个具">
@@ -563,7 +563,7 @@ p(a|\boldsymbol{x},\mathcal{D})=\int\delta(a-a_{MAP}(\boldsymbol{x})-\boldsymbol
 <script type="math/tex; mode=display">
 p(t=1|\boldsymbol{x},\mathcal{D})=\int \delta(a)p(a|\boldsymbol{w},\mathcal{D})\mathrm{d}a\tag{5.135}</script><p>⾼斯分布与<code>logistic sigmoid</code>函数的卷积是⽆法计算的。于是</p>
 <script type="math/tex; mode=display">
-p(t=1|\boldsymbol{x},\mathcal{D})=\sigma\left(\kappa(\sigma_{a}^{2})a_{MAP}\right)\tag{5.136}</script><p>图 5.39～5.40，对于⼀个具有8个隐含结点带有 $tanh$ 激活函数和⼀个<code>logistic sigmoid</code>输出结点的贝叶斯⽹络应⽤拉 普拉斯近似的说明。权参数使⽤缩放的共轭梯度⽅法得到，超参数 $\alpha$ 使⽤模型证据框架确定。图5.39是使⽤基于参数的 $\boldsymbol{w}_{MAP}$ 的点估计的简单近似得到的结果，其中绿⾊曲线表⽰ $y = 0.5$ 的决策边界，其他的轮廓线对应于 $y = 0.1, 0.3, 0.7$ 和 $0.9$ 的输出概率。图5.40是使⽤公式(5.136)得到的对应的结果。注意，求边缘概率分布的效果是扩散了轮廓线，使得预测的置信度变低，从⽽在每个输⼊点 $\boldsymbol{x}$ 处，后验概 率分布向着 $0.5$ 的⽅向偏移，⽽ $y = 0.5$ 的边界本⾝不受影响。</p>
+p(t=1|\boldsymbol{x},\mathcal{D})=\sigma\left(\kappa(\sigma_{a}^{2})a_{MAP}\right)\tag{5.136}</script><p>图5.39～5.40，对于⼀个具有8个隐含结点带有 $tanh$ 激活函数和⼀个<code>logistic sigmoid</code>输出结点的贝叶斯⽹络应⽤拉 普拉斯近似的说明。权参数使⽤缩放的共轭梯度⽅法得到，超参数 $\alpha$ 使⽤模型证据框架确定。图5.39是使⽤基于参数的 $\boldsymbol{w}_{MAP}$ 的点估计的简单近似得到的结果，其中绿⾊曲线表⽰ $y = 0.5$ 的决策边界，其他的轮廓线对应于 $y = 0.1, 0.3, 0.7$ 和 $0.9$ 的输出概率。图5.40是使⽤公式(5.136)得到的对应的结果。注意，求边缘概率分布的效果是扩散了轮廓线，使得预测的置信度变低，从⽽在每个输⼊点 $\boldsymbol{x}$ 处，后验概 率分布向着 $0.5$ 的⽅向偏移，⽽ $y = 0.5$ 的边界本⾝不受影响。</p>
 <p><img src="/images/prml_20191016163025.png" alt="点估计"></p>
 <p><img src="/images/prml_20191016163032.png" alt="卷积"></p>
 
@@ -653,6 +653,10 @@ p(t=1|\boldsymbol{x},\mathcal{D})=\sigma\left(\kappa(\sigma_{a}^{2})a_{MAP}\righ
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/22/prml_06/" rel="prev" title="【机器学习基础】核方法">
+                【机器学习基础】核方法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -772,7 +776,7 @@ p(t=1|\boldsymbol{x},\mathcal{D})=\sigma\left(\kappa(\sigma_{a}^{2})a_{MAP}\righ
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -897,7 +901,7 @@ p(t=1|\boldsymbol{x},\mathcal{D})=\sigma\left(\kappa(\sigma_{a}^{2})a_{MAP}\righ
     
       <span class="post-meta-item-text">本站字数统计&#58;</span>
     
-    <span title="本站字数统计">144.9k</span>
+    <span title="本站字数统计">154.3k</span>
   
 </div>
 
