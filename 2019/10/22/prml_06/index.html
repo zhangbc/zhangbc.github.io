@@ -122,7 +122,7 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191021105525.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191021171241.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191021171249.png">
-<meta property="og:updated_time" content="2019-10-23T01:52:10.740Z">
+<meta property="og:updated_time" content="2019-10-23T02:11:03.890Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【机器学习基础】核方法">
 <meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，对偶表示有这样⼀类模式识别的技术：训练数据点或者它的⼀个⼦集在预测阶段仍然保留并且被使⽤。许多线性参数模型可以被转化为⼀个等价的“对偶表⽰”。对偶表⽰中，预测的基础也是在训练数据点处计算的核函数（kernel function）的线性组合。对于基于固定⾮线性特征空间（feature space）映射 $\boldsymbol{\phi}(\bol">
@@ -715,7 +715,7 @@ p(\mathbf{t}_N|\boldsymbol{\theta})=\int p(\mathbf{t}_N|\boldsymbol{a}_N)p(\bold
 <script type="math/tex; mode=display">
 \frac{\partial{a_{n}^{*}}}{\partial\theta_j}=\frac{\partial{\boldsymbol{C}_{N}}}{\partial\theta_j}(\mathbf{t}_N-\boldsymbol{\sigma}_N)-\boldsymbol{C}_N\boldsymbol{W}_N\frac{\partial{a_{n}^{*}}}{\partial\theta_j}\tag{6.67}</script><p>整理，可得</p>
 <script type="math/tex; mode=display">
-\frac{\partial{a_{n}^{*}}}{\partial\theta_j}=(\boldsymbol{I}+\boldsymbol{C}_N\boldsymbol{W}_N)^{-1}\frac{\partial{\boldsymbol{C}_{N}}}{\partial\theta_j}(\mathbf{t}_N-\boldsymbol{\theta}_N)\tag{6.68}</script><p>如图6.23～6.24，使⽤⾼斯过程进⾏分类的说明。图6.23给出了数据点，以及来⾃真实概率分布的最优决策边界（绿 ⾊），还有来⾃⾼斯过程分类器的决策边界（⿊⾊）。图6.24给出了蓝⾊类别和红⾊类别的预测后验概率分布，以及⾼斯过程决策边界。</p>
+\frac{\partial{a_{n}^{*}}}{\partial\theta_j}=(\boldsymbol{I}+\boldsymbol{C}_N\boldsymbol{W}_N)^{-1}\frac{\partial{\boldsymbol{C}_{N}}}{\partial\theta_j}(\mathbf{t}_N-\boldsymbol{\theta}_N)\tag{6.68}</script><p>如图6.23～6.24，使⽤⾼斯过程进⾏分类的说明。图6.23给出了数据点，以及来⾃真实概率分布的最优决策边界（绿⾊），还有来⾃⾼斯过程分类器的决策边界（⿊⾊）。图6.24给出了蓝⾊类别和红⾊类别的预测后验概率分布，以及⾼斯过程决策边界。</p>
 <p><img src="/images/prml_20191021171241.png" alt="数据点"></p>
 <p><img src="/images/prml_20191021171249.png" alt="预测后验概率分布"></p>
 <h2 id="7，与神经⽹络的联系"><a href="#7，与神经⽹络的联系" class="headerlink" title="7，与神经⽹络的联系"></a>7，与神经⽹络的联系</h2><p>神经⽹络可以表⽰的函数的范围由隐含单元的数量 $M$ 控制， 并且对于⾜够⼤的 $M$ ，⼀个两层神经⽹络可以以任意精度近似任意给定的函数。在最⼤似然的框架中，隐含单元的数量需要有⼀定的限制（根据训练集的规模确定限制的程度），来避免过拟合现象。在贝叶斯神经⽹络中， 参数向量 $\boldsymbol{w}$ 上的先验分布以及⽹络函数 $f(\boldsymbol{x},\boldsymbol{w})$ 产⽣了函数 $y(\boldsymbol{x})$ 上的先验概率分布，其中 $\boldsymbol{y}$ 是⽹络输出向量。<code>Neal</code>（1996）已经证明，在极限 $M \to \infty$ 的情况下，对 于 $\boldsymbol{w}$ 的⼀⼤类先验分布，神经⽹络产⽣的函数的分布将会趋于⾼斯过程。在 这种极限情况下，神经⽹络的输出变量会变为相互独⽴。神经⽹络的优势之⼀是输出之间共享隐含单元，因此它们可以互相“借统计优势”，即与每个隐含结点关联的权值被所有的输出变量影响，⽽不是只被它们中的某⼀个影响。</p>
@@ -806,6 +806,10 @@ p(\mathbf{t}_N|\boldsymbol{\theta})=\int p(\mathbf{t}_N|\boldsymbol{a}_N)p(\bold
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/24/prml_07_01/" rel="prev" title="【机器学习基础】最大边缘分类器">
+                【机器学习基础】最大边缘分类器 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -925,7 +929,7 @@ p(\mathbf{t}_N|\boldsymbol{\theta})=\int p(\mathbf{t}_N|\boldsymbol{a}_N)p(\bold
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1050,7 +1054,7 @@ p(\mathbf{t}_N|\boldsymbol{\theta})=\int p(\mathbf{t}_N|\boldsymbol{a}_N)p(\bold
     
       <span class="post-meta-item-text">本站字数统计&#58;</span>
     
-    <span title="本站字数统计">154.3k</span>
+    <span title="本站字数统计">162.7k</span>
   
 </div>
 

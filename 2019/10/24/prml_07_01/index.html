@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习基础,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本系列为《模式识别与机器学习》的读书笔记。  一，最大边缘分类器考察线性模型的⼆分类问题，线性模型的形式为  y(\boldsymbol{x})=\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x})+b\tag{7.1}其中 $\boldsymbol{\phi}(\boldsymbol{x})$ 表⽰⼀个固定的特征空间变换，并且显式地写出了偏置参">
+<meta name="keywords" content="机器学习基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【机器学习基础】最大边缘分类器">
+<meta property="og:url" content="https://zhangbc.github.io/2019/10/24/prml_07_01/index.html">
+<meta property="og:site_name" content="天堂的鸽子">
+<meta property="og:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，最大边缘分类器考察线性模型的⼆分类问题，线性模型的形式为  y(\boldsymbol{x})=\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x})+b\tag{7.1}其中 $\boldsymbol{\phi}(\boldsymbol{x})$ 表⽰⼀个固定的特征空间变换，并且显式地写出了偏置参">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191023102328.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191023102337.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191024104707.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191023105522.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191024113744.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191023112729.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191023113908.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191023114837.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/prml_20191023201238.png">
+<meta property="og:updated_time" content="2019-10-24T12:17:43.677Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【机器学习基础】最大边缘分类器">
+<meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，最大边缘分类器考察线性模型的⼆分类问题，线性模型的形式为  y(\boldsymbol{x})=\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x})+b\tag{7.1}其中 $\boldsymbol{\phi}(\boldsymbol{x})$ 表⽰⼀个固定的特征空间变换，并且显式地写出了偏置参">
+<meta name="twitter:image" content="https://zhangbc.github.io/images/prml_20191023102328.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>【机器学习基础】最大边缘分类器 | 天堂的鸽子</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhangbc" class="github-corner" aria-label="View source on GitHub"><svg width="149" height="149" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天堂的鸽子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">天道酬勤</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangbc.github.io/2019/10/24/prml_07_01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bocheng Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天堂的鸽子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【机器学习基础】最大边缘分类器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-24T19:13:37+08:00">
+                2019-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-line-chart"></i> 阅读
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <span id="busuanzi_value_page_pv"></span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数&#58;</span>
+                
+                <span title="字数">
+                  4.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本系列为《模式识别与机器学习》的读书笔记。</p>
+</blockquote>
+<h1 id="一，最大边缘分类器"><a href="#一，最大边缘分类器" class="headerlink" title="一，最大边缘分类器"></a>一，最大边缘分类器</h1><p>考察线性模型的⼆分类问题，线性模型的形式为</p>
+<script type="math/tex; mode=display">
+y(\boldsymbol{x})=\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x})+b\tag{7.1}</script><p>其中 $\boldsymbol{\phi}(\boldsymbol{x})$ 表⽰⼀个固定的特征空间变换，并且显式地写出了偏置参数 $b$ 。训练数据集由 $N$ 个输⼊向量 $\boldsymbol{x}_1,\dots,\boldsymbol{x}_N$ 组成，对应的⽬标值为 $t_1,\dots,t_N$ ，其中 $t_n\in\{−1, 1\}$ ， 新的数据点 $\boldsymbol{x}$ 根据 $y(\boldsymbol{x})$ 的符号进⾏分类。</p>
+<p>现阶段，假设训练数据集在特征空间中是线性可分的，即根据定义，存在⾄少⼀个参数 $\boldsymbol{w}$ 和 $b$ 的选择⽅式，使得对于 $t_n = +1$ 的点，函数(7.1)都满⾜ $y(\boldsymbol{x}_n)&gt;0$ ，对于 $t_n = −1$ 的点，都有 $y(\boldsymbol{x}_n)<0$ ，从⽽对于所有训练数据点，都有 $t_ny(\boldsymbol{x}_n)>0$ 。</0$></p>
+<p>如果有多个能够精确分类训练数据点的解，那么应该尝试寻找泛化错误最⼩的那个解。 <strong>⽀持向量机</strong>解决这个问题的⽅法是：引⼊<strong>边缘（<code>margin</code>）</strong>的概念，这个概念被<strong>定义</strong>为决策边界与任意样本之间的最⼩距离，如图7.1所⽰。</p>
+<p><img src="/images/prml_20191023102328.png" alt="边缘"></p>
+<p>如图7.2，最⼤化边缘会⽣成对决策边界的⼀个特定的选择，这个决策边界的位置由数据点的⼀个⼦集确定，被称为<strong>⽀持向量</strong>，⽤圆圈表⽰。</p>
+<p><img src="/images/prml_20191023102337.png" alt="⽀持向量"></p>
+<p>在⽀持向量机中，决策边界被选为使边缘最⼤化的那个决策边界。</p>
+<p>点 $\boldsymbol{x}$ 距离由 $y(\boldsymbol{x})=0$ 定义的超平⾯的垂直距离为 $\frac{|y(\boldsymbol{x})|}{||\boldsymbol{w}||}$ ，其中 $y(\boldsymbol{x})$ 的函数形式由公式(7.1)给出，我们感兴趣的是那些能够正确分类所有数据点的解，即对于所有的 $n$ 都有 $t_ny(\boldsymbol{x}_n)&gt;0$ ，因此点 $\boldsymbol{x}_n$ 距离决策⾯的距离为</p>
+<script type="math/tex; mode=display">
+\frac{t_ny(\boldsymbol{x}_n)}{\|\boldsymbol{w}\|}=\frac{t_n(\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x}_n)+b)}{\|\boldsymbol{w}\|}\tag{7.2}</script><p>边缘由数据集⾥垂直距离最近的点 $\boldsymbol{x}_n$ 给出，希望最优化参数 $\boldsymbol{w}$ 和 $b$ ，使得这个距离能够最⼤化。因此最⼤边缘解可以通过下式得到：</p>
+<script type="math/tex; mode=display">
+\underset{\boldsymbol{w}, b}{\arg \max}\left\{\frac{1}{\|\boldsymbol{w}\|} \min _{n}\left[t_{n}\left(\boldsymbol{w}^{T} \boldsymbol{\phi}\left(\boldsymbol{x}_{n}\right)+b\right)\right]\right\}\tag{7.3}</script><p>注意到如果进⾏重新标度 $\boldsymbol{w}\to\kappa\boldsymbol{w}$ 以及 $b\to\kappa{b}$ ， 那么任意点 $\boldsymbol{x}_n$ 距离决策⾯的距离 $\frac{t_ny(\boldsymbol{x}_n)}{||\boldsymbol{w}||}$ 不会发⽣改变。利用这个性质，对于距离决策⾯最近的点，令</p>
+<script type="math/tex; mode=display">
+t_n(\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x}_n)+b)=1</script><p>在这种情况下，所有的数据点会满⾜限制</p>
+<script type="math/tex; mode=display">
+t_n(\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x}_n)+b)\ge1,    n=1\dots,N</script><p>这被称为<strong>决策超平⾯的标准表⽰</strong>。 对于使上式取得等号的数据点，我们说<strong>限制被激活</strong>（<code>active</code>），对于其他的数据点，我们说<strong>限制未激活</strong>（<code>inactive</code>）。根据定义，总会存在⾄少⼀个激活限制，因为总会有⼀个距离最近的点，并且⼀旦边缘被最⼤化，会有⾄少两个激活的限制。这样，最优化问题就简化为了最⼤化 $||\boldsymbol{w}|s|^{-1}$ ，这等价于最⼩化 $||\boldsymbol{w}||^2$ ，因此我们要在上述限制条件下，求解最优化问题</p>
+<script type="math/tex; mode=display">
+\underset{\boldsymbol{w},b}{\arg\min}\frac{1}{2}\|\boldsymbol{w}\|^{2}</script><p>为了解决这个限制的最优化问题，引⼊拉格朗⽇乘数 $a_n\ge0$ 。每个限制条件都对应着⼀个乘数 $a_n$ ，从⽽可得下⾯的拉格朗⽇函数</p>
+<script type="math/tex; mode=display">
+L(\boldsymbol{w},b,\boldsymbol{a})=\frac{1}{2}\|\boldsymbol{w}\|^{2}-\sum_{n=1}^{N}a_n\{t_n(\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x}_n)+b)-1\}\tag{7.4}</script><p>其中 $\boldsymbol{a} = (a_1,\dots,a_N)^{T}$ 。令 $L(\boldsymbol{w},b,\boldsymbol{a})$ 关于 $\boldsymbol{w}$ 和 $b$ 的导数等于零，有</p>
+<script type="math/tex; mode=display">
+\boldsymbol{w}=\sum_{n=1}^{N}a_nt_n\boldsymbol{\phi})(\boldsymbol{x}_n)\\
+\sum_{n=1}^{N}a_nt_n=0</script><p>使⽤这两个条件从 $L(\boldsymbol{w},b,\boldsymbol{a})$ 中消去 $\boldsymbol{a}$ 和 $b$ ，就得到了最⼤化边缘问题的对偶表⽰（<code>dual representation</code>），其中要关于 $\boldsymbol{a}$ 最⼤化</p>
+<script type="math/tex; mode=display">
+\tilde{L}(\boldsymbol{a})=\sum_{n=1}^{N}a_n-\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}a_na_mt_nt_mk(\boldsymbol{x}_n,\boldsymbol{x}_m)\tag{7.5}</script><p>其中 $k(\boldsymbol{x},\boldsymbol{x}^{\prime})=\boldsymbol{\phi}(\boldsymbol{x})^{T}\boldsymbol{\phi}(\boldsymbol{x}^{\prime})$，限制条件为</p>
+<script type="math/tex; mode=display">
+a_n\ge0,n=1\dots,N\\
+\sum_{n=1}^{N}a_nt_n=0</script><p>通过使⽤公式消去 $\boldsymbol{w}$ ，$y(\boldsymbol{x})$ 可以根据参数 $\{a_n\}$ 和核函数表⽰，即</p>
+<script type="math/tex; mode=display">
+y(\boldsymbol{x})=\sum_{n=1}^{N}a_nt_nk(\boldsymbol{x},\boldsymbol{x}_n)+b\tag{7.6}</script><p>满足如下性质：</p>
+<script type="math/tex; mode=display">
+a_n\ge0\\
+t_ny(\boldsymbol{x}_n)-1\ge0\\
+a_n\{t_ny(\boldsymbol{x}_n)-1\}=0</script><p>因此对于每个数据点，要么 $a_n = 0$ ，要么 $t_n y(\boldsymbol{x}_n) = 1$ 。任何使得 $a_n = 0$ 的数据点都不会出现在公式(7.5)的求和式中，因此对新数据点的预测没有作⽤。剩下的数据点被称为<strong>⽀持向量</strong>（<code>support vector</code>）。</p>
+<p>解决了⼆次规划问题，找到了 $\boldsymbol{a}$ 的值之后，注意到⽀持向量  $\boldsymbol{x}_n$ 满⾜ $t_ny(\boldsymbol{x}_n)=1$，就可以确定阈值参数 $b$ 的值，可得</p>
+<script type="math/tex; mode=display">
+t_n\left(\sum_{m\in{\mathcal{S}}}a_mt_mk(\boldsymbol{x}_n,\boldsymbol{x}_m)+b\right)=1\tag{7.7}</script><p>其中 $\mathcal{S}$ 表⽰⽀持向量的下标集合。 ⾸先乘以 $t_n$ ，使⽤ $t_n^2=1$ 的性质，然后对于所有的⽀持向量，整理⽅程，解出 $b$ ，可得</p>
+<script type="math/tex; mode=display">
+b=\frac{1}{N_\mathcal{S}}\sum_{n\in{\mathcal{S}}}\left(t_n-\sum_{m\in{\mathcal{S}}}a_mt_mk(\boldsymbol{x}_n,\boldsymbol{x}_m)\right)\tag{7.8}</script><p>其中 $N_\mathcal{S}$ 是⽀持向量的总数。</p>
+<p> 对于接下来的模型⽐较，可以将最⼤边缘分类器⽤带有简单⼆次正则化项的最⼩化误差函数表⽰，形式为</p>
+<script type="math/tex; mode=display">
+\sum_{n=1}^{N}E_{\propto}(y(\boldsymbol{x}_n)t_n-1)+\lambda\|\boldsymbol{w}\|^{2}</script><p>其中$E_{\infty}(z)$ 是⼀个函数，当 $z\ge0$ 时，函数值为零，其他情况下函数值为 $\infty$ 。</p>
+<p>如图7.3，⼆维空间中来⾃两个类别的⼈⼯⽣成数据的例⼦。图中画出了具有⾼斯核函数的⽀持向量机的得到的常数 $y(\boldsymbol{x}_n)$ 的轮廓线。同时给出的时决策边界、边缘边界以及⽀持向量。</p>
+<p><img src="/images/prml_20191024104707.png" alt="具有⾼斯核函数的⽀持向量机"></p>
+<h1 id="二，重叠类分布"><a href="#二，重叠类分布" class="headerlink" title="二，重叠类分布"></a>二，重叠类分布</h1><p>在实际中，类条件分布可能重叠，这种情况下对训练数据的精确划分会导致较差的泛化能⼒。</p>
+<p>引⼊<strong>松弛变量</strong>（<code>slack variable</code>）$\xi_n\ge 0$ ，其中 $n = 1,\dots, N$ ，每个训练数据点都有⼀个<strong>松弛变量</strong>（<code>Bennett</code>, 1992; <code>Cortes and Vapnik</code>, 1995）。对于位于正确的边缘边界内部的点或者边界上的点，$\xi_n=0$ ，对于其他点，$\xi_n=|t_n−y(\boldsymbol{x}_n)|$ 。 因此，对于位于决策边界 $y(\boldsymbol{x}n)=0$ 上的点，$\xi_n=1$ ，并且 $\xi_n&gt;1$ 的点就是被误分类的点。 从而分类的限制条件为</p>
+<script type="math/tex; mode=display">
+t_ny(\boldsymbol{x}_n)\ge1-\xi_n,n=1,\dots,N</script><p>其中松弛变量被限制为满⾜ $\xi_n \ge 0$ 。$\xi_n = 0$ 的数据点被正确分类，要么位于边缘上，要么在边缘的正确⼀侧。$0 &lt; \xi_n\le 1$ 的点位于边缘内部，但是在决策边界的正确⼀侧。$\xi_n &gt; 1$ 的点位于决策边界的错误⼀侧，是被错误分类的点。这种⽅法有时被描述成放宽边缘的硬限制，得到⼀个<strong>软边缘</strong>（<code>soft margin</code>），并且允许⼀些训练数据点被错分。</p>
+<p>如图7.4，松弛变量 $\xi_n \ge 0$ 的说明。圆圈标记的数据点是⽀持向量。</p>
+<p><img src="/images/prml_20191023105522.png" alt="松弛变量"></p>
+<p> 现在的⽬标是最⼤化边缘，同时以⼀种⽐较柔和的⽅式惩罚位于边缘边界错误⼀侧的点。于是最⼩化</p>
+<script type="math/tex; mode=display">
+C\sum_{n=1}^{N}\xi_n+\frac{1}{2}\|\boldsymbol{w}_n\|^{2}</script><p>其中参数 $C&gt;0$ 控制了松弛变量惩罚与边缘之间的折中。由于任何被误分类的数据点都有 $\xi_n&gt;1$ ，因此 $\sum_{n}\xi_n$ 是误分类数据点数量的上界。于是，参数 $C$ 类似于（作⽤相反的）正则化系数，因为它控制了最⼩化训练误差与模型复杂度之间的折中。</p>
+<p>现在想要在限制条件以及 $\xi_n \ge 0$ 的条件下最⼩化式，对应的拉格朗⽇函数为</p>
+<script type="math/tex; mode=display">
+L(\boldsymbol{w},b,\boldsymbol{\xi},\boldsymbol{a},\boldsymbol{\mu})=\frac{1}{2}\|\boldsymbol{w}\|^{2}+C\sum_{n=1}^{N}\xi_n-\sum_{n=1}^{N}a_n\{t_ny(\boldsymbol{x}_n)-1+\xi_n\}-\sum_{n=1}^{N}\mu_n\xi_n\tag{7.9}</script><p>其中 $\{a_n \ge 0\}$ 和 $\{\mu_n \ge 0\}$ 是拉格朗⽇乘数。对应的 <strong><code>KKT</code></strong> 条件为</p>
+<script type="math/tex; mode=display">
+a_n\ge0\\
+t_ny(\boldsymbol{x}_n)-1+\xi_n\ge0\\
+a_n(t_ny(\boldsymbol{x}_n)-1+\xi_n)=0\\
+\mu_n\ge0\\
+\xi_n\ge0\\
+\mu_n\xi_n=0</script><p>其中 $n = 1,\dots, N$ 。</p>
+<p>现在对 $\boldsymbol{w}$ , $b$ 和 $\{\xi_n\}$ 进⾏最优化，有</p>
+<script type="math/tex; mode=display">
+\frac{\partial{L}}{\partial\boldsymbol{w}}=0\Rightarrow\boldsymbol{w}=\sum_{n=1}^{N}a_nt_n\boldsymbol{\phi}(\boldsymbol{x}_n)\\
+\frac{\partial{L}}{\partial{b}}=0\Rightarrow\sum_{n=1}^{N}a_nt_n=0\\
+\frac{\partial{L}}{\partial{\xi_n}}=0\Rightarrow{a_n}=C-\mu_n\tag{7.10}</script><p>从而，</p>
+<script type="math/tex; mode=display">
+\tilde{L}(\boldsymbol{a})=\sum_{n=1}^{N}a_n-\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}a_na_mt_nt_mk(\boldsymbol{x}_n,\boldsymbol{x}_m)\tag{7.11}</script><p>关于对偶变量 $\{a_n\}$ 最⼤化公式(7.11)时必须要满⾜以下限制</p>
+<script type="math/tex; mode=display">
+0\le{a_n}\le{C}\\
+\sum_{n=1}^{N}a_nt_n=0</script><p>其中 $n = 1,\dots, N$ 。 第一个公式被称为<strong>盒限制</strong>（<code>box constraint</code>）。</p>
+<p>对于数据点的⼀个⼦集，有 $a_n = 0$ ，在这种情况下这些数据点对于预测模型没有贡献；剩余的数据点组成了⽀持向量。这些数据点满⾜ $a_n &gt; 0$ ，必须满⾜</p>
+<script type="math/tex; mode=display">
+t_ny(\boldsymbol{x}_n)=1-\xi_n\tag{7.12}</script><p>如果 $a_n &lt; C$ ，那么 $\mu_n &gt; 0$ ，则有 $\xi_n = 0$ ，从⽽这些点位于边缘上；$a_n = C$ 的点位于边缘内部，并且如果 $\xi_n \le 1$ 则被正确分类，如果 $\xi_n &gt; 1$ 则分类错误。</p>
+<p> 为确定公式(7.1)中的参数 $b$ ，注意到 $0&lt;a_n&lt;C$ 的⽀持向量满⾜ $\xi_n = 0$ 即 $t_ny(\boldsymbol{x}_n)=1$ ，因此就满⾜</p>
+<script type="math/tex; mode=display">
+t_n\left(\sum_{m\in{S}}a_mt_mk(\boldsymbol{x}_n,\boldsymbol{x}_m)+b\right)=1\tag{7.13}</script><p>通过求平均的⽅式得</p>
+<script type="math/tex; mode=display">
+b=\frac{1}{N_\mathcal{M}}\sum_{n\in{\mathcal{M}}}\left(t_n-\sum_{m\in{\mathcal{S}}}a_mt_mk(\boldsymbol{x}_n,\boldsymbol{x}_m)\right)\tag{7.14}</script><p>其中 $\mathcal{M}$ 表⽰满⾜ $0 &lt; a_n &lt; C$ 的数据点的下标的集合。</p>
+<p>⽀持向量机的另⼀种等价形式， 被称为 $\nu-SVM$，由<code>Schölkopf et al.</code>（2000）提出。它涉及到最⼩化</p>
+<script type="math/tex; mode=display">
+\tilde{L}(\boldsymbol{a})=-\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}a_na_mt_nt_mk(\boldsymbol{x}_n,\boldsymbol{x}_m)\tag{7.15}</script><p>限制条件为</p>
+<script type="math/tex; mode=display">
+0\le{a_n}\le\frac{1}{N}\\
+\sum_{n=1}^{N}a_nt_n=0\\
+\sum_{n=1}^{N}a_n\ge\nu</script><p>这种⽅法的<strong>优点</strong>是，参数 $\nu$ 代替了参数 $C$ ，它既可以被看做<strong>边缘错误</strong>（<code>margin error</code>）（$\xi_n &gt; 0$ 的点，因此就是位于边缘边界错误⼀侧的数据点，它可能被误分类也可能没被误分类）的上界， 也可以被看做⽀持向量⽐例的下界。</p>
+<p>如图7.5，$\nu-SVM$ 应⽤于⼆维不可分数据集的例⼦，圆圈表⽰⽀持向量。这⾥使⽤了形如 $\exp(-\gamma| \boldsymbol{x}−\boldsymbol{x}^{\prime}|^{2})$ 的⾼斯核，且 $\gamma = 0.45$ 。</p>
+<p><img src="/images/prml_20191024113744.png" alt="ν-SVM"></p>
+<p>⼀种最流⾏的训练⽀持向量机的⽅法被称为<strong>顺序最⼩化优化</strong>（<code>sequential minimal optimization</code>），或者称为  <strong><code>SMO</code></strong>（<code>Platt</code>, 1999），这种⽅法考虑了分块⽅法的极限情况，每次只考虑两个拉格朗⽇乘数。</p>
+<p>考虑⼀个简单的⼆阶多项式核，⽤它的分量进⾏展开</p>
+<script type="math/tex; mode=display">
+\begin{aligned}k(\boldsymbol{x},\boldsymbol{z})&=(1+\boldsymbol{x}^{T}\boldsymbol{z})^{2}\\&=(1+x_1z_1+x_2z_2)^{2}\\&=1+2x_1z_1+2x_2z_2+x_1^2z_1^2+2x_1z_1x_2z_2+x_2^2z_2^2\\&=(1,\sqrt{2}x_1,\sqrt{2}x_2,x_1^2,\sqrt{2}x_1x_2,x_2^2)(1,\sqrt{2}z_1,\sqrt{2}z_2,z_1^2,\sqrt{2}z_1z_2,z_2^2)^{T}\\&=\boldsymbol{\phi}(\boldsymbol{x})^{T}\boldsymbol{\phi}(\boldsymbol{z})\end{aligned}\tag{7.16}</script><p>于是这个核函数表⽰六维特征空间中的⼀个内积， 其中输⼊空间到特征空间的映射由向量函数 $\boldsymbol{\phi}(\boldsymbol{x})$ 描述，然⽽对这些特征加权的系数被限制为具体的形式。因此，原始⼆维空间  $\boldsymbol{x}$ 中的 任意点集都会被限制到这个六维特征空间中的⼆维⾮线性流形中。</p>
+<p><strong>⽀持向量机不提供概率输出，⽽是对新的输⼊进⾏分类决策。</strong> <code>Veropoulos et al.</code>（1999）讨论了对 <strong><code>SVM</code></strong> 的修改，使其能控制假阳性和假阴性之间的折中。然⽽，如果希望把 <strong><code>SVM</code></strong> ⽤作较⼤的概率系统中的⼀个模块，那么需要对于新的输 ⼊ $\boldsymbol{x}$ 的类别标签t的概率预测。为了解决这个问题，<code>Platt</code>（2000）提出了使⽤ <code>logistic sigmoid</code> 函数拟合训练过的⽀持向量机的输出的⽅法。具体来说，需要求解的条件概率被假设具有下⾯的形式</p>
+<script type="math/tex; mode=display">
+p(t=1|\boldsymbol{x})=\sigma(Ay(\boldsymbol{x})+B)\tag{7.17}</script><p>其中 $y(\boldsymbol{x})$ 由公式(7.1)定义， 参数 $A$ 和 $B$ 的值通过最⼩化交叉熵误差函数的⽅式确定。 交叉熵误差函数根据由 $y(\boldsymbol{x}_n)$ 和 $t_n$ 组成的训练数据集定义。⽤于拟合<code>sigmoid</code>函数的数据需要独⽴于训练原始 <strong><code>SVM</code></strong> 的数据，为了避免严重的过拟合现象。</p>
+<h1 id="三，与-logistic-回归的关系"><a href="#三，与-logistic-回归的关系" class="headerlink" title="三，与 logistic 回归的关系"></a>三，与 <strong><code>logistic</code></strong> 回归的关系</h1><p>对于位于边缘边界正确⼀侧的数据点，即满⾜ $y_nt_n\ge1$ 的数据点，有 $\xi_n = 0$ ，对于剩余的数据点，有 $\xi_n = 1 − y_nt_n$ 。因此⽬标函数可以写成（忽略整体的具有可乘性的常数）</p>
+<script type="math/tex; mode=display">
+\sum_{n=1}^{N}E_{SV}(y_nt_n)+\lambda\|\boldsymbol{w}\|^{2}</script><p>其中 $\lambda = (2C)^{−1}$ ，$E_{SV} (·)$ 是<strong>铰链（<code>hinge</code>）误差函数</strong>，定义为</p>
+<script type="math/tex; mode=display">
+E_{SV}(y_nt_n)=[1-y_nt_n]_{+}</script><p>其中 $[·]_+$ 表⽰正数部分。</p>
+<p>如图7.6，⽀持向量机使⽤的“铰链”误差函数的图像，⽤蓝⾊表⽰。同时画出的还有<code>logistic</code>回归的误差函数，使⽤因⼦ $\frac{1}{\ln(2)}$ 重新放缩，从⽽通过点 $(0, 1)$ ，⽤红⾊表⽰，还画出了误分类误差函数（⿊⾊）和平⽅误差函数（绿⾊）。</p>
+<p><img src="/images/prml_20191023112729.png" alt="铰链误差函数"></p>
+<p>考虑<code>logistic</code>回归模型，发现⽐较⽅便的做法是对⽬标变量 $t\in\{0, 1\}$ 进⾏操作。为了与⽀持向量机进⾏对⽐，⾸先使⽤⽬标变量 $t\in\{−1,1\}$ 重写最⼤似然<code>logistic</code>回归函数。注意到 $p(t=1|y)=\sigma(y)$ ，其中 $y(\boldsymbol{x})$ 由公式(7.1)给出，$\sigma(y)$ 是的 <code>logistic sigmoid</code>函数。因此有 $p(t=−1|y)=1−\sigma(y)=\sigma(−y)$ ，从而</p>
+<script type="math/tex; mode=display">
+p(t|y)=\sigma(yt)\tag{7.18}</script><p>从这个式⼦中可以通过对似然函数取负对数的⽅式构造⼀个误差函数。带有正则化项的误差函数的形式为</p>
+<script type="math/tex; mode=display">
+\sum_{n=1}^{N}E_{LR}(y_nt_n)+\lambda\|\boldsymbol{w}\|^{2}</script><p>其中</p>
+<script type="math/tex; mode=display">
+E_{LR}(y_nt_n)=\ln(1+\exp(-yt))</script><p><code>logistic</code>误差函数与铰链损失都可以看成对误分类误差函数的连续近似。有时⽤于解决分类问题的另⼀个连续近似的误差函数是平⽅和误差函数。但是，它具有下⾯的<strong>性质</strong>：它会着重强调那些被正确分类的在正确的⼀侧距离决策边界较远的点。</p>
+<h1 id="四，多类-SVM"><a href="#四，多类-SVM" class="headerlink" title="四，多类 SVM"></a>四，多类 <strong><code>SVM</code></strong></h1><p>将多个两类 <strong><code>SVM</code></strong> 组合构造多类分类器的⼀种常⽤的⽅法（<code>Vapnik</code>, 1998）是构建 $K$ 个独⽴的 <strong><code>SVM</code></strong> ，其中第 $k$ 个模型 $y_k(\boldsymbol{x})$ 在训练时，使⽤来⾃类别 $\mathcal{C}_k$ 的数据作为正例，使⽤来⾃剩余的 $K − 1$ 个类别的数据作为负例。这被称为“<strong>1对剩余</strong>”（<code>one-versus-the-rest</code>）⽅法。然⽽使⽤独⽴的分类器进⾏决策会产⽣不相容的结果，其中⼀个输⼊会同时被分配到多个类别中，这个问题有时可以这样解决：对于新的输⼊ $\boldsymbol{x}$ ，使⽤下式做预测</p>
+<script type="math/tex; mode=display">
+y(\boldsymbol{x})=\underset{k}{\max}y_k(\boldsymbol{x})\tag{7.19}</script><p>不幸的是，这种启发式的⽅法会产⽣⼀个<strong>问题</strong>：不同的分类器是在不同的任务上进⾏训练的，⽆法保证不同分类器产⽣的实数值 $y_k(\boldsymbol{x})$ 具有恰当的标度。</p>
+<p>“<strong>1对剩余</strong>”⽅法的另⼀个<strong>问题</strong>是训练集合不平衡。</p>
+<p><code>Lee et al.</code>（2001）提出了“1对剩余”⽅法的⼀种变体。这种变体修改了⽬标值，使得正例类别的⽬标值为 $+1$，负例类别的⽬标值为 $−\frac{1}{K−1}$ 。</p>
+<p><code>Weston and Watkins</code>（1999）定义了⼀个单⼀⽬标函数⽤来同时训练所有的 $K$ 个 <strong><code>SVM</code></strong> ，基于的是最⼤化每个类别与其余剩余类别的边缘。然⽽，这会导致训练过程变慢，因为这种⽅法需要求解的不是 $N$ 个数据点上的 $K$ 个独⽴的最优化问题（整体代价为 $O(KN^2)$），⽽是要求解⼀个规模为 $(K − 1)N$ 的单⼀的最优化问题，整体代价为 $O(K^2N^2)$ 。</p>
+<p>另⼀种⽅法是在所有可能的类别对之间训练 $\frac{K(K−1)}{2}$ 个不同的⼆分类 <strong><code>SVM</code></strong> ，然后将测试数据点分到具有最⾼“投票数”的类别中去。这种⽅法有时被称为“<strong>1对1</strong>”（<code>one-versus-one</code>）。</p>
+<p>后⼀个问题可以通过将每对分类器组织成有向⽆环图的⽅式解决，这就产⽣了 <strong><code>DAGSVM</code></strong> （<code>Platt et al.</code>, 2000）。对于 $K$ 个类别， <strong><code>DAGSVM</code></strong> 共有 $\frac{K(K−1)}{2}$ 个分类器。每次对新的测试点分类时，只需要 $K − 1$ 对分类器进⾏计算。选定的分类器是根据遍历图的路径确定的。</p>
+<p><code>Dietterich and Bakiri</code>（1995）提出了⼀种不同的⽅法解决多分类问题。这种⽅法基于的是误差-修正输出编码，并且被<code>Allwein et al.</code>（2000）⽤到⽀持向量机中，这种⽅法可以被看做“1对1”投票⽅法的⼀个推⼴。这种⽅法中，⽤来训练各个分类器的类别划分的⽅式更加⼀般，$K$ 个类别本⾝被表⽰为选定的两类分类器产⽣的响应的集合。结合⼀套合适的解码⽅法，这种⽅法对于错误以及各个分类器的输出的歧义性具有鲁棒性。</p>
+<h1 id="五，回归问题的-SVM"><a href="#五，回归问题的-SVM" class="headerlink" title="五，回归问题的 SVM"></a>五，回归问题的 <strong><code>SVM</code></strong></h1><p>在简单的线性回归模型中， 最⼩化⼀个正则化的误差函数</p>
+<script type="math/tex; mode=display">
+\frac{1}{2}\sum_{n=1}^{N}\{y_n-t_n\}^{2}+\frac{\lambda}{2}\|\boldsymbol{w}\|^{2}</script><p>为了得到稀疏解，⼆次误差函数被替换为⼀个 $\epsilon$ <strong>-不敏感误差函数</strong>（<code>ϵ-insensitive error function</code>） （<code>Vapnik</code>, 1995）。如果预测 $y(\boldsymbol{x})$ 和⽬标 $t$ 之间的差的绝对值⼩于 $\epsilon$，那么这个误差函数给出的误差等于零，其中 $\epsilon &gt; 0$ 。 $\epsilon$ <strong>-不敏感误差函数</strong> 的⼀个简单的例⼦</p>
+<script type="math/tex; mode=display">
+E_{\epsilon}(y(\boldsymbol{x})-t) =
+\begin{cases} 
+0,  & 如果|y(\boldsymbol{w})-t|<\epsilon \\
+|y(\boldsymbol{x})-t|-\epsilon, & 其他情况
+\end{cases}\tag{7.20}</script><p>它在不敏感区域之外，会有⼀个与误差相关联的线性代价。</p>
+<p>如图7.7，$\epsilon$ -不敏感误差函数（红⾊）的图像。在不敏感区域之外，误差函数值随着距离线性增⼤。作为对⽐，同时给出了⼆次误差函数（绿⾊）。</p>
+<p><img src="/images/prml_20191023113908.png" alt="不敏感误差函数"></p>
+<p>于是最⼩化正则化的误差函数，形式为</p>
+<script type="math/tex; mode=display">
+C\sum_{n=1}^{N}E_{\epsilon}(y(\boldsymbol{x})-t_n)+\frac{\lambda}{2}\|\boldsymbol{w}\|^{2}</script><p>其中 $y(\boldsymbol{x})$ 由公式(7.1)给出。</p>
+<p>通过引⼊松弛变量的⽅式，可以重新表达最优化问题。对于每个数据点 $\boldsymbol{x}_n$ ，现在需要两个松弛变量 $\xi_n\ge0$ 和 $\hat{\xi}_n\ge0$ ， 其中 $\xi_n &gt; 0$ 对应于 $t_n &gt; y(\boldsymbol{x}_n)+\epsilon$ 的数据点，$\hat{\xi}&gt;0$ 对应于 $t_n &lt; y(\boldsymbol{x}_n)−\epsilon$ 的数据点。</p>
+<p>如图7.8，<strong><code>SVM</code></strong>回归的说明。图中画出了回归曲线以及 $\epsilon$-不敏感“管道”。同时给出的是松弛变量 $\xi$ 和 $\hat{\xi}$ 的例⼦。 对于 $\epsilon$ -管道上⽅的点，$\xi&gt;0$ 且 $\hat{\xi}=0$ ，对于 $\epsilon$ -管道下⽅的点，$\xi=0$ 且 $\hat{\xi}&gt;0$， 对于 $\epsilon$ -管道内部的点，$\xi=0$ 且 $\hat{\xi}=0$ 。</p>
+<p><img src="/images/prml_20191023114837.png" alt="SVM回归的说明"></p>
+<p>⽬标点位于 $\epsilon$-管道内的条件是 $y_n−\epsilon \le t_n \le y_n+\epsilon$ ，其中 $y_n=y(\boldsymbol{x}_n)$ 。引⼊松弛变量使得数据点能够位于管道之外，只要松弛变量不为零即可。对应的条件变为</p>
+<script type="math/tex; mode=display">
+t_n\le y(\boldsymbol{x}_n)+\epsilon+\xi_n\\
+t_n\ge y(\boldsymbol{x}_n)-\epsilon-\hat{\xi}_n</script><p>⽀持向量回归的误差函数可以写成</p>
+<script type="math/tex; mode=display">
+C\sum_{n=1}^{N}(\xi_n+\hat{\xi}_n)+\frac{\lambda}{2}\|\boldsymbol{w}\|^{2}</script><p>引⼊拉格朗⽇乘数 $a_n\ge0$ , $\hat{a}_n\ge0$ , $\mu_n\ge0$ 以及 $\hat{\mu}_n\ge0$ ，然后最优化拉格朗⽇函数</p>
+<script type="math/tex; mode=display">
+\begin{aligned}L&=C\sum_{n=1}^{N}(\xi_n+\hat{\xi}_n)+\frac{\lambda}{2}\|\boldsymbol{w}\|^{2}-\sum_{n=1}^{N}(\mu_n\xi_n+\hat{\mu}_n\hat{\xi}_n)\\&-\sum_{n=1}^{N}a_n(\epsilon+\xi_n+y_n-t_n)-\sum_{n=1}^{N}\hat{a}_n(\epsilon+\hat{\xi}_n-y_n+t_n)\end{aligned}\tag{7.21}</script><p>令拉格朗⽇函数关于 $\boldsymbol{w}$ , $b$ , $\xi_n$ 和 $\hat{\xi}_n$ 的导数为零，有</p>
+<script type="math/tex; mode=display">
+\frac{\partial{L}}{\partial\boldsymbol{w}}=0\Rightarrow\boldsymbol{w}=\sum_{n=1}^{N}(a_n-\hat{a}_n)\boldsymbol{\phi}(\boldsymbol{x}_n)\\
+\frac{\partial{L}}{\partial{b}}=0\Rightarrow\sum_{n=1}^{N}(a_n-\hat{a}_n)=0\\
+\frac{\partial{L}}{\partial{\xi_n}}=0\Rightarrow{a_n}=C-\mu_n\\
+\frac{\partial{L}}{\partial{\hat{\xi}_n}}=0\Rightarrow{\hat{a}_n}=C-\hat{\mu}_n</script><p>对偶问题涉及到关于 $\{a_n\}$ 和 $\{\hat{a}_n\}$ 最⼤化</p>
+<script type="math/tex; mode=display">
+\begin{aligned}\tilde{L}(\boldsymbol{a},\hat{\boldsymbol{a}})&=-\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}(a_n-\hat{a}_n)(a_m-\hat{a}_m)k(\boldsymbol{x}_n,\boldsymbol{x}_m)\\&-\epsilon\sum_{n=1}^{N}(a_n+\hat{a}_n)+\sum_{n=1}^{N}(a_n-\hat{a}_n)t_n\end{aligned}\tag{7.22}</script><p>其中核 $k(\boldsymbol{x},\boldsymbol{x}^{\prime})=\boldsymbol{\phi}(\boldsymbol{x})^{T}\boldsymbol{\phi}(\boldsymbol{x}^{\prime})$ 。</p>
+<p>从而盒限制</p>
+<script type="math/tex; mode=display">
+0\le a_n \le C\\
+0\le \hat{a}_n \le C</script><p>对于新的输⼊变量，可以使⽤下式进⾏预测</p>
+<script type="math/tex; mode=display">
+y(\boldsymbol{x})=\sum_{n=1}^{N}(a_n-\hat{a}_n)k(\boldsymbol{x},\boldsymbol{x}_n)+b\tag{7.23}</script><p>对应的<code>Karush-Kuhn-Tucker</code>（<code>KKT</code>）条件说明了在解的位置，对偶变量与限制的乘积必须等于零，形式为</p>
+<script type="math/tex; mode=display">
+a_n(\epsilon+\xi_n+y_n-t_n)=0\\
+\hat{a}_n(\epsilon+\hat{\xi}_n-y_n+t_n)=0\\
+(C-a_n)\xi_n=0\\
+(C-\hat{a}_n)\hat{\xi}_n=0</script><p>考虑⼀个数据点，满⾜ $0 &lt; a_n &lt; C$ 。根据公式，⼀定有$\xi_n=0$ ，$\epsilon + y_n − t_n = 0$ 。使⽤公式(7.1)，然后求解 $b$ ，有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}b&=t_n-\epsilon-\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x}_n)\\&=t_n-\epsilon-\sum_{m=1}^{N}(a_m-\hat{a}_m)k(\boldsymbol{x}_n,\boldsymbol{x}_m)\end{aligned}\tag{7.24}</script><p>与分类问题的情形相同，有另⼀种⽤于回归的 <strong><code>SVM</code></strong> 的形式。这种形式的 <strong><code>SVM</code></strong> 中，控制复杂度的参数有⼀个更加直观的意义（<code>Schölkopf et al.</code>, 2000）。特别地，我们不固定不敏感区域 $\epsilon$ 的宽度，⽽是固定位于管道外部的数据点的⽐例 $\nu$ ，涉及到最⼤化</p>
+<script type="math/tex; mode=display">
+\begin{aligned}\tilde{L}(\boldsymbol{a},\hat{\boldsymbol{a}})&=-\frac{1}{2}\sum_{n=1}^{N}\sum_{m=1}^{N}(a_n-\hat{a}_n)(a_m-\hat{a}_m)k(\boldsymbol{x}_n,\boldsymbol{x}_m)\\&+\sum_{n=1}^{N}(a_n-\hat{a}_n)t_n\end{aligned}\tag{7.25}</script><p>限制条件为</p>
+<script type="math/tex; mode=display">
+0\le a_n \le \frac{C}{N}\\
+0\le \hat{a}_n \le \frac{C}{N}\\
+\sum_{n=1}^{N}(a_n-\hat{a}_n)=0\\
+\sum_{n=1}^{N}(a_n+\hat{a}_n)\le\nu C</script><p>如图7.9，$\nu-SVM$ 回归应⽤到⼈⼯⽣成的正弦数据集上的说明，<strong><code>SVM</code></strong> 使⽤了⾼斯核。预测分布曲线为红⾊曲线，$\epsilon$ -不敏感管道对应于阴影区域。此外，数据点⽤绿⾊表⽰，⽀持向量⽤蓝⾊圆圈标记。</p>
+<p><img src="/images/prml_20191023201238.png" alt="SVM回归应⽤到⼈⼯⽣成的正弦数据集上的说明"></p>
+<h1 id="六，计算学习理论"><a href="#六，计算学习理论" class="headerlink" title="六，计算学习理论"></a>六，计算学习理论</h1><p>历史上， ⽀持向量机⼤量地使⽤⼀个被称为<strong>计算学习理论</strong>（<code>computational learning theory</code>）的理论框架进⾏分析。这个框架有时候也被称为<strong>统计学习理论</strong>（<code>statistical learning theory</code>）（<code>Anthony and Biggs</code>, 1992; <code>Kearns and Vazirani</code>, 1994; <code>Vapnik</code>, 1995; <code>Vapnik</code>, 1998）。 这个框架起源于<code>Valiant</code>（1984），他建⽴了概率近似正确（<code>probably approximately correct</code>）或者称为 <strong><code>PAC</code></strong> 的学习框架。<strong><code>PAC</code></strong> 学习框架的⽬标是理解为两个给出较好的泛化能⼒，需要多⼤的数据集。</p>
+<p>假设从联合概率分布 $p(\boldsymbol{x},\boldsymbol{t})$ 中抽取⼀个⼤⼩为 $N$ 的数据集 $\mathcal{D}$ ，其中 $\boldsymbol{x}$ 是输⼊变量，$\boldsymbol{t}$ 表⽰类别标签。我们把注意⼒集中于“⽆噪声”的情况，即类别标签由某个（未知的）判别函数 $\boldsymbol{t} = \boldsymbol{g}(\boldsymbol{x})$ 确定。在<code>PAC</code>学习中，空间 $\mathcal{F}$ 是⼀个以训练集 $\mathcal{D}$ 为基础的函数组成的空间，从空间 $\mathcal{F}$ 中抽取⼀个函数 $\boldsymbol{f}(\boldsymbol{x};\mathcal{D})$，如果它的期望错误率⼩于某个预先设定的阈值 $\epsilon$ ，即</p>
+<script type="math/tex; mode=display">
+\mathbb{E}_{\boldsymbol{x},\boldsymbol{t}}[I(\boldsymbol{f}(\boldsymbol{x};\mathcal{D})\ne\boldsymbol{t})]<\epsilon\tag{7.26}</script><p>那么就说函数 $\boldsymbol{f}(\boldsymbol{x};\mathcal{D})$ 具有较好的泛化能⼒。 其中 $I(·)$ 是⽰性函数，期望是关于概率分布 $p(\boldsymbol{x},\boldsymbol{t})$ 的期望。 式⼦左侧的项是⼀个随机变量， 因为它依赖于训练数据集 $\mathcal{D}$ 。<strong><code>PAC</code></strong> 框架要求，对于从概率分布 $p(\boldsymbol{x},\boldsymbol{t})$ 中随机抽取的数据集 $\mathcal{D}$ ，公式(7.26)成⽴的概率要⼤于 $1−\delta$ 。 这 ⾥ $\delta$ 是另⼀个预先设定的参数，术语“<strong>概率近似正确</strong>”来⾃于下⾯的要求：以⼀个较⾼的概 率（⼤于 $1−\delta$ ）， 使得错误率较⼩（⼩于 $\epsilon$ ）。 对于⼀个给定的模型空间 $\mathcal{F}$ ， 以及给定的参数 $\epsilon$ 和 $\delta$ ， <strong><code>PAC</code></strong> 学习的⽬标是提供满⾜这个准则所需的最⼩数据集规模 $N$ 的界限。在 <strong><code>PAC</code></strong> 学习中， ⼀个<strong>关键的量</strong>是 <strong><code>Vapnik-Chervonenkis</code>维度</strong> （<code>Vapnik-Chervonenkis dimension</code>），或者被称为 <strong><code>VC</code>维度</strong> ，它提供了函数空间复杂度的⼀个度量，使得 <strong><code>PAC</code></strong> 框架能够扩展到包含⽆穷多个函数的空间。</p>
+<p>⼀种提升 <strong><code>PAC</code></strong> 界限的紧致程度的⽅法是  <strong><code>PAC</code></strong> -贝叶斯框架（<code>PAC-Bayesian framework</code>）（<code>McAllester</code>, 2003）， 它考虑了空间 $\mathcal{F}$ 上的函数的概率分布情况， 有些类似于贝叶斯⽅法中的先验概率。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechatpay.jpeg" alt="Bocheng Zhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Bocheng Zhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhangbc.github.io/2019/10/24/prml_07_01/" title="【机器学习基础】最大边缘分类器">https://zhangbc.github.io/2019/10/24/prml_07_01/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning-foundation/" rel="tag"> <i class="fa fa-tag"> 机器学习基础</i></a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/22/prml_06/" rel="next" title="【机器学习基础】核方法">
+                <i class="fa fa-chevron-left"></i> 【机器学习基础】核方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/24/prml_07_02/" rel="prev" title="【机器学习基础】相关向量机">
+                【机器学习基础】相关向量机 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+  <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Bocheng Zhang">
+            
+              <p class="site-author-name" itemprop="name">Bocheng Zhang</p>
+              <p class="site-description motion-element" itemprop="description">每天积累一点，学习一点，只有不坚持的，没有做不到的！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/TIANTANGDEGEZI" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-feed"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhangbocheng189@126.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://theme-next.iissnan.com/theme-settings.html" title="NexT文档" target="_blank">NexT文档</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一，最大边缘分类器"><span class="nav-text">一，最大边缘分类器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二，重叠类分布"><span class="nav-text">二，重叠类分布</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三，与-logistic-回归的关系"><span class="nav-text">三，与 logistic 回归的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四，多类-SVM"><span class="nav-text">四，多类 SVM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五，回归问题的-SVM"><span class="nav-text">五，回归问题的 SVM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六，计算学习理论"><span class="nav-text">六，计算学习理论</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bocheng Zhang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站字数统计&#58;</span>
+    
+    <span title="本站字数统计">162.7k</span>
+  
+</div>
+
+
+  <div class="powered-by">版权归 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 所有</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 总访客
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script scr="/js/scr/md5.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'c3e9e61886d65422eafe',
+          clientSecret: '5e136f2fd1ac0f977bbb2853e5f5798ef45e05d4',
+          repo: 'zhangbc.github.io',
+          owner: 'zhangbc',
+          admin: ['zhangbc'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.4"></script>
+
+
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
