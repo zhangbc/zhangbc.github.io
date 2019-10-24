@@ -105,7 +105,7 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191024002352.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191024092656.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191024092703.png">
-<meta property="og:updated_time" content="2019-10-24T12:29:39.530Z">
+<meta property="og:updated_time" content="2019-10-24T14:46:07.351Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【机器学习基础】相关向量机">
 <meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，⽤于回归的 RVM相关向量机（relevance vector machine）或者 RVM（Tipping, 2001）是⼀个⽤于回归问题和分类问题的贝叶斯稀疏核⽅法，它具有许多 SVM 的特征，同时避免了 SVM 的主要的局限性。此外，通常会产⽣更加稀疏的模型，从⽽使得在测试集上的速度更快，同时保留了可⽐的泛化误差。 给定⼀个输⼊向量 $\b">
@@ -569,7 +569,7 @@ a_k=\boldsymbol{w}_k^T\boldsymbol{x}\tag{7.55}</script><p>模型使⽤<code>soft
 <script type="math/tex; mode=display">
 y_k(\boldsymbol{x})=\frac{\exp(a_k)}{\sum_{j}\exp(a_j)}\tag{7.56}</script><p>对数似然函数为</p>
 <script type="math/tex; mode=display">
-\ln{p(\boldsymbol{T}|\boldsymbol{w}_1,\dots,\boldsymbol{w}_k)}=\prod_{n=1}^{N}\prod_{k=1}^{K}y_{nk}^{t_{nk}}\tag{7.57}</script><p>其中，对于每个数据点 $n$，$t_{nk} 的表⽰⽅式是“<code>1-of-K</code>”的形式，$\boldsymbol{T}$ 是⼀个矩阵，元素为 $t_{nk} 。</p>
+\ln{p(\boldsymbol{T}|\boldsymbol{w}_1,\dots,\boldsymbol{w}_k)}=\prod_{n=1}^{N}\prod_{k=1}^{K}y_{nk}^{t_{nk}}\tag{7.57}</script><p>其中，对于每个数据点 $n$，$t_{nk}$ 的表⽰⽅式是“<code>1-of-K</code>”的形式，$\boldsymbol{T}$ 是⼀个矩阵，元素为 $t_{nk}$ 。</p>
 <p>相关向量机的主要缺点是，与 <strong><code>SVM</code></strong> 相⽐，训练时间相对较长。但是，<strong><code>RVM</code></strong> 避免了通过交叉验证确定模型复杂度的过程，从⽽补偿了训练时间的劣势。</p>
 
       

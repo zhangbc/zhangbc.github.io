@@ -107,7 +107,7 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191023113908.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191023114837.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/prml_20191023201238.png">
-<meta property="og:updated_time" content="2019-10-24T12:17:43.677Z">
+<meta property="og:updated_time" content="2019-10-24T14:01:18.335Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【机器学习基础】最大边缘分类器">
 <meta name="twitter:description" content="本系列为《模式识别与机器学习》的读书笔记。  一，最大边缘分类器考察线性模型的⼆分类问题，线性模型的形式为  y(\boldsymbol{x})=\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x})+b\tag{7.1}其中 $\boldsymbol{\phi}(\boldsymbol{x})$ 表⽰⼀个固定的特征空间变换，并且显式地写出了偏置参">
@@ -466,7 +466,7 @@ y(\boldsymbol{x})=\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x})+b\tag{7.1}
 <script type="math/tex; mode=display">
 t_n(\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x}_n)+b)=1</script><p>在这种情况下，所有的数据点会满⾜限制</p>
 <script type="math/tex; mode=display">
-t_n(\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x}_n)+b)\ge1,    n=1\dots,N</script><p>这被称为<strong>决策超平⾯的标准表⽰</strong>。 对于使上式取得等号的数据点，我们说<strong>限制被激活</strong>（<code>active</code>），对于其他的数据点，我们说<strong>限制未激活</strong>（<code>inactive</code>）。根据定义，总会存在⾄少⼀个激活限制，因为总会有⼀个距离最近的点，并且⼀旦边缘被最⼤化，会有⾄少两个激活的限制。这样，最优化问题就简化为了最⼤化 $||\boldsymbol{w}|s|^{-1}$ ，这等价于最⼩化 $||\boldsymbol{w}||^2$ ，因此我们要在上述限制条件下，求解最优化问题</p>
+t_n(\boldsymbol{w}^{T}\boldsymbol{\phi}(\boldsymbol{x}_n)+b)\ge1,    n=1\dots,N</script><p>这被称为<strong>决策超平⾯的标准表⽰</strong>。 对于使上式取得等号的数据点，我们说<strong>限制被激活</strong>（<code>active</code>），对于其他的数据点，我们说<strong>限制未激活</strong>（<code>inactive</code>）。根据定义，总会存在⾄少⼀个激活限制，因为总会有⼀个距离最近的点，并且⼀旦边缘被最⼤化，会有⾄少两个激活的限制。这样，最优化问题就简化为了最⼤化 $||\boldsymbol{w}||^{-1}$ ，这等价于最⼩化 $||\boldsymbol{w}||^2$ ，因此我们要在上述限制条件下，求解最优化问题</p>
 <script type="math/tex; mode=display">
 \underset{\boldsymbol{w},b}{\arg\min}\frac{1}{2}\|\boldsymbol{w}\|^{2}</script><p>为了解决这个限制的最优化问题，引⼊拉格朗⽇乘数 $a_n\ge0$ 。每个限制条件都对应着⼀个乘数 $a_n$ ，从⽽可得下⾯的拉格朗⽇函数</p>
 <script type="math/tex; mode=display">
@@ -545,7 +545,7 @@ b=\frac{1}{N_\mathcal{M}}\sum_{n\in{\mathcal{M}}}\left(t_n-\sum_{m\in{\mathcal{S
 <p>考虑⼀个简单的⼆阶多项式核，⽤它的分量进⾏展开</p>
 <script type="math/tex; mode=display">
 \begin{aligned}k(\boldsymbol{x},\boldsymbol{z})&=(1+\boldsymbol{x}^{T}\boldsymbol{z})^{2}\\&=(1+x_1z_1+x_2z_2)^{2}\\&=1+2x_1z_1+2x_2z_2+x_1^2z_1^2+2x_1z_1x_2z_2+x_2^2z_2^2\\&=(1,\sqrt{2}x_1,\sqrt{2}x_2,x_1^2,\sqrt{2}x_1x_2,x_2^2)(1,\sqrt{2}z_1,\sqrt{2}z_2,z_1^2,\sqrt{2}z_1z_2,z_2^2)^{T}\\&=\boldsymbol{\phi}(\boldsymbol{x})^{T}\boldsymbol{\phi}(\boldsymbol{z})\end{aligned}\tag{7.16}</script><p>于是这个核函数表⽰六维特征空间中的⼀个内积， 其中输⼊空间到特征空间的映射由向量函数 $\boldsymbol{\phi}(\boldsymbol{x})$ 描述，然⽽对这些特征加权的系数被限制为具体的形式。因此，原始⼆维空间  $\boldsymbol{x}$ 中的 任意点集都会被限制到这个六维特征空间中的⼆维⾮线性流形中。</p>
-<p><strong>⽀持向量机不提供概率输出，⽽是对新的输⼊进⾏分类决策。</strong> <code>Veropoulos et al.</code>（1999）讨论了对 <strong><code>SVM</code></strong> 的修改，使其能控制假阳性和假阴性之间的折中。然⽽，如果希望把 <strong><code>SVM</code></strong> ⽤作较⼤的概率系统中的⼀个模块，那么需要对于新的输 ⼊ $\boldsymbol{x}$ 的类别标签t的概率预测。为了解决这个问题，<code>Platt</code>（2000）提出了使⽤ <code>logistic sigmoid</code> 函数拟合训练过的⽀持向量机的输出的⽅法。具体来说，需要求解的条件概率被假设具有下⾯的形式</p>
+<p><strong>⽀持向量机不提供概率输出，⽽是对新的输⼊进⾏分类决策。</strong> <code>Veropoulos et al.</code>（1999）讨论了对 <strong><code>SVM</code></strong> 的修改，使其能控制假阳性和假阴性之间的折中。然⽽，如果希望把 <strong><code>SVM</code></strong> ⽤作较⼤的概率系统中的⼀个模块，那么需要对于新的输 ⼊ $\boldsymbol{x}$ 的类别标签 $t$ 的概率预测。为了解决这个问题，<code>Platt</code>（2000）提出了使⽤ <code>logistic sigmoid</code> 函数拟合训练过的⽀持向量机的输出的⽅法。具体来说，需要求解的条件概率被假设具有下⾯的形式</p>
 <script type="math/tex; mode=display">
 p(t=1|\boldsymbol{x})=\sigma(Ay(\boldsymbol{x})+B)\tag{7.17}</script><p>其中 $y(\boldsymbol{x})$ 由公式(7.1)定义， 参数 $A$ 和 $B$ 的值通过最⼩化交叉熵误差函数的⽅式确定。 交叉熵误差函数根据由 $y(\boldsymbol{x}_n)$ 和 $t_n$ 组成的训练数据集定义。⽤于拟合<code>sigmoid</code>函数的数据需要独⽴于训练原始 <strong><code>SVM</code></strong> 的数据，为了避免严重的过拟合现象。</p>
 <h1 id="三，与-logistic-回归的关系"><a href="#三，与-logistic-回归的关系" class="headerlink" title="三，与 logistic 回归的关系"></a>三，与 <strong><code>logistic</code></strong> 回归的关系</h1><p>对于位于边缘边界正确⼀侧的数据点，即满⾜ $y_nt_n\ge1$ 的数据点，有 $\xi_n = 0$ ，对于剩余的数据点，有 $\xi_n = 1 − y_nt_n$ 。因此⽬标函数可以写成（忽略整体的具有可乘性的常数）</p>
@@ -586,7 +586,7 @@ E_{\epsilon}(y(\boldsymbol{x})-t) =
 <script type="math/tex; mode=display">
 C\sum_{n=1}^{N}E_{\epsilon}(y(\boldsymbol{x})-t_n)+\frac{\lambda}{2}\|\boldsymbol{w}\|^{2}</script><p>其中 $y(\boldsymbol{x})$ 由公式(7.1)给出。</p>
 <p>通过引⼊松弛变量的⽅式，可以重新表达最优化问题。对于每个数据点 $\boldsymbol{x}_n$ ，现在需要两个松弛变量 $\xi_n\ge0$ 和 $\hat{\xi}_n\ge0$ ， 其中 $\xi_n &gt; 0$ 对应于 $t_n &gt; y(\boldsymbol{x}_n)+\epsilon$ 的数据点，$\hat{\xi}&gt;0$ 对应于 $t_n &lt; y(\boldsymbol{x}_n)−\epsilon$ 的数据点。</p>
-<p>如图7.8，<strong><code>SVM</code></strong>回归的说明。图中画出了回归曲线以及 $\epsilon$-不敏感“管道”。同时给出的是松弛变量 $\xi$ 和 $\hat{\xi}$ 的例⼦。 对于 $\epsilon$ -管道上⽅的点，$\xi&gt;0$ 且 $\hat{\xi}=0$ ，对于 $\epsilon$ -管道下⽅的点，$\xi=0$ 且 $\hat{\xi}&gt;0$， 对于 $\epsilon$ -管道内部的点，$\xi=0$ 且 $\hat{\xi}=0$ 。</p>
+<p>如图7.8，<strong><code>SVM</code></strong> 回归的说明。图中画出了回归曲线以及 $\epsilon$-不敏感“管道”。同时给出的是松弛变量 $\xi$ 和 $\hat{\xi}$ 的例⼦。 对于 $\epsilon$ -管道上⽅的点，$\xi&gt;0$ 且 $\hat{\xi}=0$ ，对于 $\epsilon$ -管道下⽅的点，$\xi=0$ 且 $\hat{\xi}&gt;0$， 对于 $\epsilon$ -管道内部的点，$\xi=0$ 且 $\hat{\xi}=0$ 。</p>
 <p><img src="/images/prml_20191023114837.png" alt="SVM回归的说明"></p>
 <p>⽬标点位于 $\epsilon$-管道内的条件是 $y_n−\epsilon \le t_n \le y_n+\epsilon$ ，其中 $y_n=y(\boldsymbol{x}_n)$ 。引⼊松弛变量使得数据点能够位于管道之外，只要松弛变量不为零即可。对应的条件变为</p>
 <script type="math/tex; mode=display">
