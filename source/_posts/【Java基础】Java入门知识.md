@@ -9,7 +9,6 @@ title_en: java_introductory_knowledge
 ---
 
 
-
 >【学习参考资料】：[菜鸟教程-Java教程](http://www.runoob.com/java/java-tutorial.html)
 
 ## 1，java简介

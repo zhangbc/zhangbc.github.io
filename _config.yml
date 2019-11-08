@@ -60,6 +60,8 @@ category_map:
   Java: java
   心路历程: mental_journey
   Python: python
+  机器学习: machine_learning
+  杂七杂八: others
 
 tag_map:
   数据库理论: db_theory
@@ -68,6 +70,10 @@ tag_map:
   数据库实践: db_practice
   心路历程: mental_journey
   Python编码规范: python_coding_convention
+  机器学习基础: machine_learning_foundation
+  数据结构与算法: data_structure_and_algorithms
+  Python爬虫实例: python_crawler
+  其他: others
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
