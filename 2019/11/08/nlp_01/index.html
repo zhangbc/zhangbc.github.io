@@ -93,17 +93,17 @@
 <meta name="description" content="零，基本知识预备在二维平面中，设有两个向量 $\overrightarrow{a}=(x_1,y_1)$ , $\overrightarrow{b}=(x_2,y_2)$ ，$\theta$ 为 $\overrightarrow{a}$ 和 $\overrightarrow{b}$ 的夹角，则有： 1）$\overrightarrow{a}$ 与 $\overrightarrow{b}$ 的数量积">
 <meta name="keywords" content="NLP基础">
 <meta property="og:type" content="article">
-<meta property="og:title" content="天堂的鸽子">
+<meta property="og:title" content="【NLP基础】常见的距离公式说明">
 <meta property="og:url" content="https://zhangbc.github.io/2019/11/08/nlp_01/index.html">
 <meta property="og:site_name" content="天堂的鸽子">
 <meta property="og:description" content="零，基本知识预备在二维平面中，设有两个向量 $\overrightarrow{a}=(x_1,y_1)$ , $\overrightarrow{b}=(x_2,y_2)$ ，$\theta$ 为 $\overrightarrow{a}$ 和 $\overrightarrow{b}$ 的夹角，则有： 1）$\overrightarrow{a}$ 与 $\overrightarrow{b}$ 的数量积">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://zhangbc.github.io/2019/11/08/nlp_01/images/nlp_20191108224222.png">
-<meta property="og:updated_time" content="2019-11-09T03:40:33.480Z">
+<meta property="og:image" content="https://zhangbc.github.io/images/nlp_20191108224222.png">
+<meta property="og:updated_time" content="2019-11-09T04:03:33.286Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="天堂的鸽子">
+<meta name="twitter:title" content="【NLP基础】常见的距离公式说明">
 <meta name="twitter:description" content="零，基本知识预备在二维平面中，设有两个向量 $\overrightarrow{a}=(x_1,y_1)$ , $\overrightarrow{b}=(x_2,y_2)$ ，$\theta$ 为 $\overrightarrow{a}$ 和 $\overrightarrow{b}$ 的夹角，则有： 1）$\overrightarrow{a}$ 与 $\overrightarrow{b}$ 的数量积">
-<meta name="twitter:image" content="https://zhangbc.github.io/2019/11/08/nlp_01/images/nlp_20191108224222.png">
+<meta name="twitter:image" content="https://zhangbc.github.io/images/nlp_20191108224222.png">
 
 
 
@@ -137,7 +137,7 @@
 
 
 
-  <title> | 天堂的鸽子</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>【NLP基础】常见的距离公式说明 | 天堂的鸽子</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -326,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">【NLP基础】常见的距离公式说明</h1>
         
 
         <div class="post-meta">
@@ -468,7 +468,7 @@ x_1x_2+y_1y_2=0\tag{1.5}</script><p>设 $n$ 维向量 $\overrightarrow{V}=(v_1,v
 <h1 id="二，欧式距离"><a href="#二，欧式距离" class="headerlink" title="二，欧式距离"></a>二，欧式距离</h1><h2 id="1，定义-1"><a href="#1，定义-1" class="headerlink" title="1，定义"></a>1，定义</h2><p><strong>欧几里得度量</strong>（<code>euclidean metric</code>）（也称<strong>欧氏距离</strong>）是一个通常采用的距离定义，指在 $m$ 维空间中两个点之间的真实距离，或者向量的自然长度（即该点到原点的距离）。在二维和三维空间中的欧氏距离就是两点之间的实际距离。</p>
 <p>在二维平面中，设有两个向量 $\overrightarrow{a}=(x_1,y_1)$ , $\overrightarrow{b}=(x_2,y_2)$ ，则 $\overrightarrow{a}$ 与 $\overrightarrow{b}$ 的欧式距离 $d_{12}$ 为</p>
 <script type="math/tex; mode=display">
-d_{12}=\sqrt{(x_1-x_2)^2+(y_1-y_2)^2}\tag{1.9}</script><p> $\overrightarrow{a}$ 的欧式距离 $d_{1}$ 为</p>
+d_{12}=\sqrt{(x_1-x_2)^2+(y_1-y_2)^2}\tag{1.9}</script><p>$\overrightarrow{a}$ 的欧式距离 $d_{1}$ 为</p>
 <script type="math/tex; mode=display">
 d_{1}=\sqrt{x_1^2+y_1^2}\tag{1.10}</script><p>在三维空间中，设有两个向量 $\overrightarrow{a}=(x_1,y_1,z_1)$ , $\overrightarrow{b}=(x_2,y_2,z_2)$ ，则 $\overrightarrow{a}$ 与 $\overrightarrow{b}$ 的欧式距离 $d_{12}$ 为</p>
 <script type="math/tex; mode=display">
@@ -487,7 +487,7 @@ d_{12}=\sqrt{(\overrightarrow{a}-\overrightarrow{b})(\overrightarrow{a}-\overrig
 <h2 id="3，相关应用-1"><a href="#3，相关应用-1" class="headerlink" title="3，相关应用"></a>3，相关应用</h2><p>所谓<strong>欧氏距离变换</strong>，是指对于一张二值图像（在此我们假定白色为前景色，黑色为背景色），将前景中的像素的值转化为该点到达最近的背景点的距离。<br>欧氏距离变换在数字图像处理中的应用范围很广泛，尤其对于图像的骨架提取，是一个很好的参照。</p>
 <h1 id="三，曼哈顿距离"><a href="#三，曼哈顿距离" class="headerlink" title="三，曼哈顿距离"></a>三，曼哈顿距离</h1><h2 id="1，定义-2"><a href="#1，定义-2" class="headerlink" title="1，定义"></a>1，定义</h2><p><strong>出租车几何</strong>或<strong>曼哈顿距离</strong>（<code>Manhattan Distance</code>）是由十九世纪的赫尔曼·闵可夫斯基所创词汇，是种使用在几何度量空间的几何学用语，用以标明两个点在标准坐标系上的绝对轴距总和。</p>
 <p>如图1.1，曼哈顿距离示意图。</p>
-<p><img src="images/nlp_20191108224222.png" alt="曼哈顿距离"></p>
+<p><img src="/images/nlp_20191108224222.png" alt="曼哈顿距离"></p>
 <p>图中红线代表曼哈顿距离，绿色代表欧氏距离，也就是直线距离，而蓝色和黄色代表等价的曼哈顿距离。曼哈顿距离——两点在南北方向上的距离加上在东西方向上的距离，即 $d(i,j)=|x_i-x_j|+|y_i-y_j|$ 。对于一个具有正南正北、正东正西方向规则布局的城镇街道，从一点到达另一点的距离正是在南北方向上旅行的距离加上在东西方向上旅行的距离，因此，<strong>曼哈顿距离</strong>又称为<strong>出租车距离</strong>。曼哈顿距离不是距离不变量，当坐标轴变动时，点间的距离就会不同。曼哈顿距离示意图在早期的计算机图形学中，屏幕是由像素构成，是整数，点的坐标也一般是整数，原因是浮点运算很昂贵，很慢而且有误差，如果直接使用 $AB$ 的欧氏距离(欧几里德距离：在二维和三维空间中的欧氏距离的就是两点之间的距离），则必须要进行浮点运算，如果使用 $AC$ 和 $CB$ ，则只要计算加减法即可，这就大大提高了运算速度，而且不管累计运算多少次，都不会有误差。</p>
 <p>在二维平面中，设有两个向量 $\overrightarrow{a}=(x_1,y_1)$ , $\overrightarrow{b}=(x_2,y_2)$ ，则 $\overrightarrow{a}$ 与 $\overrightarrow{b}$ 的曼哈顿距离 $d_{12}$ 为</p>
 <script type="math/tex; mode=display">
@@ -517,7 +517,7 @@ d_{12}=\sqrt[p]{\sum_{i=1}^{n}|x_i-y_i|^p}=\left(\sum_{i=1}^{n}|x_i-y_i|^p\right
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">当p=1时,曼哈顿距离测试结果为:  16.0</span><br><span class="line">当p=2时,欧式距离测试结果为:  8.0</span><br></pre></td></tr></table></figure>
 <h1 id="五，切比雪夫距离"><a href="#五，切比雪夫距离" class="headerlink" title="五，切比雪夫距离"></a>五，切比雪夫距离</h1><h2 id="1，定义-4"><a href="#1，定义-4" class="headerlink" title="1，定义"></a>1，定义</h2><p>在数学中，<strong>切比雪夫距离</strong>（<code>Chebyshev distance</code>）也称 $L\infty$ <strong>度量</strong>，是向量空间中的一种度量，二个点之间的距离定义是其各坐标数值差绝对值的最大值。<br>在二维平面中，设有两个向量 $\overrightarrow{a}=(x_1,y_1)$ , $\overrightarrow{b}=(x_2,y_2)$ ，则 $\overrightarrow{a}$ 与 $\overrightarrow{b}$ 的切比雪夫距离 $d_{12}$ 为</p>
 <script type="math/tex; mode=display">
-d_{12}=\max(|x_1-x_2|+|y_1-y_2|)\tag{1.18}</script><p>在 $n$ 维空间中，设有两个向量 $\overrightarrow{a}=(x_1,x_2，\dots,x_n)$ , $\overrightarrow{b}=(y_1,y_2,\dots,y_n)$ ，则 $\overrightarrow{a}$ 与 $\overrightarrow{b}$ 的切比雪夫距离 $d_{12}$ 为</p>
+d_{12}=\max(|x_1-x_2|,|y_1-y_2|)\tag{1.18}</script><p>在 $n$ 维空间中，设有两个向量 $\overrightarrow{a}=(x_1,x_2，\dots,x_n)$ , $\overrightarrow{b}=(y_1,y_2,\dots,y_n)$ ，则 $\overrightarrow{a}$ 与 $\overrightarrow{b}$ 的切比雪夫距离 $d_{12}$ 为</p>
 <script type="math/tex; mode=display">
 d_{12}=\max(|x_1-y_1|,|x_2-y_2|,\dots,|x_n-y_n|)=\underset{i}{\max}(|x_i-y_i|)\tag{1.19}</script><p>等价表示为</p>
 <script type="math/tex; mode=display">
@@ -623,7 +623,7 @@ r=\frac{1}{n-1}\sum_{i=1}^{n}\left(\frac{X_i-\bar{X}}{\delta_X}\right)\left(\fra
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://zhangbc.github.io/2019/11/08/nlp_01/" title>https://zhangbc.github.io/2019/11/08/nlp_01/</a>
+    <a href="https://zhangbc.github.io/2019/11/08/nlp_01/" title="【NLP基础】常见的距离公式说明">https://zhangbc.github.io/2019/11/08/nlp_01/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -660,6 +660,10 @@ r=\frac{1}{n-1}\sum_{i=1}^{n}\left(\frac{X_i-\bar{X}}{\delta_X}\right)\left(\fra
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/12/java_kettle_01/" rel="prev" title="【Java实践】Kettle从一次实验说起">
+                【Java实践】Kettle从一次实验说起 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -779,7 +783,7 @@ r=\frac{1}{n-1}\sum_{i=1}^{n}\left(\frac{X_i-\bar{X}}{\delta_X}\right)\left(\fra
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">53</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -801,7 +805,7 @@ r=\frac{1}{n-1}\sum_{i=1}^{n}\left(\frac{X_i-\bar{X}}{\delta_X}\right)\left(\fra
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -904,7 +908,7 @@ r=\frac{1}{n-1}\sum_{i=1}^{n}\left(\frac{X_i-\bar{X}}{\delta_X}\right)\left(\fra
     
       <span class="post-meta-item-text">本站字数统计&#58;</span>
     
-    <span title="本站字数统计">167.3k</span>
+    <span title="本站字数统计">169.4k</span>
   
 </div>
 
