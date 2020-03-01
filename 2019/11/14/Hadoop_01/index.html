@@ -90,13 +90,13 @@
 
 
 
-<meta name="description" content="一，准备环境 PC基本配置如下：  123处理器：Intel(R) Core(TM) i5-3230M CPU @ 2.6GHz 2.60GHz安装内存（RAM）: 12.0GB系统类型：64位操作系统   初始化四台Ubuntu-14.04_x64虚拟机，配置如下：  12345内存：2GB处理器：1硬盘：40G网络适配器：NAT系统：Linux ubuntu 4.4.0-142-generic">
+<meta name="description" content="本系列为《Hadoop大数据处理基础与实践》的读书笔记。  一，准备环境 PC基本配置如下：  123处理器：Intel(R) Core(TM) i5-3230M CPU @ 2.6GHz 2.60GHz安装内存（RAM）: 12.0GB系统类型：64位操作系统   初始化四台Ubuntu-14.04_x64虚拟机，配置如下：  12345内存：2GB处理器：1硬盘：40G网络适配器：NAT系统">
 <meta name="keywords" content="Hadoop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【大数据基础】Hadoop2.2.0集群环境搭建文档分享">
+<meta property="og:title" content="【大数据基础】Hadoop2.2.0集群环境搭建">
 <meta property="og:url" content="https://zhangbc.github.io/2019/11/14/Hadoop_01/index.html">
 <meta property="og:site_name" content="天堂的鸽子">
-<meta property="og:description" content="一，准备环境 PC基本配置如下：  123处理器：Intel(R) Core(TM) i5-3230M CPU @ 2.6GHz 2.60GHz安装内存（RAM）: 12.0GB系统类型：64位操作系统   初始化四台Ubuntu-14.04_x64虚拟机，配置如下：  12345内存：2GB处理器：1硬盘：40G网络适配器：NAT系统：Linux ubuntu 4.4.0-142-generic">
+<meta property="og:description" content="本系列为《Hadoop大数据处理基础与实践》的读书笔记。  一，准备环境 PC基本配置如下：  123处理器：Intel(R) Core(TM) i5-3230M CPU @ 2.6GHz 2.60GHz安装内存（RAM）: 12.0GB系统类型：64位操作系统   初始化四台Ubuntu-14.04_x64虚拟机，配置如下：  12345内存：2GB处理器：1硬盘：40G网络适配器：NAT系统">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://zhangbc.github.io/images/hadoop_20191114132209.PNG">
 <meta property="og:image" content="https://zhangbc.github.io/images/hadoop_20191114153212.PNG">
@@ -106,12 +106,12 @@
 <meta property="og:image" content="https://zhangbc.github.io/images/hadoop_20191114153239.PNG">
 <meta property="og:image" content="https://zhangbc.github.io/images/hadoop_20191114153339.PNG">
 <meta property="og:image" content="https://zhangbc.github.io/images/hadoop_20191114133212.PNG">
-<meta property="og:image" content="https://zhangbc.github.io/images/hadoop_20191114133210.PNG">
-<meta property="og:image" content="https://zhangbc.github.io/images/hadoop_20191114153340.PNG">
-<meta property="og:updated_time" content="2019-11-14T12:42:22.049Z">
+<meta property="og:image" content="https://zhangbc.github.io/images/hadoop_20191114133210.png">
+<meta property="og:image" content="https://zhangbc.github.io/images/hadoop_20191114153340.png">
+<meta property="og:updated_time" content="2020-02-29T11:57:33.696Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【大数据基础】Hadoop2.2.0集群环境搭建文档分享">
-<meta name="twitter:description" content="一，准备环境 PC基本配置如下：  123处理器：Intel(R) Core(TM) i5-3230M CPU @ 2.6GHz 2.60GHz安装内存（RAM）: 12.0GB系统类型：64位操作系统   初始化四台Ubuntu-14.04_x64虚拟机，配置如下：  12345内存：2GB处理器：1硬盘：40G网络适配器：NAT系统：Linux ubuntu 4.4.0-142-generic">
+<meta name="twitter:title" content="【大数据基础】Hadoop2.2.0集群环境搭建">
+<meta name="twitter:description" content="本系列为《Hadoop大数据处理基础与实践》的读书笔记。  一，准备环境 PC基本配置如下：  123处理器：Intel(R) Core(TM) i5-3230M CPU @ 2.6GHz 2.60GHz安装内存（RAM）: 12.0GB系统类型：64位操作系统   初始化四台Ubuntu-14.04_x64虚拟机，配置如下：  12345内存：2GB处理器：1硬盘：40G网络适配器：NAT系统">
 <meta name="twitter:image" content="https://zhangbc.github.io/images/hadoop_20191114132209.PNG">
 
 
@@ -146,7 +146,7 @@
 
 
 
-  <title>【大数据基础】Hadoop2.2.0集群环境搭建文档分享 | 天堂的鸽子</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>【大数据基础】Hadoop2.2.0集群环境搭建 | 天堂的鸽子</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -335,7 +335,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">【大数据基础】Hadoop2.2.0集群环境搭建文档分享</h1>
+          <h1 class="post-title" itemprop="name headline">【大数据基础】Hadoop2.2.0集群环境搭建</h1>
         
 
         <div class="post-meta">
@@ -447,7 +447,10 @@
       
 
       
-        <h1 id="一，准备环境"><a href="#一，准备环境" class="headerlink" title="一，准备环境"></a>一，准备环境</h1><ul>
+        <blockquote>
+<p>本系列为《Hadoop大数据处理基础与实践》的读书笔记。</p>
+</blockquote>
+<h1 id="一，准备环境"><a href="#一，准备环境" class="headerlink" title="一，准备环境"></a>一，准备环境</h1><ul>
 <li><code>PC</code>基本配置如下：</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">处理器：Intel(R) Core(TM) i5-3230M CPU @ 2.6GHz 2.60GHz</span><br><span class="line">安装内存（RAM）: 12.0GB</span><br><span class="line">系统类型：64位操作系统</span><br></pre></td></tr></table></figure>
@@ -545,13 +548,13 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">zhangbc@master:~$ start-yarn.sh </span><br><span class="line">starting yarn daemons</span><br><span class="line">starting resourcemanager, logging to /home/zhangbc/hadoop2.2.0/logs/yarn-zhangbc-resourcemanager-master.out</span><br><span class="line">slave_2: starting nodemanager, logging to /home/zhangbc/hadoop2.2.0/logs/yarn-zhangbc-nodemanager-slave_2.out</span><br><span class="line">slave_1: starting nodemanager, logging to /home/zhangbc/hadoop2.2.0/logs/yarn-zhangbc-nodemanager-slave_1.out</span><br><span class="line">slave_3: starting nodemanager, logging to /home/zhangbc/hadoop2.2.0/logs/yarn-zhangbc-nodemanager-slave_3.out</span><br><span class="line"></span><br><span class="line">zhangbc@master:~$ jps</span><br><span class="line">5771 NameNode</span><br><span class="line">6642 Jps</span><br><span class="line">zhangbc@slave_1:~$ jps</span><br><span class="line">5099 Jps</span><br><span class="line">4818 DataNode</span><br><span class="line">5011 NodeManager</span><br><span class="line">zhangbc@slave_2:~$ jps</span><br><span class="line">5101 Jps</span><br><span class="line">5016 NodeManager</span><br><span class="line">4801 DataNode</span><br><span class="line">zhangbc@slave_2:~$ jps</span><br><span class="line">5101 Jps</span><br><span class="line">5016 NodeManager</span><br><span class="line">4801 DataNode</span><br></pre></td></tr></table></figure>
 <p><code>WEB</code>验证：<a href="http://192.168.71.128:8088" target="_blank" rel="noopener">http://192.168.71.128:8088</a></p>
-<p><img src="/images/hadoop_20191114133210.PNG" alt="web_yarn"></p>
+<p><img src="/images/hadoop_20191114133210.png" alt="web_yarn"></p>
 <ul>
 <li>管理<code>JobHistory Server</code></li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zhangbc@master:~$ mr-jobhistory-daemon.sh start historyserver</span><br><span class="line">starting historyserver, logging to /home/zhangbc/hadoop2.2.0/logs/mapred-zhangbc-historyserver-master.out</span><br><span class="line">zhangbc@master:~$ mr-jobhistory-daemon.sh stop historyserver</span><br></pre></td></tr></table></figure>
 <p><code>WEB</code>验证：<a href="http://192.168.71.128:19888" target="_blank" rel="noopener">http://192.168.71.128:19888</a></p>
-<p><img src="/images/hadoop_20191114153340.PNG" alt="web_job"></p>
+<p><img src="/images/hadoop_20191114153340.png" alt="web_job"></p>
 <ul>
 <li>集群验证</li>
 </ul>
@@ -573,7 +576,7 @@
 </ul>
 <p><strong>解决方案</strong>如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ sudo vi /etc/hosts</span><br><span class="line"></span><br><span class="line">  1 127.0.0.1       localhost</span><br><span class="line">  2 127.0.1.1       ubuntu</span><br><span class="line">  3 127.0.1.1       master</span><br><span class="line">:wq!</span><br></pre></td></tr></table></figure>
-<p>通过本次实验，对集群概念有个基本的认识，在搭建过程中遇到问题不算太多，主要是对局域网组建缺乏认识深度，本集群环境可以进一步扩展，如动态增减节点，借助<code>Zookeeper</code>技术加以融合等都在是企业中比较常见等做法。</p>
+<p>通过本次实验，对集群概念有个基本的认识，在搭建过程中遇到问题不算太多，主要是对局域网组建缺乏认识深度，本集群环境可以进一步扩展，如动态增减节点，借助<code>Zookeeper</code>技术加以融合等在企业中是比较常见的做法。</p>
 
       
     </div>
@@ -624,7 +627,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://zhangbc.github.io/2019/11/14/Hadoop_01/" title="【大数据基础】Hadoop2.2.0集群环境搭建文档分享">https://zhangbc.github.io/2019/11/14/Hadoop_01/</a>
+    <a href="https://zhangbc.github.io/2019/11/14/Hadoop_01/" title="【大数据基础】Hadoop2.2.0集群环境搭建">https://zhangbc.github.io/2019/11/14/Hadoop_01/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -661,6 +664,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/27/Hadoop_02/" rel="prev" title="【大数据基础】Hadoop入门--HDFS">
+                【大数据基础】Hadoop入门--HDFS <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -780,7 +787,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -791,7 +798,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -802,7 +809,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -891,7 +898,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -905,7 +912,7 @@
     
       <span class="post-meta-item-text">本站字数统计&#58;</span>
     
-    <span title="本站字数统计">173.1k</span>
+    <span title="本站字数统计">179.4k</span>
   
 </div>
 
