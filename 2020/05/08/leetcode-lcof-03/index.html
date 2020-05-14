@@ -79,7 +79,7 @@
 
 
 
-  <meta name="keywords" content="剑指offer, leetcode,">
+  <meta name="keywords" content="leetcode,剑指offer,">
 
 
 
@@ -91,18 +91,18 @@
 
 
 <meta name="description" content="原题链接： https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof  题目描述 在一个长度为 $n$ 的数组 $nums$ 里的所有数字都在 $0$ ~ $n-1$ 的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复，也不知道每个数字重复几次。请找出数组中任意一个重复的数字。  思路分析 通过阅读提干，">
-<meta name="keywords" content="剑指offer, leetcode">
+<meta name="keywords" content="leetcode,剑指offer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Leetcode刷题】题3 数组中重复的数字">
+<meta property="og:title" content="【Leetcode刷题】题3.数组中重复的数字">
 <meta property="og:url" content="https://zhangbc.github.io/2020/05/08/leetcode-lcof-03/index.html">
 <meta property="og:site_name" content="天堂的鸽子">
 <meta property="og:description" content="原题链接： https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof  题目描述 在一个长度为 $n$ 的数组 $nums$ 里的所有数字都在 $0$ ~ $n-1$ 的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复，也不知道每个数字重复几次。请找出数组中任意一个重复的数字。  思路分析 通过阅读提干，">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://zhangbc.github.io/images/leetcode_20200508234733.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/leetcode_20200508234657.png">
-<meta property="og:updated_time" content="2020-05-08T16:17:45.683Z">
+<meta property="og:updated_time" content="2020-05-14T06:08:11.331Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【Leetcode刷题】题3 数组中重复的数字">
+<meta name="twitter:title" content="【Leetcode刷题】题3.数组中重复的数字">
 <meta name="twitter:description" content="原题链接： https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof  题目描述 在一个长度为 $n$ 的数组 $nums$ 里的所有数字都在 $0$ ~ $n-1$ 的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复，也不知道每个数字重复几次。请找出数组中任意一个重复的数字。  思路分析 通过阅读提干，">
 <meta name="twitter:image" content="https://zhangbc.github.io/images/leetcode_20200508234733.png">
 
@@ -138,7 +138,7 @@
 
 
 
-  <title>【Leetcode刷题】题3 数组中重复的数字 | 天堂的鸽子</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>【Leetcode刷题】题3.数组中重复的数字 | 天堂的鸽子</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -327,7 +327,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">【Leetcode刷题】题3 数组中重复的数字</h1>
+          <h1 class="post-title" itemprop="name headline">【Leetcode刷题】题3.数组中重复的数字</h1>
         
 
         <div class="post-meta">
@@ -457,15 +457,15 @@
 </blockquote>
 </blockquote>
 </blockquote>
-<h1 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h1><blockquote>
-<p>方法一：复制数组，时间复杂度为 $O(n)$ ，空间复杂度为 $O(n)$ 。</p>
-</blockquote>
+<h1 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h1><ul>
+<li>方法一：复制数组，时间复杂度为 $O(n)$ ，空间复杂度为 $O(n)$ 。</li>
+</ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findRepeatNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            arr[nums[i]]++;</span><br><span class="line">            <span class="keyword">if</span> (arr[nums[i]] &gt; <span class="number">1</span> ) &#123;</span><br><span class="line">                <span class="keyword">return</span> nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>运行结果如下：</p>
 <p><img src="/images/leetcode_20200508234733.png" alt="复制数组"></p>
-<blockquote>
-<p>方法二：原地修改数组，时间复杂度为 $O(n)$ ，空间复杂度为 $O(1)$ 。</p>
-</blockquote>
+<ul>
+<li>方法二：原地修改数组，时间复杂度为 $O(n)$ ，空间复杂度为 $O(1)$ 。</li>
+</ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findRepeatNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] != i) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[nums[i]] == nums[i]) &#123;</span><br><span class="line">                    <span class="keyword">return</span> nums[i];</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">int</span> temp = nums[nums[i]];</span><br><span class="line">                nums[nums[i]] = nums[i];</span><br><span class="line">                nums[i] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>运行结果如下：</p>
 <p><img src="/images/leetcode_20200508234657.png" alt="原地修改数组"></p>
@@ -522,7 +522,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://zhangbc.github.io/2020/05/08/leetcode-lcof-03/" title="【Leetcode刷题】题3 数组中重复的数字">https://zhangbc.github.io/2020/05/08/leetcode-lcof-03/</a>
+    <a href="https://zhangbc.github.io/2020/05/08/leetcode-lcof-03/" title="【Leetcode刷题】题3.数组中重复的数字">https://zhangbc.github.io/2020/05/08/leetcode-lcof-03/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -537,7 +537,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/剑指offer-leetcode/" rel="tag"> <i class="fa fa-tag"> 剑指offer, leetcode</i></a>
+            <a href="/tags/leetcode/" rel="tag"> <i class="fa fa-tag"> leetcode</i></a>
+          
+            <a href="/tags/prove-offer/" rel="tag"> <i class="fa fa-tag"> 剑指offer</i></a>
           
         </div>
       
@@ -559,6 +561,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/14/leetcode-09/" rel="prev" title="【Leetcode刷题】9.回文数">
+                【Leetcode刷题】9.回文数 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -678,7 +684,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -700,7 +706,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -803,7 +809,7 @@
     
       <span class="post-meta-item-text">本站字数统计&#58;</span>
     
-    <span title="本站字数统计">182k</span>
+    <span title="本站字数统计">182.6k</span>
   
 </div>
 
