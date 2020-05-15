@@ -90,20 +90,20 @@
 
 
 
-<meta name="description" content="原题链接：https://leetcode-cn.com/problems/palindrome-number/  题目描述  判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。  思路分析  由于整数的特殊性，如果为负数，则易知不是回文数（因为整数的末尾不可能出现符号）。 方法一：此题最容易想到的就是把数字转成字符串 str，然后用双指针法(low，hig">
+<meta name="description" content="原题链接：https://leetcode-cn.com/problems/palindrome-number/  题目描述 判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。  思路分析 由于整数的特殊性，如果为负数，则易知不是回文数（因为整数的末尾不可能出现符号）。 方法一：此题最容易想到的就是把数字转成字符串 str，然后用双指针法(low，high)">
 <meta name="keywords" content="leetcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Leetcode刷题】9.回文数">
 <meta property="og:url" content="https://zhangbc.github.io/2020/05/14/leetcode-09/index.html">
 <meta property="og:site_name" content="天堂的鸽子">
-<meta property="og:description" content="原题链接：https://leetcode-cn.com/problems/palindrome-number/  题目描述  判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。  思路分析  由于整数的特殊性，如果为负数，则易知不是回文数（因为整数的末尾不可能出现符号）。 方法一：此题最容易想到的就是把数字转成字符串 str，然后用双指针法(low，hig">
+<meta property="og:description" content="原题链接：https://leetcode-cn.com/problems/palindrome-number/  题目描述 判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。  思路分析 由于整数的特殊性，如果为负数，则易知不是回文数（因为整数的末尾不可能出现符号）。 方法一：此题最容易想到的就是把数字转成字符串 str，然后用双指针法(low，high)">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://zhangbc.github.io/images/leetcode_20200514125544.png">
 <meta property="og:image" content="https://zhangbc.github.io/images/leetcode_20200514121403.png">
-<meta property="og:updated_time" content="2020-05-14T06:06:12.437Z">
+<meta property="og:updated_time" content="2020-05-15T03:51:13.700Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Leetcode刷题】9.回文数">
-<meta name="twitter:description" content="原题链接：https://leetcode-cn.com/problems/palindrome-number/  题目描述  判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。  思路分析  由于整数的特殊性，如果为负数，则易知不是回文数（因为整数的末尾不可能出现符号）。 方法一：此题最容易想到的就是把数字转成字符串 str，然后用双指针法(low，hig">
+<meta name="twitter:description" content="原题链接：https://leetcode-cn.com/problems/palindrome-number/  题目描述 判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。  思路分析 由于整数的特殊性，如果为负数，则易知不是回文数（因为整数的末尾不可能出现符号）。 方法一：此题最容易想到的就是把数字转成字符串 str，然后用双指针法(low，high)">
 <meta name="twitter:image" content="https://zhangbc.github.io/images/leetcode_20200514125544.png">
 
 
@@ -442,18 +442,15 @@
         <blockquote>
 <p>原题链接：<a href="https://leetcode-cn.com/problems/palindrome-number/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/palindrome-number/</a></p>
 </blockquote>
-<p><strong>题目描述</strong></p>
-<blockquote>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
 <p>判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。</p>
 </blockquote>
-<p><strong>思路分析</strong></p>
-<blockquote>
+<h1 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h1><blockquote>
 <p>由于整数的特殊性，如果为负数，则易知不是回文数（因为整数的末尾不可能出现符号）。</p>
 <p>方法一：此题最容易想到的就是把数字转成字符串 <code>str</code>，然后用双指针法(<code>low</code>，<code>high</code>)进行首尾遍历，当 <code>str[low] != str[high]</code> 说明不是回文；否则进行下一轮，<code>low++，high--</code> ，直到<code>low &gt;= high</code> 循环结束。</p>
 <p>方法二：方法一是常规的字符串解法，没有充分利用本题的整数这一条件，回文数是指整数的前部分（负数除外）和后半部分形成对称，也就是说只要将整数拆成位数相等（如果整数的奇数位去中间位）的两部分并且将后半部分翻转与前半部分相比，如相等则说明是回文数，否则不是。需要处理的问题有：1）整数翻转，定义一个新的整型变量 <code>reverse</code>，循环每次取 <code>x</code> 的个位数，然后 <code>reverse = reverse * 10 + x % 10</code>，同时需要将 <code>x = x / 10</code>，这样可以将<code>x</code>进行翻转；2）拆分整数<code>x</code>为两部分，本题只需要判断前半部分和翻转后的后半分部分是否相等即可，所以循环的终止条件是 <code>x &lt;= reverse</code>，当整数 <code>x</code> 为偶数位时两数相等；当整数 <code>x</code> 为奇数位时 <code>x &lt; reverse</code>，因为多出的中间位被添加到 <code>reverse</code> 的末尾，所以最终判断是否为回文数的条件应该为 <code>x == reverse || x == reverse / 10</code> ；3）注意特殊情况，如果 <code>x</code> 的个位数为0，那么易知整数不是回文数，2）中的最终判断条件会判定 <code>x = 10</code> 为 <code>true</code> ，这是最容易忽略的一点。</p>
 </blockquote>
-<p><strong>参考代码</strong></p>
-<ul>
+<h1 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h1><ul>
 <li>方法一：转字符串法，时间复杂度为 $O(n/2)$，空间复杂度为 $O(1)$ 。</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        String value = String.valueOf(x);</span><br><span class="line">        <span class="keyword">int</span> low = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> high = value.length() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (low &lt; high) &#123;</span><br><span class="line">            <span class="keyword">if</span> (value.charAt(low) != value.charAt(high)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            low++;</span><br><span class="line">            high--;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -553,6 +550,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/05/15/leetcode-560/" rel="prev" title="【Leetcode刷题】560. 和为K的子数组">
+                【Leetcode刷题】560. 和为K的子数组 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -644,8 +645,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -662,7 +672,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -737,6 +747,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目描述"><span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思路分析"><span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考代码"><span class="nav-text">参考代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -771,7 +797,7 @@
     
       <span class="post-meta-item-text">本站字数统计&#58;</span>
     
-    <span title="本站字数统计">182.6k</span>
+    <span title="本站字数统计">183.4k</span>
   
 </div>
 
