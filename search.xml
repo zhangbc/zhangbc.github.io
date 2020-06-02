@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[【Leetcode刷题】题64. 求1+2+…+n]]></title>
+    <url>%2F2020%2F06%2F02%2Fleetcode-lcof-03%2F</url>
+    <content type="text"><![CDATA[原题链接：https://leetcode-cn.com/problems/qiu-12n-lcof/ 题目描述 求 1+2+...+n ，要求不能使用乘除法、for、while、if、else、switch、case 等关键字及条件判断语句（A?B:C）。 思路分析 本题抛开要求限制，算是入门级题目，但是加上条件限制却变成了一道思维拓展题，不涉及任何算法知识。这里给出两种解决方案： 方法一：递归法，递归需要判断终止条件，除了 if 语句，还有 switch，逻辑运算符，进而可以突破 if 的限制，达到解题目的； 方法二：等差数列求和公式，S_{n}=\frac{(1+n)*n}{2}，这里出现了乘除法，现在就需要想方设法找道乘除法的替代方案，除法可以用位运算替代；乘法呢？将分子展开即有 n^2 + n，平方可以调用库函数 pow。 参考代码 方法一：递归法，其时间复杂度为 $O(n)$ ，空间复杂度为 $O(1)$ 。 1234567class Solution &#123; public int sumNums(int n) &#123; int sum = n; boolean flag = n &gt; 0 &amp;&amp; (sum += sumNums(n - 1)) &gt; 0; return sum; &#125;&#125; 运行结果如下： 方法二：等差数列公式，其时间复杂度为 $O(1)$ ，空间复杂度为 $O(1)$ 。 12345class Solution &#123; public int sumNums(int n) &#123; return ((int)Math.pow(n, 2) + n) &gt;&gt; 1; &#125;&#125; 运行结果如下：]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>leetcode</tag>
+        <tag>数据结构与算法</tag>
+        <tag>剑指offer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[【Leetcode刷题】35. 搜索插入位置]]></title>
     <url>%2F2020%2F06%2F01%2Fleetcode-lcof-35%2F</url>
     <content type="text"><![CDATA[原题链接：https://leetcode-cn.com/problems/search-insert-position/ 题目描述 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。 你可以假设数组中无重复元素。 思路分析 分析题意，可以理解为给一个已排好序的数组“插入”一个数，求解其插入位置。这里给出两种解法。 方法一：常规解法，逐一遍历每一个元素并与目标值比较，如果目标值大于前一个数而小于等与后一个数，那么应返回后一个数的位置，即为插入位置；如果目标值小于第一个元素应返回0；如果目标值大于最后一个元素应返回数组的长度，即为插入位置； 方法二：二分查找法，进一步探究方法一，其实质就是查找，那么可以优化查找算法，从而可以应用二分法查找，降低时间复杂度。 参考代码 方法一：常规解法，其时间复杂度为 $O(n)$，空间复杂度为 $O(1)$。 123456789101112131415class Solution &#123; public int searchInsert(int[] nums, int target) &#123; if (nums == null || nums.length &lt; 1) &#123; return 0; &#125; for (int i = 0; i &lt; nums.length; i++) &#123; if (target &lt;= nums[i]) &#123; return i; &#125; &#125; return nums.length; &#125;&#125; 运行结果如下： 方法二：二分查找法，其时间复杂度为 $O(log{n})$，空间复杂度为 $O(1)$。 123456789101112131415161718192021class Solution &#123; public int searchInsert(int[] nums, int target) &#123; if (nums == null || nums.length &lt; 1) &#123; return 0; &#125; int low = 0, high = nums.length - 1, mid; while (low &lt;= high) &#123; mid = (low + high) / 2; if (target &lt; nums[mid]) &#123; high = mid - 1; &#125; else if (target == nums[mid]) &#123; return mid; &#125; else &#123; low = mid + 1; &#125; &#125; return low; &#125;&#125; 运行结果如下：]]></content>
