@@ -41,7 +41,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: true
+  auto_detect: false
   tab_replace:
 
 # Home page setting
@@ -57,22 +57,29 @@ index_generator:
 default_category: uncategorized
 category_map:
   数据库技术: database
-  Java: java
   心路历程: mental_journey
   Python: python
   机器学习: machine_learning
   杂七杂八: others
+  大数据技术: big_data
+  科研笔记: research_mote
+  C++: cpp
+  Java: java_note
 
 tag_map:
   数据库理论: db_theory
   数据库实战: db_actual_combat
   Java基础: java_basic
+  Java实践: java_practice
   数据库实践: db_practice
   心路历程: mental_journey
   Python编码规范: python_coding_convention
   机器学习基础: machine_learning_foundation
   数据结构与算法: data_structure_and_algorithms
   Python爬虫实例: python_crawler
+  Hadoop: hadoop
+  剑指offer: prove_offer
+  leetcode: leetcode
   其他: others
 
 # Date / Time format
