@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据库理论,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。  一，问题的提出1，关系模式 关系模式定义：一个关系模式是一个系统，它是有一个五元组$R(U, D, DOM, I, F)$组成，其中，$R$为关系名，$U$是$R$的一组属性集合$\{ A_1,A_2,A_3,\dots,A_n \}$，$D$是$U$中属性的域集合$\{ D_1,D_2,D_3,\dots,D_n \}$，$DOM$">
+<meta name="keywords" content="数据库理论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【数据库理论】关系模式的规范化与查询优化">
+<meta property="og:url" content="https://zhangbc.github.io/2019/04/13/db_query_opt/index.html">
+<meta property="og:site_name" content="天堂的鸽子">
+<meta property="og:description" content="本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。  一，问题的提出1，关系模式 关系模式定义：一个关系模式是一个系统，它是有一个五元组$R(U, D, DOM, I, F)$组成，其中，$R$为关系名，$U$是$R$的一组属性集合$\{ A_1,A_2,A_3,\dots,A_n \}$，$D$是$U$中属性的域集合$\{ D_1,D_2,D_3,\dots,D_n \}$，$DOM$">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://zhangbc.github.io/images/db_query_opt_normal_form_20190413.png">
+<meta property="og:updated_time" content="2019-04-14T06:10:16.477Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【数据库理论】关系模式的规范化与查询优化">
+<meta name="twitter:description" content="本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。  一，问题的提出1，关系模式 关系模式定义：一个关系模式是一个系统，它是有一个五元组$R(U, D, DOM, I, F)$组成，其中，$R$为关系名，$U$是$R$的一组属性集合$\{ A_1,A_2,A_3,\dots,A_n \}$，$D$是$U$中属性的域集合$\{ D_1,D_2,D_3,\dots,D_n \}$，$DOM$">
+<meta name="twitter:image" content="https://zhangbc.github.io/images/db_query_opt_normal_form_20190413.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>【数据库理论】关系模式的规范化与查询优化 | 天堂的鸽子</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhangbc" class="github-corner" aria-label="View source on GitHub"><svg width="149" height="149" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天堂的鸽子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">天道酬勤</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangbc.github.io/2019/04/13/db_query_opt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bocheng Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天堂的鸽子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【数据库理论】关系模式的规范化与查询优化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-13T22:31:38+08:00">
+                2019-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/database/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-line-chart"></i> 阅读
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <span id="busuanzi_value_page_pv"></span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数&#58;</span>
+                
+                <span title="字数">
+                  5.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">
+                  21
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本系列为《数据库系统原理与应用（刘先锋等著）》的读书笔记。</p>
+</blockquote>
+<h2 id="一，问题的提出"><a href="#一，问题的提出" class="headerlink" title="一，问题的提出"></a>一，问题的提出</h2><p>1，<strong>关系模式</strong></p>
+<p><code>关系模式</code>定义：一个关系模式是一个系统，它是有一个五元组$R(U, D, DOM, I, F)$组成，其中，$R$为关系名，$U$是$R$的一组属性集合$\{ A_1,A_2,A_3,\dots,A_n \}$，$D$是$U$中属性的域集合$\{ D_1,D_2,D_3,\dots,D_n \}$，$DOM$为属性$U$到域$D$的映射，$I$为完整性约束集合，$F$为属性间的函数依赖关系。</p>
+<p>2，<strong>关系</strong></p>
+<p>1）<code>关系</code>定义：在关系模式$R( U, D, DOM, I, F )$中，当且仅当$U$上的一个关系$r$足$F$时，$r$称为关系模式$R$的一个关系，记作$R(U)$或$R(U,F)$。</p>
+<p>2）关系数据库对关系有一个<strong>最起码的要求</strong>： 每个属性必须是不可分割的数据项。满足列这个条件的关系模式就属于<code>第一范式（1NF）</code>。</p>
+<p>3）<code>数据依赖</code>：通过一个关系中属性间值的相等与否以体现数据间的相互关系，是现实世界属性间相互联系的抽象，是数据内在的性质，是语义的体现。主要有：<code>函数依赖FD</code>，<code>多值依赖MVD</code>。</p>
+<p>3，<strong>插入异常</strong>：表示数据插入时出现问题，即无法在缺少另一个实体实例或者关系实例的情况下表示实体或者实体的信息。</p>
+<p>4，<strong>删除异常</strong>：删除表的某一行来反映某个实体实例或者关系实例消失，会导致丢失另一个不同实例实体或者关系实例的信息。</p>
+<p>5，<strong>更新异常</strong>：更改表所对应的某个实体实例或者关系实例的单个属性，会将多行的相关信息全部更新。</p>
+<h2 id="二，关系模式的函数依赖"><a href="#二，关系模式的函数依赖" class="headerlink" title="二，关系模式的函数依赖"></a>二，关系模式的函数依赖</h2><p>1，<strong>函数依赖（<code>FD</code>）</strong></p>
+<p>1）<code>函数依赖（FD）</code>定义：设$R(U)$是属性集$U$上的关系模式，$X$，$Y \subseteq U$。若对$R(U)$的任意一个可能的关系$r$，$r$中有任意两个元组$t_1$和$t_2$，如果$t_1 [ X ] = t_2 [ X ]$，有$t_1[ Y ] = t_2[ Y ]$，则称$X$函数确定$Y$，或者说$Y$函数依赖$X$，记为$X \rightarrow Y$。</p>
+<blockquote>
+<p>（1）如果$X \rightarrow Y$，但是$Y \nsubseteq X$，则称$X \rightarrow Y$是<code>非平凡的函数依赖</code>；<br>（2）如果$X \rightarrow Y$，但是$Y \subseteq X$，则称$X \rightarrow Y$是<code>平凡的函数依赖</code>；<br>（3）如果$X \rightarrow Y$，则$X$为这个函数依赖的<code>决定属性集(Determinant)</code>；<br>（4）如果$X \rightarrow Y$，$Y \rightarrow X$，则记为$X \longleftrightarrow Y$；<br>（5） 如果$Y$不函数依赖于$X$，则记为$X \nrightarrow Y$。</p>
+</blockquote>
+<p>2）<code>完全函数依赖</code>和<code>部分函数依赖</code><br>设$R(U)$是属性集$U$上的关系模式，如果$X \rightarrow Y$，并且对于$X$的任何一个真子集$Z$，都有$Z \nrightarrow Y$，则称$Y$完全依赖于$X$，记$X \stackrel{f}{\rightarrow} Y$；若$X \rightarrow Y$，但$Y$不完全函数依赖于$X$，则称$Y$部分函数依赖于$X$，记$X \stackrel{p}{\rightarrow} Y$。</p>
+<p>3）<code>传递函数依赖</code><br>设$R(U)$是属性集$U$上的关系模式，$X \subseteq U$，$Y \subseteq U$，$Z \subseteq U$，$Z - X$，$Z - Y$，$Y - X$均非空，如果$X \rightarrow Y(Y \nsubseteq X)$，$Y \nrightarrow X$，$Y \rightarrow Z$，则称$Z$传递依赖于$X$。</p>
+<p>2，<strong>键</strong></p>
+<blockquote>
+<p>1）<code>候选键</code>：设$R(U)$是属性集$U$上的关系模式，$K \subseteq U$，如果$K \stackrel{f}{\rightarrow}  U$，则$K$为$R$的<code>候选键</code>。<br>候选键包含了关系模式的所有属性，称为<code>全键</code>。<br>2）<code>主属性</code>：包含在任意一个候选键中的属性称为<code>主属性</code>。<br>3）<code>非主属性</code>：不包含在任意候选键中的属性称为<code>非主属性</code>或<code>非键属性</code>。<br>4）<code>外键</code>：在关系模式$R$中属性或者属性组$X$并非$R$的候选键，但$X$是另一个关系模式的候选键，则称$X$是$R$的<code>外部键</code>，也称<code>外键</code>。</p>
+</blockquote>
+<p>3，<strong>函数依赖的逻辑蕴含</strong></p>
+<p>1）<strong>阿姆斯特朗公理体系</strong></p>
+<p>   （1）<code>包含规则</code>：设$R(U)$是属性集$U$上的关系模式，$X \subseteq U$，$Y \subseteq U$，且$Y \subseteq X$，则$X \rightarrow Y$。</p>
+<p>   （2）<code>平凡依赖</code>：由包含规则得到的函数依赖都是平凡函数依赖。</p>
+<p>   （3）<code>逻辑蕴含</code>：设$R(U)$是属性集$U$上的关系模式，$F$是$R$上函数依赖集合，如果$R$的任意关系实例$r$使$F$成立的，函数依赖$X \rightarrow Y$均成立，则称$F$逻辑蕴含$X \rightarrow Y$。</p>
+<p>   （4）<code>阿姆斯特朗公理</code>：设$R$是一个具有属性集合$U$的关系模式，$F$是$R$的一个函数依赖集合，$X \subseteq U$，$Y \subseteq U$，$Z \subseteq U$。包含如下规则：</p>
+<blockquote>
+<p>i）<code>包含规则</code>：又称<code>自反律</code>，如果$Y \subseteq X \subseteq Z$，则$X \rightarrow Y$为$F$所蕴含；<br>ii）<code>传递规则</code>：如果$F$蕴含$X \rightarrow Y$，$Y \rightarrow Z$，则$X \rightarrow Z$为$F$所蕴含；<br>iii）<code>增广规则</code>：如果$F$蕴含$X \rightarrow Y$，且$Z \subseteq U$，则$XZ \rightarrow YZ$为$F$所蕴含。</p>
+</blockquote>
+<p><code>阿姆斯特朗公理</code>包含蕴含规则如下：</p>
+<blockquote>
+<p>i）<code>合并规则</code>：如果$X \rightarrow Y$，$X \rightarrow Z$，则$X \rightarrow YZ$；<br>ii）<code>伪传递规则</code>：如果$X \rightarrow Y$，$WY \rightarrow Z$，则$WX \rightarrow Z$；<br>iii）<code>分解规则</code>：如果$X \rightarrow Y$，$Z \subseteq Y$，则$X \rightarrow Z$；<br>iv）<code>集合累积规则</code>：如果$X \rightarrow YZ$且$Z \rightarrow W$，则$X \rightarrow YZW$。</p>
+</blockquote>
+<p><strong>【<code>引理4-1</code>】</strong> $X \rightarrow A_1A_2A_3 \dots A_n$ 成立的充分必要条件是$X \rightarrow A_i（i=1，2，\dots，n）$成立。</p>
+<p>2）<strong>闭包，覆盖和最小覆盖</strong></p>
+<p>（1）<code>函数依赖的闭包</code>：设$R$是一个具有属性集合$U$的关系模式，$F$是给定的函数依赖的集合，由$F$推导出的所有函数依赖的集合称为$F$的<code>闭包</code>，记作$F^{+}$。</p>
+<p>（2）<code>函数依赖集的覆盖</code>：$R$表上的两个函数依赖集合$F$和$G$，如果函数依赖集$G$可以从$F$用<code>蕴含规则</code>推导出来，换言之，如果 $G \subset  F^{+}$，则称$F$ <code>覆盖</code> $G$，如果$F$ 覆盖 $G$ 且 $G$ 覆盖 $F$，则称这两个<code>函数依赖集等价</code>，记作$F \equiv G$。</p>
+<p>（3）<code>属性集的闭包</code>：设$R$是一个具有属性集合$U$的关系模式，$F$是$R$上的函数依赖集，$X \subseteq U$，定义$X$的<code>闭包</code> $X^+$，作为$X$函数决定的最大属性集$Y$，则最大属性集满足 $X \rightarrow Y$ 存在于 $F^+$ 中。</p>
+<p><strong>【<code>算法4-1</code>】</strong> 属性集 $X$ 的闭包 $X^+$ 的迭代算法：</p>
+<blockquote>
+<p>i）选$X$作为闭包$X^+$的初始值$X[0]$；<br>ii）由$X[i]$计算$X[i+1]$时，它是由 $X[i]$ 并上属性集合$A$所组成的，其中$A$为$F$中存在的函数依赖 $Y \rightarrow Z$，而$A \subseteq Z$，$Y \subseteq X[i]$。因为$U$是有穷的所以上述过程经过有限步后会达到$X[i] = X[i+1]$，此时$X[i]$为所求的$X^+$。</p>
+</blockquote>
+<p>（4）<code>最小覆盖</code></p>
+<blockquote>
+<p>i）$F$中任意函数依赖的右部只包含一个属性；<br>ii）不存在这样的函数依赖 $X \rightarrow A$，使得$F$与 $F- \{ X \rightarrow A \}$ 等价；<br>iii）不存在这样的函数依赖$X \rightarrow A$，$X$包含真子集$Z(Z \subset X)$，使得 $(F-\{ X \rightarrow A \} \cup \{ Z \rightarrow A \})$与$F$等价。<br>如果$F$满足上述条件，则函数依赖$F$称为<code>极小或者最小函数依赖集</code>。</p>
+</blockquote>
+<p>（5）<code>最小覆盖集算法</code></p>
+<p>从函数依赖集$F$构造最小覆盖$M$的算法如下：</p>
+<blockquote>
+<p>i）从函数依赖集$F$，创建函数依赖的一个等价集$H$，它的函数依赖的右边只有单个属性（使用<code>分解规则</code>）<br>ii）从函数依赖集$H$，顺次去掉在$H$中非关键的单个函数依赖。一个函数依赖$X \rightarrow Y$在一个函数依赖集中是非关键的，指如果 $X \rightarrow Y$ 从$H$中去掉，得到结果$J$，仍然满足$H^+ = J^+$，或者说$H \equiv J$。<br>iii）从函数依赖集$J$，顺次用左边具有更少属性的函数依赖替换原来的函数依赖，只要不会导致$J^+$改变。<br>iv）从剩下的函数依赖集中收集所有左边相同的函数依赖，使用<code>合并规则</code>创建一个等价的函数依赖集$M$，它的所有依赖的左边是<code>唯一</code>的。</p>
+</blockquote>
+<p>（6）每个函数依赖集$F$都等价于一个极小函数依赖集。</p>
+<h2 id="三，关系模式的规范化"><a href="#三，关系模式的规范化" class="headerlink" title="三，关系模式的规范化"></a>三，关系模式的规范化</h2><p><code>规范化</code>定义：把一个给定规范模式转化为某种范式的过程称为<code>关系模式的规范过程</code>，简称<code>规范化</code>。</p>
+<p>1，<strong>第一范式</strong></p>
+<p><strong>【<code>定义4-1</code>】</strong> 设$R$是一个关系模式，如果$R$的每个属性的值域都是<strong>不可分割</strong>的简单数据项的集合，则这个模式称为<code>第一范式关系模式</code>，记作<code>1NF</code>。</p>
+<p>2，<strong>第二范式</strong></p>
+<p><strong>【<code>定义4-2</code>】</strong> 如果关系模式$R$是<code>第一范式</code>，而且每个非主属性都<strong>完全函数依赖</strong>于$R$的键，则$R$称为<code>第二范式的关系模式</code>，记作<code>2NF</code>。</p>
+<p>3，<strong>第三范式</strong></p>
+<p><strong>【<code>定义4-3</code>】</strong> 设关系模式$R$满足<code>2NF</code>，而且它的任意一个非键属性都<strong>不传递依赖</strong>于任何候选键，则$R$称为<code>第三范式的关系模式</code>，记作<code>3NF</code>。</p>
+<p>4，<strong>BCNF</strong></p>
+<p><strong>【<code>定义4-4</code>】</strong> 设关系模式$R$满足<code>1NF</code>，如果对$R$的每个函数依赖 $X \rightarrow Y$ 且 $Y \nsubseteq X$，$X$必为<code>候选键</code>，则$R$满足<code>BCNF</code>，即：在关系模式 $R(U,F)$ 中，如果每个决定因素都包含键，则$R(U,F) \in BCNF$。</p>
+<p><em>一个满足<code>BCNF</code>的关系模式有如下</em> <strong>条件</strong>：</p>
+<blockquote>
+<p>i）所有非键属性对每个键都是完全函数依赖；<br>ii）所有的键属性对每个不包含它的键，也是完全函数依赖；<br>iii）没有任何属性完全函数依赖于非键属性的任意一组属性。</p>
+</blockquote>
+<p>5，<strong>多值依赖与第四范式</strong></p>
+<p>1）<strong>多值依赖</strong></p>
+<p>   （1）<code>多值依赖</code>定义：设 $R(U)$ 是属性集$U$上的一个关系模式，$X$，$Y$，$Z$是$U$的子集，并且 $Z=U-X-Y$，关系模式$R(U)$中多值依赖 $X \rightarrow \rightarrow Y$ 成立，当且仅当对$R(U)$的任意关系$r$，给定的一对 $(x，z)$ 值，有一组$Y$的值，这组值仅仅取决于$x$值，而与$z$值无关。</p>
+<p>   （2）如果 $X \rightarrow \rightarrow Y$，而 $Z=\varnothing$，即$Z$为空，则 $X \rightarrow \rightarrow Y$ 称为<code>平凡的多值依赖</code>。</p>
+<p>   （3）<code>多值依赖的公理</code>（设$U$是一个关系模式的属性集，$X，Y，Z，W，V$都是集合$U$的子集。）</p>
+<blockquote>
+<p>i）<code>对称性规则</code>：如果 $X \rightarrow \rightarrow Y$，则 $X  \rightarrow \rightarrow U-X-Y$；<br>ii）<code>传递性规则</code>：如果 $X \rightarrow \rightarrow Y$，$Y  \rightarrow \rightarrow Z$，则 $X \rightarrow \rightarrow Z-Y$；<br>iii）<code>增广规则</code>：如果 $X \rightarrow \rightarrow Y$，$V \subseteq W$，则 $WX  \rightarrow \rightarrow VY$；<br>iv）<code>替代规则</code>：如果 $X  \rightarrow Y$，则$X \rightarrow \rightarrow Y$；<br>v）<code>聚集规则</code>：如果$X \rightarrow \rightarrow Y$，$Z \subseteq Y$，$W \cap Z = \varnothing$，$W \rightarrow Z$，则 $X \rightarrow Z$。</p>
+</blockquote>
+<p>   （4）<code>多值依赖的推导规则</code>（设$U$是一个关系模式的属性集，$X，Y，Z，W，V$都是集合$U$的子集。）</p>
+<blockquote>
+<p>i）<code>合并规则</code>：如果 $X \rightarrow \rightarrow Y$， $X \rightarrow \rightarrow Z$，则 $X \rightarrow \rightarrow YZ$；<br>ii）<code>分解规则</code>：如果 $X \rightarrow \rightarrow Y$， $X \rightarrow \rightarrow Z$，则 $X \rightarrow \rightarrow Y \cap Z$，$X \rightarrow \rightarrow Y-Z$，$X \rightarrow \rightarrow Z-Y$；<br>iii）<code>伪传递规则</code>：如果 $X \rightarrow \rightarrow Y$，$WY \rightarrow \rightarrow Z$，则 $WX \rightarrow \rightarrow (Z-WY)$；<br>iv）<code>混合伪传递规则</code>：如果 $X \rightarrow \rightarrow Y$，$XY \rightarrow Z$，则 $X \rightarrow (Z-Y)$。</p>
+</blockquote>
+<p>   （5）在$R(U)$上，如果有 $X \rightarrow \rightarrow Y$ 在 $W(W \subseteq U)$ 上成立，则 $X \rightarrow \rightarrow Y$ 称为$R(U)$的<code>嵌入型多值依赖</code>。</p>
+<p>2）<strong>第四范式</strong></p>
+<p><strong>【<code>定义4-5</code>】</strong>  设关系模式 $R(U,F) \in 1NF$，$F$是$R$上的多值依赖集，如果$R$的每个非平凡多值依赖 $X \rightarrow \rightarrow Y$（$Y-X \ne \varnothing$，$XY$未包含$R$的全部属性），$X$都含有$R$的候选键，则称$R$是<code>第四范式</code>，记为<code>4NF</code>。</p>
+<p>6，<strong>各范式之间的关系</strong></p>
+<p>1）<strong>各范式之间的关系</strong></p>
+<script type="math/tex; mode=display">4NF \subset BCNF \subset 3NF \subset 2NF \subset 1NF</script><p>2）<strong>各范式小结</strong><br><img src="/images/db_query_opt_normal_form_20190413.png" alt="各范式小结"></p>
+<blockquote>
+<p>i）$4NF$：限制关系模式的属性之间<code>不允许</code>有非平凡且非函数依赖的多值依赖；<br>ii）$3NF \rightarrow BCNF$：消除主属性对候选关键字的<code>部分和传递</code>函数依赖；<br>iii）$2NF \rightarrow 3NF$：消除非主属性对候选关键字的<code>传递</code>函数依赖；<br>iv）$1NF \rightarrow 2NF$：消除非主属性对候选关键字的<code>部分</code>函数依赖。</p>
+</blockquote>
+<h2 id="四，关系模式的分解特性"><a href="#四，关系模式的分解特性" class="headerlink" title="四，关系模式的分解特性"></a>四，关系模式的分解特性</h2><p>1，<strong>关系模式的分解</strong></p>
+<p>1）<code>关系模式的分解</code>定义：把一个关系模式分解成若干个关系模式的过程，称为<code>关系模式的分解</code>。</p>
+<p><strong>【<code>定义4-6</code>】</strong> 关系模式$R(U, F)$ 的分解是指$R$为它的一组子集 $\rho=\{R_1(U_1, F_1),R_2(U_2, F_2),\dots,R_k(U_k, F_k)\}$ 所代替的过程。其中，$U=U_1 \cup U_2 \dots \cup U_k$，并且设 $U_i \subseteq U_j(1 \le i,j \le k)$，$F_i$是$F$在$U$上的投影，即 $F_i = \{X \rightarrow Y \in F^+ \wedge XY \subseteq U_i \}$。</p>
+<p>   分解后表的连接丢失或者多余元组的分解称为<code>有损分解</code>，或称<code>有损连接分解</code>。</p>
+<p>2）<code>关系模式的分解</code>遵守原则： </p>
+<blockquote>
+<p>i）<code>无损连接性</code>：信息不失真（不增减信息）；<br>ii）<code>函数依赖保持性</code>：不破坏属性间存在的依赖关系。</p>
+</blockquote>
+<p>2，<strong>分解的无损连接性</strong></p>
+<p>1）<strong>无损连接的概念</strong></p>
+<p><strong>【<code>定义4-7</code>】</strong> 设$F$是关系模式$R$的函数依赖集，$\rho=\{R_1(U_1, F_1),R_2(U_2, F_2),\dots,R_k(U_k, F_k)\}$ 是$R$ 的一个分解，$r$是$R$的一个关系，定义</p>
+<script type="math/tex; mode=display">m_{\rho}(r)=\pi_{U_{1}}(r) \infty \pi_{U_{2}}(r) \infty \cdots \infty_{\pi_{U_{k}}}(r)</script><p>如果$R$满足$F$的任意关系$r$均有则$r=m_\rho(r)$，则称分解 $\rho$ <code>具有无损连接性</code>。</p>
+<p><strong>【<code>引理4-2</code>】</strong> 设 $\rho=\{R_1(U_1, F_1),R_2(U_2, F_2),\dots,R_k(U_k, F_k)\}$ 为关系模式$R$的一个分解， $r$是$R$的任一个关系，有</p>
+<blockquote>
+<p>(1) $r \subseteq m_\rho(r)$；<br>(2) 如果 $s = m_\rho(r)$， 则 $\pi_{U_{i}}(r) = \pi_{U_{i}}(s)$；<br>(3) $m_\rho(m_\rho(r)) = m_\rho(r)$。</p>
+</blockquote>
+<p>2）<strong>进行关系分解的必要性</strong></p>
+<p>一个关系模式分解后，可以存放原来所不能存放的信息，通常称为“<code>悬挂</code>”的元组，这是实际所需要的，也是分解的优点。</p>
+<p>3）<strong>无损连接判定方法</strong></p>
+<p><strong>【<code>算法4-2</code>】</strong> (<code>矩阵法</code>)判别一个分解的无损连接性的算法。</p>
+<blockquote>
+<p>(1) 构造初始表：构造一个$k$行$n$列的初始表，其中，每列对应于$R$的一个属性，每行用于表示分解后的一个模式组成。如果属性$A_j$属于关系模式$R_i$，则表示在表的第$i$行第$j$列置符号$a_j$，否则置符号$b_{ij}$。<br>(2) 根据$F$中的函数依赖修改表的内容：考察$F$中的每个函数依赖 $X \rightarrow Y$，在属性组$X$所在的那些列上寻找具有相同符号的行，如果找到这样的两行或者更多行，则修改这些行，使这些行上属性组$Y$所在的列上元素相同。<code>修改规则</code>是：如果$Y$所在的要修改的行有一个为$a_j$，则这些元素均变成$a_j$；否则改为$b_{mj}$（其中$m$为这些行的最小行号）。<br>(3) 判断分解是否为无损连接：如果通过修改，发现表中有一行变为 $a_1,a_2,\dots,a_n$，则<code>分解是无损连接的</code>，否则<code>分解不具有无损连接性</code>。</p>
+</blockquote>
+<p><strong>【<code>定理4-1</code>】</strong> （<code>定理法</code>）设 $\rho = \{ R_1,R_2 \}$ 是关系模式$R$的一个分解，$F$是$R$的函数依赖集，$U_1$，$U_2$和$U$分别是$R_1$，$R_2$和$R$的属性集合，那么$\rho$是$R$(关于$F$)的无损分解的充分必要条件为</p>
+<script type="math/tex; mode=display">(U_1\cap U_2) \rightarrow U_1 - U_2 \in F^+</script><p><code>或者</code>  </p>
+<script type="math/tex; mode=display">(U_1\cap U_2) \rightarrow U_2 - U_1 \in F^+</script><p><strong>【<code>定理4-2</code>】</strong> （<code>逐步分解定理</code>）设$F$是关系模式$R$的函数依赖集，$\rho = \{ R_1,R_2,\dots,R_k \}$ 是$R$关于$F$的一个无损连接。</p>
+<blockquote>
+<p>（1）如果 $\sigma = \{ S_1,S_2,\dots,S_m \}$ 是 $R_i$ 关于 $F_i$ 的一个无损连接分解，则 $\varepsilon = \{ R_1,R_2,\dots,R_{i-1},S_1,S_2,\dots,S_m,R_{i+1},\dots,R_k \}$ 是$R$关于$F$的无损连接分解，其中，$F_i = \pi_{R_i}(F)$。<br>（2）设 $\tau = \{ R_1,\dots,R_{k},R_{k+1},\dots,R_n \}$ 是 $R$ 的一个分解，其中，$\tau \supseteq \rho$，$\tau$ 也是$R$关于$F$的无损连接分解。</p>
+</blockquote>
+<p>3）<strong>分解的函数依赖保持性</strong></p>
+<p><strong>【<code>定义4-8</code>】</strong> 设$F$是关系模式$R$的函数依赖集， $\rho=\{R_1(U_1, F_1),R_2(U_2, F_2),\dots,R_k(U_k, F_k)\}$ 为$R$的一个分解，如果 $F_i = \pi_{R_i}(F)(i=1,2,\dots,k)$ 的并集 $(F_1 \cup F_2 \cup \dots \cup F_k)^+ \equiv F^+$，则称分解 $\rho$ 具有<code>函数依赖保持性</code>。</p>
+<p>3，<strong>关系模式分解算法</strong></p>
+<p>1）<strong>分解的基本要求</strong>：分解后的关系模式与分解前的关系模式等价，即分解必须具有<code>无损连接</code>和<code>函数依赖保持性</code>。</p>
+<p>2）<strong>分解算法的结论</strong></p>
+<blockquote>
+<p> i）如果要求分解具有<code>无损连接性</code>，则分解一定可以达到<code>BCNF</code>；<br> ii）如果要求分解保持<code>函数依赖</code>，则分解可以达到<code>3NF</code>，但不一定能够达到<code>BCNF</code>；<br> iii）如果要求分解既具有<code>无损连接性</code>，又保持<code>函数依赖</code>，则分解可以达到<code>3NF</code>，但不一定能够达到<code>BCNF</code>。</p>
+</blockquote>
+<h2 id="五，关系模式的优化"><a href="#五，关系模式的优化" class="headerlink" title="五，关系模式的优化"></a>五，关系模式的优化</h2><p>1，<strong>水平分解</strong></p>
+<p>1）<code>水平分解</code>的<strong>定义</strong>：<code>水平分解</code>是把关系元组分为若干个子集合，每个子集合定义为一个子关系，以提高系统效率的过程。</p>
+<p>2）<code>水平分解</code>的<strong>规则</strong>：</p>
+<blockquote>
+<p>（1）根据“<code>80%与20%原则</code>”，在一个大型关系中，经常使用的数据只是很有限的一部分，可以把经常使用的数据分解出来形成一个子关系。<br>（2）如果关系$R$上具有$n$个事务，而且多数事务存取的数据不相交，则$R$可分解为不大于$n$个子关系，使每个事务存取的数据形成一个关系。</p>
+</blockquote>
+<p>2，<strong>垂直分解</strong></p>
+<p>1）<code>垂直分解</code>的<strong>定义</strong>设 $R(A_1,A_2,\dots,A_k)$ 是关系模式，$R$的一个垂直分解是$n$个关系的集合$\{ R_1(B_1,B_2,\dots,B_v),\dots,R_n(D_1,D_2,\dots,D_m) \}$，其中，$\{B_1,B_2,\dots,B_v \},\dots,\{ D_1,D_2,\dots,D_m \}$ 是 $\{ A_1,A_2,\dots,A_k  \}$ 的子集合。</p>
+<p>2）<code>垂直分解</code>的<strong>基本原则</strong>：经常在一起使用的属性从$R$中分解出来形成一个独立的关系。</p>
+<h2 id="六，关系查询优化"><a href="#六，关系查询优化" class="headerlink" title="六，关系查询优化"></a>六，关系查询优化</h2><p>1，<strong>关系系统及其查询优化</strong></p>
+<p>1）<strong>查询优化工作</strong>：</p>
+<blockquote>
+<p>i）关系数据库内部提供的优化机制；<br>ii）用户通过改变查询的运算次序和建立索引等机制进行优化。</p>
+</blockquote>
+<p>2）<strong>关系数据库查询优化的<code>总目标</code></strong>：选择有效的策略，快速求得给定关系表达式的值，以减少查询执行的总开销。</p>
+<p>3）<strong>查询执行的开销计算</strong></p>
+<blockquote>
+<p>i）在集中式数据库中，<code>总代价=I/O代价+CPU代价</code><br>ii）在多用户环境下，<code>总代价=I/O代价+CPU代价+内存代价</code></p>
+</blockquote>
+<p>2，<strong>查询优化的一般策略</strong></p>
+<blockquote>
+<p>1）尽量先执行选择运算<br>2）在执行连接前对关系适当地预处理：</p>
+<blockquote>
+<p>i）索引连接；<br>ii）排序合并连接</p>
+</blockquote>
+</blockquote>
+<p>3，<strong>关系代数等价变换规则</strong></p>
+<p>1）<code>连接，笛卡尔积交换律</code></p>
+<script type="math/tex; mode=display">E_1 \times E_2 \equiv E_2 \times E_1</script><script type="math/tex; mode=display">E_{1} \infty E_{2} \equiv E_{2} \infty E_{1}</script><script type="math/tex; mode=display">\begin{array}{c}{E_{1} \infty E_{2}} \\ {F}\end{array} \equiv \begin{array}{c}{E_{2} \infty E_{1}} \\ {F}\end{array}</script><p>2）<code>连接，笛卡尔积结合律</code></p>
+<script type="math/tex; mode=display">(E_1 \times E_2) \times E_3 \equiv E_1 \times (E_2 \times E_3)</script><script type="math/tex; mode=display">(E_{1} \infty E_{2}) \infty E_{3} \equiv E_{1} \infty (E_{2} \infty E_{3})</script><script type="math/tex; mode=display">\begin{array}{c}{(E_{1} \infty E_{2}) \infty E_{3}} \\ {F_1} \quad \quad {F_2} \end{array} \equiv \begin{array}{c}{E_{1} \infty (E_{2} \infty E_{3})} \\ {F_1} \quad \quad {F_2} \end{array}</script><p>3）<code>投影的串接定律</code></p>
+<script type="math/tex; mode=display">\pi A_1,A_2,\dots,A_n(\pi B_1,B_2,\dots.B_m(E)) = \pi A_1,A_2,\dots,A_n(E)</script><p>4）<code>选择的串接定律</code></p>
+<script type="math/tex; mode=display">\sigma_{F_1}(\sigma_{F_2}(E)) \equiv \sigma_{F_1 \wedge F_2}(E)</script><p>5）<code>选择与投影的交换律</code></p>
+<script type="math/tex; mode=display">F(\pi A_1,A_2,\dots,A_n(E)) \equiv \pi A_1,A_2,\dots,A_n(\sigma_F(E))</script><p>6）<code>选择与笛卡尔积的交换律</code></p>
+<script type="math/tex; mode=display">\sigma_F(E_1 \times E_2) \equiv \sigma_F(E_1) \times E_2</script><script type="math/tex; mode=display">\sigma_F(E_1 \times E_2) \equiv \sigma_{F_1}(E_1) \times \sigma_{F_2}(E_2) （其中F = F_1 \wedge F_2）</script><script type="math/tex; mode=display">\sigma_F(E_1 \times E_2) \equiv \sigma_{F_2}(\sigma_{F_1} (E_1) \times E_2)</script><p>7）<code>选择与并运算的交换</code><br>设$E = E_1 \cup E_2$，$E_1$、$E_2$有相同的属性名，则</p>
+<script type="math/tex; mode=display">\sigma_F(E_1 \cup E_2) \equiv \sigma_F(E_1) \cup \sigma_F(E_2)</script><p>8）<code>选择与差运算的交换</code></p>
+<script type="math/tex; mode=display">\sigma_F(E_1 - E_2) \equiv \sigma_F(E_1) - \sigma_F(E_2)</script><p>9）<code>投影与笛卡尔积的交换</code></p>
+<script type="math/tex; mode=display">\pi A_1,A_2,\dots,A_n,B_1,B_2,\dots,B_m(E_1 \times E_2) \equiv \pi A_1,A_2,\dots,A_n(E_1) \cup \pi B_1,B_2,\dots,B_m(E_2)</script><p>10）<code>投影与并运算的交换</code></p>
+<script type="math/tex; mode=display">\pi A_1,A_2,\dots,A_n(E_1 \cup E_2) \equiv \pi A_1,A_2,\dots,A_n(E_1) \cup \pi A_1,A_2,\dots,A_m(E_2)</script><p>4，<strong>关系代数表达式的优化算法</strong></p>
+<ul>
+<li>关系系统的查询优化步骤：<blockquote>
+<p>（1）把查询转换成某种内部表示<br>（2）把语法树转换成标准（优化）形式<br>（3）选择底层的存取路径<br>（4）生成查询计划，选择代价最小的查询计划</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechatpay.jpeg" alt="Bocheng Zhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay.jpeg" alt="Bocheng Zhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Bocheng Zhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhangbc.github.io/2019/04/13/db_query_opt/" title="【数据库理论】关系模式的规范化与查询优化">https://zhangbc.github.io/2019/04/13/db_query_opt/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/db-theory/" rel="tag"> <i class="fa fa-tag"> 数据库理论</i></a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/12/java_code_100/" rel="next" title="【Java基础】Java基础100实例">
+                <i class="fa fa-chevron-left"></i> 【Java基础】Java基础100实例
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/14/db_design/" rel="prev" title="【数据库理论】数据库的设计与实施">
+                【数据库理论】数据库的设计与实施 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+  <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Bocheng Zhang">
+            
+              <p class="site-author-name" itemprop="name">Bocheng Zhang</p>
+              <p class="site-description motion-element" itemprop="description">每天积累一点，学习一点，只有不坚持的，没有做不到的！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/TIANTANGDEGEZI" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-feed"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhangbocheng189@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://theme-next.iissnan.com/theme-settings.html" title="NexT文档" target="_blank">NexT文档</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一，问题的提出"><span class="nav-text">一，问题的提出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二，关系模式的函数依赖"><span class="nav-text">二，关系模式的函数依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三，关系模式的规范化"><span class="nav-text">三，关系模式的规范化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四，关系模式的分解特性"><span class="nav-text">四，关系模式的分解特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五，关系模式的优化"><span class="nav-text">五，关系模式的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六，关系查询优化"><span class="nav-text">六，关系查询优化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bocheng Zhang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站字数统计&#58;</span>
+    
+    <span title="本站字数统计">200.4k</span>
+  
+</div>
+
+
+  <div class="powered-by">版权归 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 所有</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 总访客
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script scr="/js/scr/md5.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'c3e9e61886d65422eafe',
+          clientSecret: '5e136f2fd1ac0f977bbb2853e5f5798ef45e05d4',
+          repo: 'zhangbc.github.io',
+          owner: 'zhangbc',
+          admin: ['zhangbc'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.4"></script>
+
+
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

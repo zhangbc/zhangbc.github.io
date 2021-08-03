@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="paper,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="作者及其单位：北京邮电大学，张俊遥，2019年6月，硕士论文  摘要实验数据：来源于网络公开的新闻文本数据；用随机欠采样和过采样的方法解决分类不均衡问题；使用BIO格式的标签识别5类命名实体，标注11种标签。 学习模型：基于RNN-CRF框架，提出Bi-GRU-Attention模型；基于改进的ELMo可移植模型。 一，绪论1，研究背景及意义 研究背景主要介绍的是时代背景及NER的应用领域。">
+<meta name="keywords" content="paper">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文笔记】《基于深度学习的中文命名实体识别研究》阅读笔记">
+<meta property="og:url" content="https://zhangbc.github.io/2020/03/01/paper_01/index.html">
+<meta property="og:site_name" content="天堂的鸽子">
+<meta property="og:description" content="作者及其单位：北京邮电大学，张俊遥，2019年6月，硕士论文  摘要实验数据：来源于网络公开的新闻文本数据；用随机欠采样和过采样的方法解决分类不均衡问题；使用BIO格式的标签识别5类命名实体，标注11种标签。 学习模型：基于RNN-CRF框架，提出Bi-GRU-Attention模型；基于改进的ELMo可移植模型。 一，绪论1，研究背景及意义 研究背景主要介绍的是时代背景及NER的应用领域。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-01T08:20:00.262Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【论文笔记】《基于深度学习的中文命名实体识别研究》阅读笔记">
+<meta name="twitter:description" content="作者及其单位：北京邮电大学，张俊遥，2019年6月，硕士论文  摘要实验数据：来源于网络公开的新闻文本数据；用随机欠采样和过采样的方法解决分类不均衡问题；使用BIO格式的标签识别5类命名实体，标注11种标签。 学习模型：基于RNN-CRF框架，提出Bi-GRU-Attention模型；基于改进的ELMo可移植模型。 一，绪论1，研究背景及意义 研究背景主要介绍的是时代背景及NER的应用领域。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>【论文笔记】《基于深度学习的中文命名实体识别研究》阅读笔记 | 天堂的鸽子</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhangbc" class="github-corner" aria-label="View source on GitHub"><svg width="149" height="149" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天堂的鸽子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">天道酬勤</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/aboutme.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangbc.github.io/2020/03/01/paper_01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bocheng Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天堂的鸽子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【论文笔记】《基于深度学习的中文命名实体识别研究》阅读笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-01T12:29:30+08:00">
+                2020-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/research-mote/" itemprop="url" rel="index">
+                    <span itemprop="name">科研笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-line-chart"></i> 阅读
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <span id="busuanzi_value_page_pv"></span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数&#58;</span>
+                
+                <span title="字数">
+                  2.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">时长 &asymp;</span>
+                
+                <span title="时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>作者及其单位：北京邮电大学，张俊遥，2019年6月，硕士论文</p>
+</blockquote>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>实验数据：来源于网络公开的新闻文本数据；用随机欠采样和过采样的方法解决分类不均衡问题；使用<code>BIO</code>格式的标签识别5类命名实体，标注11种标签。</p>
+<p>学习模型：基于<code>RNN-CRF</code>框架，提出<code>Bi-GRU-Attention</code>模型；基于改进的<code>ELMo</code>可移植模型。</p>
+<h1 id="一，绪论"><a href="#一，绪论" class="headerlink" title="一，绪论"></a>一，绪论</h1><h2 id="1，研究背景及意义"><a href="#1，研究背景及意义" class="headerlink" title="1，研究背景及意义"></a>1，研究背景及意义</h2><blockquote>
+<p>研究背景主要介绍的是时代背景及<code>NER</code>的应用领域。</p>
+</blockquote>
+<h2 id="2，研究现状"><a href="#2，研究现状" class="headerlink" title="2，研究现状"></a>2，研究现状</h2><blockquote>
+<p>1）基于规则和词典的方法；</p>
+<p>2）基于统计的方法：语言的<code>N</code>元模型，隐马尔科夫模型，最大熵模型，条件随机场，支持向量机，决策树，基于转换的学习方法；</p>
+<p>3）基于深度学习的方法：基于双向循环神经网络与条件随机场结合的框架；基于标签转移与窗口滑动的方法；注意力机制(<code>Attention</code>)；</p>
+<p>4）基于迁移学习的方法。</p>
+</blockquote>
+<p>面临挑战：</p>
+<blockquote>
+<p>1）中文命名实体界限难划分；</p>
+<p>2）中文命名实体结构更多样复杂；</p>
+<p>3）中文命名实体分类标准不同，划分标注结果不同。</p>
+</blockquote>
+<h2 id="3，研究内容"><a href="#3，研究内容" class="headerlink" title="3，研究内容"></a>3，研究内容</h2><blockquote>
+<p>1）数据集收集与预处理；</p>
+<p>2）基于双向循环神经网络与条件随机场模型的研究；</p>
+<p>3）基于<code>ELMo</code>的可移植模型研究。</p>
+</blockquote>
+<h1 id="二，相关技术"><a href="#二，相关技术" class="headerlink" title="二，相关技术"></a>二，相关技术</h1><h2 id="1，基于循环神经网络方法的技术"><a href="#1，基于循环神经网络方法的技术" class="headerlink" title="1，基于循环神经网络方法的技术"></a>1，基于循环神经网络方法的技术</h2><blockquote>
+<p>1）神经单元结构：循环是指一个神经单元的计算是按照时间顺序展开依次进行的过程。具有记忆特征，常用来处理与序列相关的问题。</p>
+<p>2）循环神经网络的发展：<code>LSTM</code>取代<code>CNN</code>，主要是解决<code>CNN</code>单元的反向传播的计算问题。</p>
+<p>3）深层网络搭建：<code>Dropout</code>常被用作防止模型过拟合，减少网络冗余度，增加模型鲁棒性；批量归一化策略是批量梯度下降算法过程的一项操作；<code>clip</code>是一种有效控制梯度爆炸的算法。</p>
+<p>4）目标函数，即损失函数，衡量经过模型计算的预测结果和事实上的结果之间的差距。如：平方差，交叉熵，<code>softmax</code>。</p>
+<p>5）注意力机制：论文研究了在<code>LSTM</code>中引入注意力机制。</p>
+<p>6）<code>Adam</code>优化算法：适合解决梯度稀疏或噪音较高的优化问题。</p>
+</blockquote>
+<h2 id="2，基于迁移学习方法的技术"><a href="#2，基于迁移学习方法的技术" class="headerlink" title="2，基于迁移学习方法的技术"></a>2，基于迁移学习方法的技术</h2><blockquote>
+<p>1）基本思想：</p>
+<blockquote>
+<p>（1）预训练的两种基本思路：</p>
+<blockquote>
+<p>a）基于共同表示形式的思路：电子文本大多以某种向量形式（词，句，段，文本）表示输入到网络中，如<code>ELMo</code>模型。</p>
+<p>b）基于网络微调的思想：借鉴机器视觉领域的模型思想，在预训练好的模型上加入针对任务的功能层，在对后几层进行结构和参数设置的精调。</p>
+</blockquote>
+</blockquote>
+<p>2）语言模型：双向语言模型</p>
+<p>3）词向量技术：<code>One-hot</code>向量，稀疏向量和稠密向量。</p>
+<blockquote>
+<p>（1）基于统计的方法</p>
+<blockquote>
+<p>a）基于共现矩阵的方法：在设定的窗口大小内，统计了一个句子中词语前后相邻出现的次数，使用这个次数构成的向量当作词向量，这个向量比较稀疏。</p>
+<p>b）奇异值分解的方法：可以看作一种降维过程，把稀疏矩阵压缩为稠密矩阵的过程。</p>
+</blockquote>
+<p>（2）基于语言模型的方法：</p>
+<blockquote>
+<p>a）跳字模型（<code>skip-gram</code>）：使用一个词来预测上下文词语；</p>
+<p>b）连续词袋模型（<code>CBOW</code>）：使用周围词语预测中心词；</p>
+<p>c）<code>ELMo</code>模型：词向量表达过程是动态的，即一词多义下的词向量完全不同。</p>
+</blockquote>
+</blockquote>
+<p>4）混淆矩阵：数据科学，数据分析和机器学习中统计分类的实际结果和预测结果的表格表示。</p>
+</blockquote>
+<h1 id="三，命名实体识别任务与数据集"><a href="#三，命名实体识别任务与数据集" class="headerlink" title="三，命名实体识别任务与数据集"></a>三，命名实体识别任务与数据集</h1><h2 id="1，命名实体识别任务"><a href="#1，命名实体识别任务" class="headerlink" title="1，命名实体识别任务"></a>1，命名实体识别任务</h2><blockquote>
+<p>1）定义：命名实体识别属于序列标注类问题，分为三大类（实体类，数量类，时间类），七小类（人名，地名，组织名，日期，时间，货币或者百分比）。</p>
+<p>2）任务过程：准确划分出命名实体的边界，并将命名实体进行正确的分类。</p>
+<p>3）判别标准：（1）准确划分出命名实体的边界；（2）命名实体的标注分类正确；（3）命名实体内部位置标注有序。</p>
+<script type="math/tex; mode=display">
+准确率=\frac{标注结果正确的数量}{标注结果的数量}\times{100\%} \\召回率=\frac{标注命名实体正确的数量}{标注命名实体的数量}\times{100\%}\\F_1=\frac{(\beta^{2}+1)\times 准确率\times 召回率}{(\beta^{2}\times 准确率) + 召回率}\times{100\%}</script></blockquote>
+<h2 id="2，数据集收集与处理"><a href="#2，数据集收集与处理" class="headerlink" title="2，数据集收集与处理"></a>2，数据集收集与处理</h2><blockquote>
+<p>1）数据源：本论文数据来源于搜狗实验室公开的2012年6月到7月期间的国内外国际、体育、社会、娱乐等18类新闻文本。</p>
+<p>2）数据处理：<code>jieba</code>+盘古工具，本文研究<code>NER</code>分为五类：人名（58136），地名（87412），机构名（5142），时间（75491），数量（148392）。数据集（句子个数）分：训练集（197828），验证集（8994），测试集（3485）。</p>
+</blockquote>
+<h1 id="四，基于改进的神经网络与注意力机制结合的研究"><a href="#四，基于改进的神经网络与注意力机制结合的研究" class="headerlink" title="四，基于改进的神经网络与注意力机制结合的研究"></a>四，基于改进的神经网络与注意力机制结合的研究</h1><h2 id="1，RNN-CRF框架"><a href="#1，RNN-CRF框架" class="headerlink" title="1，RNN-CRF框架"></a>1，RNN-CRF框架</h2><blockquote>
+<p>1）框架结构：以<code>Bi-LSTM-CRF</code>模型为例，包括字嵌入层（字量化表示，输入到神经网络），<code>Bi-LSTM</code>神经网络层（双向网络记录了上下文信息，据此共同训练计算当前的字的新向量表示，其输出字或词的向量维度与神经单元数量有关），<code>CRF</code>层（进行进一步标签顺序的规则学习）。</p>
+<p>2）模型原理：将输入的语句转换为词向量，然后输入到<code>LSTM</code>网络计算，接着在<code>CRF</code>层中计算输出标签，根据定义的目标函数计算损失，使用梯度下降等算法更新模型中的参数。</p>
+</blockquote>
+<h2 id="2，改进与设计"><a href="#2，改进与设计" class="headerlink" title="2，改进与设计"></a>2，改进与设计</h2><blockquote>
+<p>1）改进的思想与结构设计：改进思路就是简化神经单元结构，本文使用双向的<code>GRU</code>结构代替<code>LSTM</code>单元结构，使用神经网络与注意力机制结合。</p>
+<p>2）改进的模型设计</p>
+</blockquote>
+<h2 id="3，实验与分析"><a href="#3，实验与分析" class="headerlink" title="3，实验与分析"></a>3，实验与分析</h2><blockquote>
+<p>1）实验思路是以<code>Bi-LSTM-CRF</code>为基础，并进行网络优化，对比本文提出的<code>Bi-GRU-Attention</code>模型。</p>
+</blockquote>
+<p>实验一：<code>Bi-LSTM</code>网络参数</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>batch_size</td>
+<td>20</td>
+</tr>
+<tr>
+<td>max_num_steps</td>
+<td>20</td>
+</tr>
+<tr>
+<td>优化器</td>
+<td>Admin</td>
+</tr>
+<tr>
+<td>初始学习率</td>
+<td>0.001</td>
+</tr>
+<tr>
+<td>衰减率</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td>clip</td>
+<td>5</td>
+</tr>
+<tr>
+<td>one-hot_dim</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>实验二：<code>GRU-Attention</code>模型实验参数</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>batch_size</td>
+<td>20</td>
+</tr>
+<tr>
+<td>char_dim</td>
+<td>100</td>
+</tr>
+<tr>
+<td>max_num_steps</td>
+<td>20</td>
+</tr>
+<tr>
+<td>神经单元数</td>
+<td>128</td>
+</tr>
+<tr>
+<td>优化器</td>
+<td>Adam</td>
+</tr>
+<tr>
+<td>初始学习率</td>
+<td>0.001</td>
+</tr>
+<tr>
+<td>衰减率</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td>one-hot_dim</td>
+<td>11</td>
+</tr>
+<tr>
+<td>epoch</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>实验结果如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分类/F1/模型</th>
+<th>Bi-LSTM-CRF</th>
+<th>Bi-LSTM-Attention</th>
+<th>Bi-GRU-CRF</th>
+<th>Bi-GRU-Attention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人名</td>
+<td>82.32%</td>
+<td>82.45%</td>
+<td>82.22%</td>
+<td>82.42%</td>
+</tr>
+<tr>
+<td>地名</td>
+<td>89.97%</td>
+<td>90.19%</td>
+<td>89.93%</td>
+<td>91.06%</td>
+</tr>
+<tr>
+<td>机构名</td>
+<td>91.94%</td>
+<td>91.96%</td>
+<td>91.94%</td>
+<td>91.95%</td>
+</tr>
+<tr>
+<td>数量</td>
+<td>94.98%</td>
+<td>95.06%</td>
+<td>95.01%</td>
+<td>95.26%</td>
+</tr>
+<tr>
+<td>时间</td>
+<td>96.05%</td>
+<td>96.14%</td>
+<td>96.06%</td>
+<td>96.14%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="五，基于ELMo的可移植模型研究"><a href="#五，基于ELMo的可移植模型研究" class="headerlink" title="五，基于ELMo的可移植模型研究"></a>五，基于ELMo的可移植模型研究</h1><h2 id="1，改进的ELMo模型设计"><a href="#1，改进的ELMo模型设计" class="headerlink" title="1，改进的ELMo模型设计"></a>1，改进的<code>ELMo</code>模型设计</h2><blockquote>
+<p><code>ELMo</code>模型在2018年由<code>Peter</code>提出，<code>Peter</code>团队使用双层的循环神经网络实现模型的预先训练。本章基于<code>Peter</code>的<code>ELMo</code>模型设计，提出了直通结构，实现词向量的提前训练模型。</p>
+<p>1）模型原理：<code>Peters</code>使用<code>CNN-BIG-LSTM</code>网络实现模型，使用卷积神经网络实现字符编码，使用两层双向循环神经网络实现词向量的训练模型。</p>
+<p>2）改进与设计：本文使用改进的<code>ELMo</code>预先训练模型包含输入层，卷积神经网络7层，双向神经网络2层，输出层结构。</p>
+</blockquote>
+<h2 id="2，基于ELMo的嵌入式模型设计"><a href="#2，基于ELMo的嵌入式模型设计" class="headerlink" title="2，基于ELMo的嵌入式模型设计"></a>2，基于<code>ELMo</code>的嵌入式模型设计</h2><blockquote>
+<p>1）连接结构：在模型嵌入的衔接层中，本文使用维度映射的方法，将不同维度的输入输出维度进行统一。</p>
+<p>2）模型设计：本文的嵌入<code>ELMo</code>模型，包含<code>ELMo</code>层，衔接层，神经网络层，注意力层和输出调整层结构。</p>
+</blockquote>
+<h2 id="3，实验"><a href="#3，实验" class="headerlink" title="3，实验"></a>3，实验</h2><p>实验参数配置如下：</p>
+<p>1）<code>ELMo</code>模型实验参数</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>word_dim</td>
+<td>100</td>
+</tr>
+<tr>
+<td>char_dim</td>
+<td>50</td>
+</tr>
+<tr>
+<td>activation</td>
+<td>ReLU</td>
+</tr>
+<tr>
+<td>每层神经单元数目</td>
+<td>512</td>
+</tr>
+<tr>
+<td>优化器</td>
+<td>Adam</td>
+</tr>
+<tr>
+<td>初始学习率</td>
+<td>0.001</td>
+</tr>
+<tr>
+<td>lr_decay</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td>clip</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>2）卷积神经网络参数</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>卷积层</th>
+<th>输出词向量维度</th>
+<th>过滤器个数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>conv1</td>
+<td>32</td>
+<td>32</td>
+</tr>
+<tr>
+<td>conv2</td>
+<td>32</td>
+<td>32</td>
+</tr>
+<tr>
+<td>conv3</td>
+<td>64</td>
+<td>64</td>
+</tr>
+<tr>
+<td>conv4</td>
+<td>128</td>
+<td>128</td>
+</tr>
+<tr>
+<td>conv5</td>
+<td>256</td>
+<td>256</td>
+</tr>
+<tr>
+<td>conv6</td>
+<td>512</td>
+<td>512</td>
+</tr>
+<tr>
+<td>conv7</td>
+<td>1024</td>
+<td>1024</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>3）移植模型实验参数</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>batch_size</td>
+<td>20</td>
+</tr>
+<tr>
+<td>char_dim</td>
+<td>100</td>
+</tr>
+<tr>
+<td>max_num_steps</td>
+<td>20</td>
+</tr>
+<tr>
+<td>神经单元数</td>
+<td>128</td>
+</tr>
+<tr>
+<td>优化器</td>
+<td>Adam</td>
+</tr>
+<tr>
+<td>初始化学习率</td>
+<td>0.001</td>
+</tr>
+<tr>
+<td>clip</td>
+<td>5</td>
+</tr>
+<tr>
+<td>dropout</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>one-hot_dim</td>
+<td>11</td>
+</tr>
+<tr>
+<td>epoch</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>实验结果对比：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分类/F1/模型</th>
+<th>Bi-LSTM-CRF</th>
+<th>Bi-GRU-Attention</th>
+<th>改进的ELMo嵌入模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人名</td>
+<td>82.32%</td>
+<td>82.42%</td>
+<td>83.14%</td>
+</tr>
+<tr>
+<td>地名</td>
+<td>89.97%</td>
+<td>91.06%</td>
+<td>92.36%</td>
+</tr>
+<tr>
+<td>机构名</td>
+<td>91.94%</td>
+<td>91.95%</td>
+<td>93.02%</td>
+</tr>
+<tr>
+<td>数量</td>
+<td>94.98%</td>
+<td>95.26%</td>
+<td>96.13%</td>
+</tr>
+<tr>
+<td>时间</td>
+<td>96.05%</td>
+<td>96.14%</td>
+<td>96.55%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="六，总结与展望"><a href="#六，总结与展望" class="headerlink" title="六，总结与展望"></a>六，总结与展望</h1><h2 id="1，总结"><a href="#1，总结" class="headerlink" title="1，总结"></a>1，总结</h2><blockquote>
+<p>本文主要研究了基于深度学习的中文命名实体识别任务，提出了<code>Bi-GRU-Attention</code>模型减少训练时间，提升模型准确率；提出了基于改进的<code>ELMo</code>可移植模型，用于应对少量数据集和快速移植不同场景的问题。</p>
+</blockquote>
+<h2 id="2，不足与发展趋势"><a href="#2，不足与发展趋势" class="headerlink" title="2，不足与发展趋势"></a>2，不足与发展趋势</h2><blockquote>
+<p>1）公开的权威的中文文本数据集不足；</p>
+<p>2）可以划分更细的领域或分类，分别涉及分类器；</p>
+<p>3）基于迁移学习的多任务模型研究是热点。</p>
+</blockquote>
+<p><strong>阅读心得</strong>：绪论内容相对详细，结构中规中矩，美中不足缺乏对研究对象现状的介绍，国内外研究现状，要解决的问题以及达到的预期效果未尽阐述。技术要点论述详尽，本文设计实验充分且多角度论证，扩展实验与改进设计也具有一定创新性。通过本篇论文研究学习，在<code>NER</code>领域收获颇多，很多知识有待弥补，如<code>ELMo</code>模型，迁移学习方面需要加强学习。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechatpay.jpeg" alt="Bocheng Zhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay.jpeg" alt="Bocheng Zhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Bocheng Zhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhangbc.github.io/2020/03/01/paper_01/" title="【论文笔记】《基于深度学习的中文命名实体识别研究》阅读笔记">https://zhangbc.github.io/2020/03/01/paper_01/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/paper/" rel="tag"> <i class="fa fa-tag"> paper</i></a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/27/Hadoop_02/" rel="next" title="【大数据基础】Hadoop入门--HDFS">
+                <i class="fa fa-chevron-left"></i> 【大数据基础】Hadoop入门--HDFS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/12/db_sysbench/" rel="prev" title="【数据库测试工具】认识Sysbench">
+                【数据库测试工具】认识Sysbench <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+  <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Bocheng Zhang">
+            
+              <p class="site-author-name" itemprop="name">Bocheng Zhang</p>
+              <p class="site-description motion-element" itemprop="description">每天积累一点，学习一点，只有不坚持的，没有做不到的！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/TIANTANGDEGEZI" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-feed"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhangbocheng189@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://theme-next.iissnan.com/theme-settings.html" title="NexT文档" target="_blank">NexT文档</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一，绪论"><span class="nav-text">一，绪论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1，研究背景及意义"><span class="nav-text">1，研究背景及意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2，研究现状"><span class="nav-text">2，研究现状</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3，研究内容"><span class="nav-text">3，研究内容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二，相关技术"><span class="nav-text">二，相关技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1，基于循环神经网络方法的技术"><span class="nav-text">1，基于循环神经网络方法的技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2，基于迁移学习方法的技术"><span class="nav-text">2，基于迁移学习方法的技术</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三，命名实体识别任务与数据集"><span class="nav-text">三，命名实体识别任务与数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1，命名实体识别任务"><span class="nav-text">1，命名实体识别任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2，数据集收集与处理"><span class="nav-text">2，数据集收集与处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四，基于改进的神经网络与注意力机制结合的研究"><span class="nav-text">四，基于改进的神经网络与注意力机制结合的研究</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1，RNN-CRF框架"><span class="nav-text">1，RNN-CRF框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2，改进与设计"><span class="nav-text">2，改进与设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3，实验与分析"><span class="nav-text">3，实验与分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五，基于ELMo的可移植模型研究"><span class="nav-text">五，基于ELMo的可移植模型研究</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1，改进的ELMo模型设计"><span class="nav-text">1，改进的ELMo模型设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2，基于ELMo的嵌入式模型设计"><span class="nav-text">2，基于ELMo的嵌入式模型设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3，实验"><span class="nav-text">3，实验</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六，总结与展望"><span class="nav-text">六，总结与展望</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1，总结"><span class="nav-text">1，总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2，不足与发展趋势"><span class="nav-text">2，不足与发展趋势</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bocheng Zhang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站字数统计&#58;</span>
+    
+    <span title="本站字数统计">200.4k</span>
+  
+</div>
+
+
+  <div class="powered-by">版权归 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 所有</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 总访客
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script scr="/js/scr/md5.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'c3e9e61886d65422eafe',
+          clientSecret: '5e136f2fd1ac0f977bbb2853e5f5798ef45e05d4',
+          repo: 'zhangbc.github.io',
+          owner: 'zhangbc',
+          admin: ['zhangbc'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.4"></script>
+
+
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
